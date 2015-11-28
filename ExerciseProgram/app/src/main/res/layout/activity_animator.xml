@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@mipmap/ic_launcher"/>
+
+    <Button
+        android:id="@+id/bt_scale_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar"
+        android:text="放大"/>
+
+    <Button
+        android:id="@+id/bt_scale_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/bar"
+        android:text="缩小"/>
+
+    <Button
+        android:id="@+id/bt_rotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar"
+        android:layout_centerHorizontal="true"
+        android:text="旋转"/>
+
+    <Button
+        android:id="@+id/bt_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_rotate"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="圆周"/>
+
+    <EditText
+        android:id="@+id/et_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:hint="输入开始数值"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/et_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:hint="输入结束数值"
+        android:inputType="numberDecimal"/>
+
+</RelativeLayout>

@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:23.1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.zhaokaiqiang.klog:library:1.1.0'
+    compile 'com.pnikosis:materialish-progress:1.5'
 }

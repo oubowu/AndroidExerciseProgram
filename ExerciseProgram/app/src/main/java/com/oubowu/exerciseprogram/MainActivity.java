@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.widget.Button;
 
 import com.oubowu.exerciseprogram.mvpdemo.MvpActivity;
+import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -20,6 +21,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_mvp)
     void mvp() {
         startActivity(new Intent(this, MvpActivity.class));
+    }
+
+    @OnClick(R.id.bt_refresh)
+    void refresh() {
+        startActivity(new Intent(this, RefreshActivity.class));
     }
 
     @Override

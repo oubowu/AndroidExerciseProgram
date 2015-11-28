@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity"
+    tools:showIn="@layout/activity_refresh">
+
+    <com.oubowu.exerciseprogram.refreshrecyclerview.RefreshRecyclerView
+        android:id="@+id/rrv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:load_all_text="已经加载完毕啦！！!"
+        app:load_all_text_color="@color/material_red_a700"
+        app:load_all_text_size="15sp"
+        app:loading_text="正在努力加载中..."
+        app:loading_text_color="@color/material_light_green_a700"
+        app:loading_text_size="18sp"
+        app:loading_wheel_color="@color/material_red_600"
+        app:loading_wheel_bar_width="3dp"
+        app:loading_wheel_width_height="25dp">
+
+    </com.oubowu.exerciseprogram.refreshrecyclerview.RefreshRecyclerView>
+
+</RelativeLayout>

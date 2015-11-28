@@ -35,7 +35,7 @@ public class MvpActivity extends BaseActivity implements IPerformAnimatorView, V
 
     @Override
     protected int provideLayoutId() {
-        return R.layout.activity_animator;
+        return R.layout.activity_mvp;
     }
 
     @Override

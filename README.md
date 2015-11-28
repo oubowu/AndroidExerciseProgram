@@ -5,3 +5,4 @@ Android练手项目，记录所思所学
 1.ButterKnife的使用<br> 
 2.MVP模式的使用例子<br> 
 3.添加封装的上拉刷新，滑动到底部自动加载的RecyclerView组合控件例子<br>
+http://github.com/oubowu/AndroidExerciseProgram/raw/master/images/recyclerview.gif<br>

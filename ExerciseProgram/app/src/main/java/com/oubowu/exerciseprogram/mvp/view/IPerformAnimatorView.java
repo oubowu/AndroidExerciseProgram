@@ -1,9 +1,9 @@
-package com.oubowu.exerciseprogram.mvpdemo.view;
+package com.oubowu.exerciseprogram.mvp.view;
 
 import android.util.DisplayMetrics;
 import android.view.View;
 
-import com.oubowu.exerciseprogram.mvpdemo.bean.AnimateType;
+import com.oubowu.exerciseprogram.mvp.bean.AnimateType;
 
 
 /**

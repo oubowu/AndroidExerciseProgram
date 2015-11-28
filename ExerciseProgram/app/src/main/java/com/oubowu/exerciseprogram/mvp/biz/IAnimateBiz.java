@@ -1,9 +1,9 @@
-package com.oubowu.exerciseprogram.mvpdemo.biz;
+package com.oubowu.exerciseprogram.mvp.biz;
 
 import android.util.DisplayMetrics;
 import android.view.View;
 
-import com.oubowu.exerciseprogram.mvpdemo.bean.AnimateType;
+import com.oubowu.exerciseprogram.mvp.bean.AnimateType;
 
 /**
  * 类名： IAnimateBiz

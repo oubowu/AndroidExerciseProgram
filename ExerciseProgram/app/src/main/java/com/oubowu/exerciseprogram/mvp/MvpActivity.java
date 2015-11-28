@@ -1,4 +1,4 @@
-package com.oubowu.exerciseprogram.mvpdemo;
+package com.oubowu.exerciseprogram.mvp;
 
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -7,9 +7,9 @@ import android.widget.EditText;
 
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
-import com.oubowu.exerciseprogram.mvpdemo.bean.AnimateType;
-import com.oubowu.exerciseprogram.mvpdemo.presenter.AnimatorPresenter;
-import com.oubowu.exerciseprogram.mvpdemo.view.IPerformAnimatorView;
+import com.oubowu.exerciseprogram.mvp.bean.AnimateType;
+import com.oubowu.exerciseprogram.mvp.presenter.AnimatorPresenter;
+import com.oubowu.exerciseprogram.mvp.view.IPerformAnimatorView;
 
 import butterknife.Bind;
 

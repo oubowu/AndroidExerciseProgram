@@ -1,4 +1,4 @@
-package com.oubowu.exerciseprogram.mvpdemo.bean;
+package com.oubowu.exerciseprogram.mvp.bean;
 
 /**
  * 类名： AnimateType

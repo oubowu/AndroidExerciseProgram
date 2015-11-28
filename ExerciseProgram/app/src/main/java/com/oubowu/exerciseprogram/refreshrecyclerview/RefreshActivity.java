@@ -22,7 +22,7 @@ public class RefreshActivity extends BaseActivity {
     @Bind(R.id.rrv)
     RefreshRecyclerView rrv;
 
-    private int cc;
+    private int count;
 
     @Override
     protected int provideLayoutId() {
@@ -37,10 +37,10 @@ public class RefreshActivity extends BaseActivity {
     @Override
     protected void initData() {
         List<String> arrayList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             arrayList.add("位置" + i);
         }
-        cc = 10;
+        count = 20;
         final MyAdapter adapter = new MyAdapter(this, arrayList, rrv);
         rrv.setAdapterAndLayoutManager(adapter, new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         rrv.setOnRefreshListener(new RefreshRecyclerView.OnRefreshListener() {
@@ -50,7 +50,7 @@ public class RefreshActivity extends BaseActivity {
                     @Override
                     public void run() {
                         final List<String> arrayList = new ArrayList<>();
-                        for (int i = 0; i < 10; i++) {
+                        for (int i = 0; i < 20; i++) {
                             arrayList.add("位置" + i);
                         }
                         try {
@@ -72,13 +72,13 @@ public class RefreshActivity extends BaseActivity {
             @Override
             public void onLoadMore() {
                 final List<String> arrayList = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
-                    arrayList.add("位置" + (i + cc));
+                for (int i = 0; i < 20; i++) {
+                    arrayList.add("位置" + (i + count));
                 }
-                cc += 10;
+                count += 20;
                 if (adapter.getItemCount() > 50) {
                     rrv.loadAllComplete();
-                    cc = 10;
+                    count = 20;
                 }
                 new Thread() {
                     @Override

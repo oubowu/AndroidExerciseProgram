@@ -1,9 +1,9 @@
-package com.oubowu.exerciseprogram.mvpdemo.presenter;
+package com.oubowu.exerciseprogram.mvp.presenter;
 
 
-import com.oubowu.exerciseprogram.mvpdemo.biz.AnimateBiz;
-import com.oubowu.exerciseprogram.mvpdemo.biz.IAnimateBiz;
-import com.oubowu.exerciseprogram.mvpdemo.view.IPerformAnimatorView;
+import com.oubowu.exerciseprogram.mvp.biz.AnimateBiz;
+import com.oubowu.exerciseprogram.mvp.biz.IAnimateBiz;
+import com.oubowu.exerciseprogram.mvp.view.IPerformAnimatorView;
 
 /**
  * 类名： AnimatorPresenter

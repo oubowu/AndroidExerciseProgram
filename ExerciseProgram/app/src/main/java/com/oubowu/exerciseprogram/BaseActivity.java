@@ -19,27 +19,6 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-
-    /*class ExampleActivity extends Activity {
-        @Bind(R.id.user)
-        EditText username;
-        @Bind(R.id.pass) EditText password;
-
-        @BindString(R.string.login_error)
-        String loginErrorMessage;
-
-        @OnClick(R.id.submit) void submit() {
-            // TODO call server...
-        }
-
-        @Override public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.simple_activity);
-            ButterKnife.bind(this);
-            // TODO Use fields...
-        }
-    }*/
-
     protected abstract int provideLayoutId();
 
     protected abstract void initView();
@@ -64,6 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @SuppressWarnings("unchecked")
     protected <T extends View> T getViewById(int id) {
+        // 泛型强转
         return (T) findViewById(id);
     }
 

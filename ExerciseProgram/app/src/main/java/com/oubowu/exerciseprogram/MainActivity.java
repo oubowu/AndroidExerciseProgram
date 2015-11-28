@@ -3,7 +3,7 @@ package com.oubowu.exerciseprogram;
 import android.content.Intent;
 import android.widget.Button;
 
-import com.oubowu.exerciseprogram.mvpdemo.MvpActivity;
+import com.oubowu.exerciseprogram.mvp.MvpActivity;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
 
 import butterknife.Bind;

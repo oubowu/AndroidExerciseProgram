@@ -24,6 +24,11 @@
             android:label="@string/title_activity_refresh"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".floatlayout.FloatLeafActivity"
+            android:label="@string/bazier"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

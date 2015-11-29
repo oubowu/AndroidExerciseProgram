@@ -21,4 +21,11 @@
         android:layout_toRightOf="@+id/bt_mvp"
         android:text="封装刷新加载控件"/>
 
+    <Button
+        android:id="@+id/bt_leaf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_refresh"
+        android:text="飘动落叶"/>
+
 </RelativeLayout>

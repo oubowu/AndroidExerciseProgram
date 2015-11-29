@@ -6,4 +6,5 @@
     <string name="no_more_products">load complete</string>
     <string name="loading">Loading</string>
     <string name="title_activity_refresh">RefreshActivity</string>
+    <string name="bazier">贝塞尔曲线</string>
 </resources>

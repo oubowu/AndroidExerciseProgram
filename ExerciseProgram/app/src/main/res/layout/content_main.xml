@@ -22,10 +22,18 @@
         android:text="封装刷新加载控件"/>
 
     <Button
-        android:id="@+id/bt_leaf"
+    android:id="@+id/bt_leaf"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/bt_refresh"
+    android:text="飘动落叶"/>
+
+    <Button
+        android:id="@+id/bt_kotlin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/bt_refresh"
-        android:text="飘动落叶"/>
+        android:layout_toRightOf="@+id/bt_leaf"
+        android:textSize="12sp"
+        android:text="Kotlin"/>
 
 </RelativeLayout>

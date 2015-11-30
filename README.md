@@ -12,12 +12,12 @@ Android练手项目，记录所思所学
 ![github](http://raw.github.com/oubowu/AndroidExerciseProgram/master/ExerciseProgram/images/tree.gif)<br>
 
 ## 2015-12-01<br>
-1.Kotlin学习笔记[kymjs/KotlinDoc-cn:Kotlin语言文档翻译项目](https://github.com/kymjs/KotlinDoc-cn)
-第一章（准备开始）：
-基础语法
-常用语法
-编码风格
-第二章（基础）：
-基础数据类型
-包
-<br>
+1.Kotlin学习笔记 [kymjs/KotlinDoc-cn:Kotlin语言文档翻译项目](https://github.com/kymjs/KotlinDoc-cn)<br>
+第一章（准备开始）：<br>
+基础语法<br>
+常用语法<br>
+编码风格<br>
+第二章（基础）：<br>
+基础数据类型<br>
+包<br>
+

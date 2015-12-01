@@ -122,7 +122,7 @@ public class FloatLayout extends RelativeLayout {
         int result = 0;
         int mode = MeasureSpec.getMode(measureSpec);
         int size = MeasureSpec.getSize(measureSpec);
-
+        KLog.e("height: " + size);
         if (mode == MeasureSpec.EXACTLY) {
             result = size;
         } else {

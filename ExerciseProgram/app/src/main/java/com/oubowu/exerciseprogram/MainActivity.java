@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
-import com.oubowu.exerciseprogram.kotlin.KotlinActivity;
+import com.oubowu.exerciseprogram.kotlin.LoginActivity;
 import com.oubowu.exerciseprogram.mvp.MvpActivity;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
 
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.bt_kotlin)
     void kotlin() {
-        startActivity(new Intent(this, KotlinActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     @Override

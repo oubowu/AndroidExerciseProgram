@@ -17,6 +17,7 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
@@ -167,20 +168,28 @@ public class FloatLayout extends RelativeLayout {
 
     // 添加落叶
     public void addLeaf() {
+
+        KLog.e(mScreenHeight + " " + mHeightSize + " " + ((ViewGroup) getParent()).getMeasuredHeight());
+        KLog.e(mScreenWidth + " " + mWidthSize + " " + ((ViewGroup) getParent()).getMeasuredWidth());
+
+
         mLeaf = new ImageView(getContext());
         Random random = new Random();
         mLeaf.setImageDrawable(mLeafs[random.nextInt(4)]);
         mLeaf.setLayoutParams(mLp);
 
-        int leafX = random.nextInt(mWidthSize);
-        int leafY = 0;
+        float leafX = random.nextInt(mWidthSize);
+        float leafY = 0;
+
+        float h = mHeightSize;
+        float w = mWidthSize;
+        KLog.e(h / w);
         if (leafX > mWidthSize / 2) {
-            leafY = mHeightSize / mWidthSize * leafX - mHeightSize / 2;
+            leafY = h / w * leafX - h / 2;
         } else {
-            leafY = -mHeightSize / mWidthSize * leafX + mHeightSize / 2;
+            leafY = -h / w * leafX + h / 2;
         }
         // 加上toolbar的高度
-        leafY += dip2px(getContext(), 56);
         ViewCompat.setX(mLeaf, leafX);
         ViewCompat.setY(mLeaf, leafY);
         KLog.e(leafX + "  " + leafY);
@@ -193,8 +202,8 @@ public class FloatLayout extends RelativeLayout {
         set.playTogether(alpha, scaleX, scaleY);
         set.setDuration(300);
 
-        final PointF pointF1 = new PointF(leafX + random.nextInt(mWidthSize - leafX), leafY + random.nextInt(mHeightSize - leafY));
-        final PointF pointF2 = new PointF(leafX + random.nextInt(mWidthSize - leafX), leafY + random.nextInt(mHeightSize - leafY));
+        final PointF pointF1 = new PointF(leafX + random.nextInt((int) (mWidthSize - leafX)), leafY + random.nextInt((int) (mHeightSize - leafY)));
+        final PointF pointF2 = new PointF(leafX + random.nextInt((int) (mWidthSize - leafX)), leafY + random.nextInt((int) (mHeightSize - leafY)));
         final PointF pointF0 = new PointF(ViewCompat.getX(mLeaf), ViewCompat.getY(mLeaf));
         final PointF pointF3 = new PointF(random.nextInt(mWidthSize), mHeightSize);
 

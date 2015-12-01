@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MVPDemo</string>
+    <string name="app_name">Android学习笔记</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="mvp_text">MVP例子</string>
@@ -8,7 +8,7 @@
     <string name="title_activity_refresh">RefreshActivity</string>
     <string name="bazier">贝塞尔曲线</string>
     <string name="kotlin">Kotlin</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Kotlin写的简单登录</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

@@ -44,4 +44,8 @@ Android练手项目，记录所思所学
 4.RxJava学习笔记 [深入浅出RxJava 大头鬼Bruce](http://android.jobbole.com/81557/)<br>
 1.深入浅出RxJava（1）：基础篇<br>
 2.深入浅出RxJava（2）：操作符<br>
+3.深入浅出RxJava（3）：响应式的好处<br>
+4.深入浅出RxJava（4）：在Android中使用响应式编程<br>
+
+
 

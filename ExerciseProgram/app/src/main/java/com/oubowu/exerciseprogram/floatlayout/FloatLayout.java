@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -17,7 +16,6 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
@@ -30,6 +28,7 @@ import android.widget.RelativeLayout;
 import com.oubowu.exerciseprogram.R;
 import com.socks.library.KLog;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -58,6 +57,9 @@ public class FloatLayout extends RelativeLayout {
     private int mScreenHeight;
     private ImageView mLeaf;
     private ImageView mTree;
+
+    private ArrayList<AnimatorSet> allSets;
+    private boolean mIsDestoryed;
 
 
     public FloatLayout(Context context, AttributeSet attrs) {
@@ -123,7 +125,7 @@ public class FloatLayout extends RelativeLayout {
         int result = 0;
         int mode = MeasureSpec.getMode(measureSpec);
         int size = MeasureSpec.getSize(measureSpec);
-        KLog.e("height: " + size);
+//        KLog.e("height: " + size);
         if (mode == MeasureSpec.EXACTLY) {
             result = size;
         } else {
@@ -148,6 +150,8 @@ public class FloatLayout extends RelativeLayout {
             public void run() {
                 super.run();
                 for (int i = 0; i < 20; i++) {
+                    if (mIsDestoryed)
+                        return;
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -169,8 +173,8 @@ public class FloatLayout extends RelativeLayout {
     // 添加落叶
     public void addLeaf() {
 
-        KLog.e(mScreenHeight + " " + mHeightSize + " " + ((ViewGroup) getParent()).getMeasuredHeight());
-        KLog.e(mScreenWidth + " " + mWidthSize + " " + ((ViewGroup) getParent()).getMeasuredWidth());
+//        KLog.e(mScreenHeight + " " + mHeightSize + " " + ((ViewGroup) getParent()).getMeasuredHeight());
+//        KLog.e(mScreenWidth + " " + mWidthSize + " " + ((ViewGroup) getParent()).getMeasuredWidth());
 
 
         mLeaf = new ImageView(getContext());
@@ -183,7 +187,7 @@ public class FloatLayout extends RelativeLayout {
 
         float h = mHeightSize;
         float w = mWidthSize;
-        KLog.e(h / w);
+//        KLog.e(h / w);
         if (leafX > mWidthSize / 2) {
             leafY = h / w * leafX - h / 2;
         } else {
@@ -192,7 +196,7 @@ public class FloatLayout extends RelativeLayout {
         // 加上toolbar的高度
         ViewCompat.setX(mLeaf, leafX);
         ViewCompat.setY(mLeaf, leafY);
-        KLog.e(leafX + "  " + leafY);
+//        KLog.e(leafX + "  " + leafY);
         addView(mLeaf);
 
         ObjectAnimator alpha = ObjectAnimator.ofFloat(mLeaf, "alpha", 0.1f, 1);
@@ -219,18 +223,21 @@ public class FloatLayout extends RelativeLayout {
         allSet.addListener(new AnimatorEndListener(mLeaf));
         allSet.start();
 
-        KLog.e("child:" + getChildCount());
+        if (allSets == null)
+            allSets = new ArrayList<>();
+        allSets.add(allSet);
+
+        KLog.e("添加树叶，当前child个数: " + getChildCount());
 
     }
 
     private class BazierUpdateListener implements ValueAnimator.AnimatorUpdateListener {
 
         public BazierUpdateListener(View target) {
-            this.target = target;
+            BazierUpdateListener.this.target = target;
         }
 
         View target;
-
 
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
@@ -257,31 +264,11 @@ public class FloatLayout extends RelativeLayout {
         }
     }
 
-    private class BazierTypeEvaluator implements TypeEvaluator<PointF> {
-
-        /**
-         * 三次方贝塞尔曲线
-         * B(t)=P0*(1-t)^3+3*P1*t*(1-t)^2+3*P2*t^2*(1-t)+P3*t^3,t∈[0,1]
-         * P0,是我们的起点,
-         * P3是终点,
-         * P1,P2是途径的两个点
-         * 而t则是我们的一个因子,取值范围是0-1
-         */
-
-        private PointF pointF1;
-        private PointF pointF2;
-
-        public BazierTypeEvaluator(PointF pointF1, PointF pointF2) {
-            this.pointF1 = pointF1;
-            this.pointF2 = pointF2;
-        }
-
-        @Override
-        public PointF evaluate(float t, PointF startValue, PointF endValue) {
-            PointF pointF = new PointF();
-            pointF.x = (float) (startValue.x * Math.pow(1 - t, 3) + 3 * pointF1.x * t * Math.pow(1 - t, 2) + 3 * pointF2.x * Math.pow(t, 2) * (1 - t) + endValue.x * Math.pow(t, 3));
-            pointF.y = (float) (startValue.y * Math.pow(1 - t, 3) + 3 * pointF1.y * t * Math.pow(1 - t, 2) + 3 * pointF2.y * Math.pow(t, 2) * (1 - t) + endValue.y * Math.pow(t, 3));
-            return pointF;
+    public void onDestroy() {
+        KLog.e("Activity被销毁了");
+        mIsDestoryed = true;
+        for (int i = 0; i < allSets.size(); i++) {
+            allSets.get(i).cancel();
         }
     }
 

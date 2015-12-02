@@ -35,7 +35,7 @@ public open class KotlinActivity : BaseActivity() {
     }
 
     override fun initView() {
-
+        toast("LoginActivity那里拓展了Activity，这里也可以用到，十分方便")
     }
 
     fun show(list: ArrayList<String>) {

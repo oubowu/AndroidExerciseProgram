@@ -1,7 +1,6 @@
 package com.oubowu.exerciseprogram;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Button;
 
 import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
@@ -11,7 +10,6 @@ import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
 
 import butterknife.Bind;
 import butterknife.BindString;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
@@ -56,13 +54,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        // 将button设置给一个静态的对象的成员变量，MainActivity在Ondestroy后
+        // 静态对象仍然持有MainActivity的实例，内存发生泄漏
+        RetainDataModel.getInstance().setRetainedView(mMvpBt);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    protected void onDestroy() {
+        super.onDestroy();
+        // 回收掉静态对象
+        RetainDataModel.getInstance().recycle();
     }
 }

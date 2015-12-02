@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.oubowu.exerciseprogram"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="com.oubowu.exerciseprogram"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
@@ -45,6 +44,8 @@
             android:name=".kotlin.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".rxjava.RxJavaActivity">
         </activity>
     </application>
 

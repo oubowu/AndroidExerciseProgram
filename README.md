@@ -39,4 +39,9 @@ Android练手项目，记录所思所学
 
 ## 2015-12-02<br>
 1.LeakCanary使用和模拟内存泄露<br>
+2.Gradle加入默认签名和自定义签名包的名称<br>
+3.加入Lambda<br>
+4.RxJava学习笔记 [深入浅出RxJava 大头鬼Bruce](http://android.jobbole.com/81557/)<br>
+1.深入浅出RxJava（1）：基础篇<br>
+2.深入浅出RxJava（2）：操作符<br>
 

@@ -1,9 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId "com.oubowu.exerciseprogram"
@@ -12,15 +18,62 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        demo {
+            storeFile file("../exercise.jks")
+            storePassword "12345678"
+            keyAlias "oubowu"
+            keyPassword "12345678"
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.demo
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.demo
         }
     }
+
+    //修改生成的apk名字
+    applicationVariants.all { variant ->
+
+        if (variant.buildType.name.equals('release') || variant.buildType.name.equals('debug')) {
+            variant.outputs.each { output ->
+                def appName = 'AndroidExercise'
+                def oldFile = output.outputFile
+                def buildName = ''
+                def releaseApkName = ''
+
+                variant.productFlavors.each { product ->
+                    buildName = product.name
+                }
+
+                releaseApkName = appName + '-' + defaultConfig.versionName /*+ '-' + variant.buildType.name + "-" + buildName + '-' + getDate()*/ + '.apk'
+                output.outputFile = new File(oldFile.parent, releaseApkName)
+            }
+        }
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+}
+
+//获取时间戳
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy年MM月dd日HH时mm分ss秒')
+    return formattedDate
+}
+
+//从androidManifest.xml中获取版本号
+def getVersionNameFromManifest() {
+    def manifestParser = new com.android.builder.core.DefaultManifestParser()
+    return manifestParser.getVersionName(android.sourceSets.main.manifest.srcFile)
 }
 
 dependencies {
@@ -37,6 +90,8 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
 
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxjava:1.0.16'
 }
 buildscript {
     ext.kotlin_version = '1.0.0-beta-2423'
@@ -45,6 +100,7 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'me.tatarka:gradle-retrolambda:3.2.4'
     }
 }
 repositories {

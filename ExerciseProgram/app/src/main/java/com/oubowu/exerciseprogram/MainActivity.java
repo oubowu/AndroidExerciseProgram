@@ -7,6 +7,7 @@ import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
 import com.oubowu.exerciseprogram.kotlin.LoginActivity;
 import com.oubowu.exerciseprogram.mvp.MvpActivity;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
+import com.oubowu.exerciseprogram.rxjava.RxJavaActivity;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -38,6 +39,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_kotlin)
     void kotlin() {
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    @OnClick(R.id.bt_rxjava)
+    void rxJava() {
+        startActivity(new Intent(this, RxJavaActivity.class));
     }
 
     @Override

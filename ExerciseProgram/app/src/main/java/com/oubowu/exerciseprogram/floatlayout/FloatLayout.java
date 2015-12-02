@@ -149,6 +149,8 @@ public class FloatLayout extends RelativeLayout {
             @Override
             public void run() {
                 super.run();
+                if (mIsDestoryed)
+                    return;
                 for (int i = 0; i < 20; i++) {
                     if (mIsDestoryed)
                         return;
@@ -270,6 +272,7 @@ public class FloatLayout extends RelativeLayout {
         for (int i = 0; i < allSets.size(); i++) {
             allSets.get(i).cancel();
         }
+        allSets.clear();
     }
 
 }

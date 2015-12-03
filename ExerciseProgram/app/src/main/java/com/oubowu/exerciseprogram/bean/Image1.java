@@ -1,6 +1,7 @@
-package com.oubowu.exerciseprogram.jsonBean;
+package com.oubowu.exerciseprogram.bean;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonIgnore;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 import com.bluelinelabs.logansquare.annotation.OnJsonParseComplete;
 import com.bluelinelabs.logansquare.annotation.OnPreJsonSerialize;
@@ -8,7 +9,7 @@ import com.bluelinelabs.logansquare.annotation.OnPreJsonSerialize;
 import java.util.List;
 
 /**
- * 类名： Image
+ * 类名： Image1
  * 作者: oubowu
  * 时间： 2015/12/3 13:55
  * 功能：
@@ -17,46 +18,41 @@ import java.util.List;
  * 更新人:$$Author$$
  * 更新描述:
  */
-/*
- *所有属性接受解析和序列化。
- * 作者推荐的方案，更少错误，但要打更多的注解。
+/*非private属性都会接受解析和序列化，即使属性没有写@JsonFields注解，但要先配置 fieldDetectionPolicy
+ * 这个方案比第一个方案写少点注解
  */
-@JsonObject
-public class Image {
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
+public class Image1 {
 
     /*
-     * 标准的属性注解
+     *普通声明的属性默认会被解析和序列化
      */
-    @JsonField
     public String format;
 
     /*
-     * 解析和序列化时，该属性的key用"_id"代替"imageId"
+     *重命名key还是需要注解来指出的
      */
     @JsonField(name = "_id")
     public int imageId;
 
-    @JsonField
     public String url;
 
-    @JsonField
     public String description;
 
     /*
-     * 注意虽然该属性只有包访问权限，但LoganSquare可毫无障碍地处理
+     * 包访问权限的处理是没问题的
      */
-    @JsonField(name = "similar_images")
     List<Image> similarImages;
 
     /*
-     * 不注解的属性默认被LoganSquare忽略
+     * 用@JsonIgnore来忽略不想被解析和序列化的属性
      */
+    @JsonIgnore
     public int nonJsonField;
 
     /*
-     * ！！！强烈注意private权限的属性必须提供getter和setter， 不然你会后悔的
+     * 该策略下private属性默认忽略
      */
-    @JsonField
     private int privateInt;
 
     public int getPrivateInt() {
@@ -67,9 +63,6 @@ public class Image {
         privateInt = i;
     }
 
-    /*
-     * 还贴心地提供了解析完成后和序列化前的回调接口，当然是可选的
-     */
     @OnJsonParseComplete
     void onParseComplete() {
         // 解析完成后干点什么
@@ -79,5 +72,4 @@ public class Image {
     void onPreSerialize() {
         //序列化前干点什么
     }
-
 }

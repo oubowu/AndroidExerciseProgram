@@ -1,4 +1,4 @@
-package com.oubowu.exerciseprogram.jsonBean;
+package com.oubowu.exerciseprogram.bean;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;

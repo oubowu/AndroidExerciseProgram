@@ -1,11 +1,11 @@
-package com.oubowu.exerciseprogram.jsonParse;
+package com.oubowu.exerciseprogram.jsonparse;
 
 import android.widget.TextView;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
-import com.oubowu.exerciseprogram.jsonBean.Express;
+import com.oubowu.exerciseprogram.bean.Express;
 import com.socks.library.KLog;
 import com.squareup.okhttp.Request;
 import com.zhy.http.okhttp.callback.ResultCallback;

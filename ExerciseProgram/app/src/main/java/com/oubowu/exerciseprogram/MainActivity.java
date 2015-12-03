@@ -3,12 +3,13 @@ package com.oubowu.exerciseprogram;
 import android.content.Intent;
 import android.widget.Button;
 
-import com.oubowu.exerciseprogram.jsonParse.JsonParseActivity;
+import com.oubowu.exerciseprogram.jsonparse.JsonParseActivity;
 import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
 import com.oubowu.exerciseprogram.kotlin.LoginActivity;
 import com.oubowu.exerciseprogram.mvp.MvpActivity;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
 import com.oubowu.exerciseprogram.rxjava.RxJavaActivity;
+import com.oubowu.exerciseprogram.viewdraghelper.SwipeActivity;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -50,6 +51,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_json)
     void jsonParse() {
         startActivity(new Intent(this, JsonParseActivity.class));
+    }
+
+    @OnClick(R.id.bt_drag_helper)
+    void dragHelper() {
+        startActivity(new Intent(this, SwipeActivity.class));
     }
 
     @Override

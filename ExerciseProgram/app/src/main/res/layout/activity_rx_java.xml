@@ -22,5 +22,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <Button
+        android:id="@+id/bt_close_network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="关闭网络"/>
+
 
 </RelativeLayout>

@@ -1,5 +1,10 @@
 package com.oubowu.exerciseprogram.rxjava;
 
+import android.content.Context;
+import android.net.wifi.WifiManager;
+import android.view.View;
+import android.widget.Button;
+
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
 import com.socks.library.KLog;
@@ -8,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -18,6 +25,22 @@ import rx.schedulers.Schedulers;
 
 public class RxJavaActivity extends BaseActivity {
 
+    @Bind(R.id.bt_close_network)
+    Button button;
+
+    @OnClick(R.id.bt_close_network)
+    void closeNetWork(View view) {
+        KLog.e(view.getId() == R.id.bt_close_network);
+        WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager.isWifiEnabled()) {
+            wifiManager.setWifiEnabled(false);
+            button.setText("开启wifi");
+        } else {
+            wifiManager.setWifiEnabled(true);
+            button.setText("关闭wifi");
+        }
+    }
+
     @Override
     protected int provideLayoutId() {
         return R.layout.activity_rx_java;
@@ -25,6 +48,21 @@ public class RxJavaActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+//        test1();
+//        test2();
+//        test3();
+//        test4();
+//        test5();
+//        test6();
+//        test7();
+//        test8();
+//        test9();
+//        test10();
 
     }
 
@@ -536,18 +574,5 @@ public class RxJavaActivity extends BaseActivity {
     总结
 
     RxJava还是一个很新的项目，RxAndroid更是。RxAndroid目前还在活跃开发中，也没有多少好的例子。我打赌一年之后我的一些建议就会被看做过时了。*/
-    @Override
-    protected void initData() {
-//        test1();
-//        test2();
-//        test3();
-//        test4();
-//        test5();
-//        test6();
-//        test7();
-//        test8();
-//        test9();
-        test10();
-    }
 
 }

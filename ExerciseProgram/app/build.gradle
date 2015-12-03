@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'kotlin-android'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -76,6 +77,19 @@ def getVersionNameFromManifest() {
     return manifestParser.getVersionName(android.sourceSets.main.manifest.srcFile)
 }
 
+buildscript {
+    ext.kotlin_version = '1.0.0-beta-2423'
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'me.tatarka:gradle-retrolambda:3.2.4'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -92,17 +106,11 @@ dependencies {
 
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'io.reactivex:rxjava:1.0.16'
+
+    apt 'com.bluelinelabs:logansquare-compiler:1.3.4'
+    compile 'com.bluelinelabs:logansquare:1.3.4'
+
+    compile 'com.zhy:okhttputils:1.0.2'
+
 }
-buildscript {
-    ext.kotlin_version = '1.0.0-beta-2423'
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'me.tatarka:gradle-retrolambda:3.2.4'
-    }
-}
-repositories {
-    mavenCentral()
-}
+

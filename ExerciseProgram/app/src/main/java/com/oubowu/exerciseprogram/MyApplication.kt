@@ -5,6 +5,7 @@ import android.content.Context
 import com.socks.library.KLog
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import java.util.concurrent.TimeUnit
 
 /**
  * 类名： MyApplication
@@ -32,7 +33,9 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         LeakCanary.install(this)
+        KLog.init(true)
         KLog.e("LeakCanary.install(this)")
+
     }
 
 }

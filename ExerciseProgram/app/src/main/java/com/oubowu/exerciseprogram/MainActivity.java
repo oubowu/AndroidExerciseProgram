@@ -3,6 +3,7 @@ package com.oubowu.exerciseprogram;
 import android.content.Intent;
 import android.widget.Button;
 
+import com.oubowu.exerciseprogram.jsonParse.JsonParseActivity;
 import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
 import com.oubowu.exerciseprogram.kotlin.LoginActivity;
 import com.oubowu.exerciseprogram.mvp.MvpActivity;
@@ -44,6 +45,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_rxjava)
     void rxJava() {
         startActivity(new Intent(this, RxJavaActivity.class));
+    }
+
+    @OnClick(R.id.bt_json)
+    void jsonParse() {
+        startActivity(new Intent(this, JsonParseActivity.class));
     }
 
     @Override

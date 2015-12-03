@@ -42,10 +42,10 @@ Android练手项目，记录所思所学
 2.Gradle加入默认签名和自定义签名包的名称<br>
 3.加入Lambda<br>
 4.RxJava学习笔记 [深入浅出RxJava 大头鬼Bruce](http://android.jobbole.com/81557/)<br>
-1.深入浅出RxJava（1）：基础篇<br>
-2.深入浅出RxJava（2）：操作符<br>
-3.深入浅出RxJava（3）：响应式的好处<br>
-4.深入浅出RxJava（4）：在Android中使用响应式编程<br>
-
+4.1.深入浅出RxJava（1）：基础篇<br>
+4.2.深入浅出RxJava（2）：操作符<br>
+4.3.深入浅出RxJava（3）：响应式的好处<br>
+4.4.深入浅出RxJava（4）：在Android中使用响应式编程<br>
+5.使用LoganSquare解析Json数据<br>
 
 

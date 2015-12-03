@@ -48,4 +48,5 @@ Android练手项目，记录所思所学
 4.4.深入浅出RxJava（4）：在Android中使用响应式编程<br>
 5.使用LoganSquare解析Json数据<br>
 6.ViewDragHelpher学习<br>
+![github](http://raw.github.com/oubowu/AndroidExerciseProgram/master/ExerciseProgram/images/viewdraghelpher.gif)<br>
 

@@ -269,6 +269,7 @@ public class FloatLayout extends RelativeLayout {
     public void onDestroy() {
         KLog.e("Activity被销毁了");
         mIsDestoryed = true;
+        if (allSets == null) return;
         for (int i = 0; i < allSets.size(); i++) {
             allSets.get(i).cancel();
         }

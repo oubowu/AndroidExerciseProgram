@@ -66,13 +66,14 @@ public class JsonParseActivity extends BaseActivity {
                         KLog.e(response);
                         try {
                             Express info = LoganSquare.parse(response, Express.class);
-                            infoText.setText(info.toString());
+                            infoText.setText("解析后的信息：\n" + info.toString());
 
                             String serialize = LoganSquare.serialize(info);
                             KLog.e("序列化后信息: " + serialize);
 
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
+                            infoText.setText(response);
                         }
                     }
                 });

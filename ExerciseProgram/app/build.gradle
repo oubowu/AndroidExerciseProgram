@@ -1,8 +1,23 @@
+// apply plugin表示改项目会使用指定的插件
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'kotlin-android'
 apply plugin: 'me.tatarka.retrolambda'
 
+// 注意点:
+// 1. 只需要使用android插件，再使用Java插件会报错.
+// 2. 在local.properties中使用sdk.dir属性指定SDK路径，或者你可以使用ANDROID_HOME环境变量。
+
+/*def computeVersionName() {
+    if (android.defaultConfig.testInstrumentationRunner == null) {
+        // assign a better default...
+    }
+    "1.0"
+}*/
+
+// android { ... }配置了Android项目构建时需要的所有参数。
+// 默认情况下，只需要指定compileSdkVersion和buildtoolsVersion，compileSdkVersion指定使用哪个版本的sdk编译，
+// buildToolsVersion指定使用哪个版本的构建工具。
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -12,12 +27,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    // defaultConfig元素就是我们用来配置Manifest的地方
+    // 更强大的是build文件中描述的配置可以是动态的，比如可以从文件或者自定义的逻辑中获取版本名称
     defaultConfig {
         applicationId "com.oubowu.exerciseprogram"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+//        versionName computeVersionName()
     }
 
     signingConfigs {
@@ -28,9 +46,20 @@ android {
             keyPassword "12345678"
         }
     }
+
+    // 默认情况下，Android插件自动为项目构建一个debug和一个release版本的应用。
+    // 这两个版本的不同主要体现在在非开发机上的调试功能以及APK的签名方式。
+    // debug版本使用一个用公开的name/password创建的key来签名（这样构建的时候就不需要提示输入密码了）。
+    // release版本在构建的时候不会进行签名，而是稍后在做。这个可以使用gradle中的BuildType对象来进行配置
     buildTypes {
         debug {
+            applicationIdSuffix ".debug"
             signingConfig signingConfigs.demo
+        }
+        jnidebug.initWith(buildTypes.debug)
+        jnidebug {
+            applicationIdSuffix ".jnidebug"
+            jniDebuggable true
         }
         release {
             minifyEnabled false
@@ -38,6 +67,20 @@ android {
             signingConfig signingConfigs.demo
         }
     }
+    /*创建一个新的的Build Types非常简单，只需要在buildTypes下面通过调用initWith或者使用闭包添加一个新的元素。下表是可以配置的属性以及默认值：
+
+    属性明   debug版本默认值  release或其他版本 默认值
+    debuggable  true  false
+    jniDebuggable   false   false
+    renderscriptDebuggable  false   false
+    renderscriptOptimLevel  3   3
+    applicationIdSuffix   null  null
+    versionNameSuffix   null  null
+    signingConfig   android.signingConfigs.debug  null
+    zipAlignEnabled   false   true
+    minifyEnabled   false   false
+    proguardFile  N/A (set only)  N/A (set only)
+    proguardFiles   N/A (set only)  N/A (set only)*/
 
     //修改生成的apk名字
     applicationVariants.all { variant ->
@@ -47,21 +90,40 @@ android {
                 def appName = 'AndroidExercise'
                 def oldFile = output.outputFile
                 def buildName = ''
-                def releaseApkName = ''
 
                 variant.productFlavors.each { product ->
                     buildName = product.name
                 }
 
-                releaseApkName = appName + '-' + defaultConfig.versionName /*+ '-' + variant.buildType.name + "-" + buildName + '-' + getDate()*/ + '.apk'
+                def releaseApkName = appName + '-' + defaultConfig.versionName /*+ '-' + variant.buildType.name + "-" + buildName + '-' + getDate()*/ + '.apk'
                 output.outputFile = new File(oldFile.parent, releaseApkName)
             }
         }
     }
 
+    // Android工程，默认情况下，java文件和resource文件分别在src/main/java和src/main/res目录下，
+    // 在build.gradle文件，andorid{}里面添加下面的代码，便可以将java文件和resource文件放到src/java和src/resources目录下。
+    // （注意，如果你在gradle文件中修改了，只需要重新sync一下，gradle会自动创建新的目录，并将对应的文件移动到新的目录下）
     sourceSets {
+//        main.java.srcDirs = ['src/java']
+//        main.resources.srcDirs = ['src/resources']
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    // 这里的main code其实使用的就是Android Gradle的默认值，而androidTest不再使用默认的androidTest目录，而是使用tests目录
+    /* sourceSets {
+         main {
+             manifest.srcFile 'AndroidManifest.xml'
+             java.srcDirs = ['src']
+             resources.srcDirs = ['src']
+             aidl.srcDirs = ['src']
+             renderscript.srcDirs = ['src']
+             res.srcDirs = ['res']
+             assets.srcDirs = ['assets']
+         }
+         androidTest.setRoot('tests')
+     }*/
+
 }
 
 //获取时间戳
@@ -69,12 +131,6 @@ def getDate() {
     def date = new Date()
     def formattedDate = date.format('yyyy年MM月dd日HH时mm分ss秒')
     return formattedDate
-}
-
-//从androidManifest.xml中获取版本号
-def getVersionNameFromManifest() {
-    def manifestParser = new com.android.builder.core.DefaultManifestParser()
-    return manifestParser.getVersionName(android.sourceSets.main.manifest.srcFile)
 }
 
 buildscript {
@@ -88,6 +144,10 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'me.tatarka:gradle-retrolambda:3.2.4'
     }
+}
+
+task myTask << {
+    println 'Hello, World!' //this is executed when my task is called
 }
 
 dependencies {

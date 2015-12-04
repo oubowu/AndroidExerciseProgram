@@ -1,5 +1,26 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+/*构建任务(Build Tasks)
+java和Android通用的任务
+在build文件中使用了Android或者Java插件之后就会自动创建一系列可以运行的任务。
+
+Gradle中有如下一下默认约定的任务:
+1. assemble
+该任务包含了项目中的所有打包相关的任务，比如java项目中打的jar包，Android项目中打的apk
+2. check
+该任务包含了项目中所有验证相关的任务，比如运行测试的任务
+3. build
+该任务包含了assemble和check
+4. clean
+该任务会清空项目的所有的输出，删除所有在assemble任务中打的包
+
+assemble, check 和 build 任务实际上并不做任何事情，它们其实只是为插件提供了一个钩子，真正的事情都是由插件来完成的。
+
+这样的话，开发人员就不需要关心我到底运行的是一个java项目还是一个Android项目，也不用关心我到底使用了哪些gradle插件，因为我都可以调用这些约定的任务来完成构建。*/
+
+// buildscript { ... } 配置驱动构建过程的代码，意思就是buildscript中的配置仅仅在构建过程中起作用，也就是构建程序所使用的配置
+// 声明了我们的构建程序会使用Jcenter中央仓库，并且有一个classpath依赖是指向一个Jcenter库的。
+// 这个Jcenter库就是Android Gradle插件，版本号是1.5.0
 buildscript {
     repositories {
         jcenter()

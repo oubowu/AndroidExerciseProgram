@@ -56,3 +56,4 @@ Android练手项目，记录所思所学
 1.学习 [深入浅出Android Gradle构建系统}(http://blog.csdn.net/lzyzsd/article/details/42438515)<br>
 2.DataBinding的学习<br>
 ![github](http://raw.github.com/oubowu/AndroidExerciseProgram/master/ExerciseProgram/images/java.gif)<br>
+

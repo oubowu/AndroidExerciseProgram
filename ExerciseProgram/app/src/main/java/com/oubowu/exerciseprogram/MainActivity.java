@@ -3,6 +3,7 @@ package com.oubowu.exerciseprogram;
 import android.content.Intent;
 import android.widget.Button;
 
+import com.oubowu.exerciseprogram.databinding.DataBindingActivity;
 import com.oubowu.exerciseprogram.jsonparse.JsonParseActivity;
 import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
 import com.oubowu.exerciseprogram.kotlin.LoginActivity;
@@ -56,6 +57,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_drag_helper)
     void dragHelper() {
         startActivity(new Intent(this, SwipeActivity.class));
+    }
+
+    @OnClick(R.id.bt_binding)
+    void binding() {
+        startActivity(new Intent(this, DataBindingActivity.class));
     }
 
     @Override

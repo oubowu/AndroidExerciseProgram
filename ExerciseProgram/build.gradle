@@ -41,3 +41,12 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+//根目录下面的 build.gradle 包含一些通用的配置，这些配置可以在各个子模块当中使用。
+task hello << {
+    setProperty("hello1", "hello world")
+    println hello
+    //gradle.properties 文件包含的属性，会成为 project 的 properties 的成员,例如我们添加了属性 hello，
+    println project.getProperties.get("hello")
+    println android.getSdkDirectory()
+}

@@ -1,1 +1,3 @@
 include ':app'
+
+// 根目录下面的 settings.gradle 当中主要是用来 include 子模块的

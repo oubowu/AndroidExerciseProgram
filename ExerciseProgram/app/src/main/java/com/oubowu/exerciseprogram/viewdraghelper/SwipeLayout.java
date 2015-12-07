@@ -73,6 +73,8 @@ public class SwipeLayout extends LinearLayout {
 //        KLog.e("onMeasure: " + dragDistance);
     }
 
+
+
     /*通过ViewDragHelper.Callback来监听以下几种事件：
       1.拖动的状态改变
       2.被拖动的view的位置改变

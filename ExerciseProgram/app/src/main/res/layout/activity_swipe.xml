@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:background="@color/material_green_200"
+    android:padding="10dp"
     tools:context="com.oubowu.exerciseprogram.viewdraghelper.SwipeActivity">
 
     <com.oubowu.exerciseprogram.viewdraghelper.SwipeLayout
@@ -33,6 +33,7 @@
     </com.oubowu.exerciseprogram.viewdraghelper.SwipeLayout>
 
     <com.oubowu.exerciseprogram.viewdraghelper.VDLayout
+        android:id="@+id/vd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/sl"
@@ -47,6 +48,15 @@
             android:background="@color/material_red_a400"
             android:gravity="center"
             android:text="带左边缘拖动，松手回到原处"/>
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/material_blue_700"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:text="拖到中间松手爆炸"
+            android:textColor="@color/material_white"/>
 
     </com.oubowu.exerciseprogram.viewdraghelper.VDLayout>
 

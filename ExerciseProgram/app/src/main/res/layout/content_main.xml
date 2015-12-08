@@ -71,4 +71,12 @@
         android:text="DataBinding"
         android:textSize="12sp"/>
 
+    <Button
+        android:id="@+id/bt_tail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_rxjava"
+        android:text="尾部设置文字的TextView"
+        android:textSize="12sp"/>
+
 </RelativeLayout>

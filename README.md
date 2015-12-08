@@ -60,3 +60,7 @@ Android练手项目，记录所思所学
 ## 2015-12-07<br>
 1.[ExplosionField](https://github.com/tyrantgit/ExplosionField)源码阅读理解与实际使用<br>
 
+## 2015-12-08<br>
+1.继承TextView实现一个可在末尾设置文字的功能<br>
+![github](http://raw.github.com/oubowu/AndroidExerciseProgram/master/ExerciseProgram/images/tail.png)<br>
+

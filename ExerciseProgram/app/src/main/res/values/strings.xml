@@ -22,4 +22,18 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="rate_app">Rate App</string>
+    <string name="shipping_method">Shipping Method</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="change_profile">Change Profile</string>
+    <string name="about_us">About Us</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="terms_of_service">Terms of services</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="return_policy">Return Policy</string>
+    <string name="logout_text">Logout</string>
+    <string name="language_settings">Language Setting</string>
+    <string name="currency_settings">Currency Setting</string>
+
 </resources>

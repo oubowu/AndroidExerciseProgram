@@ -10,6 +10,7 @@ import com.oubowu.exerciseprogram.kotlin.LoginActivity;
 import com.oubowu.exerciseprogram.mvp.MvpActivity;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
 import com.oubowu.exerciseprogram.rxjava.RxJavaActivity;
+import com.oubowu.exerciseprogram.tailview.SettingsActivity;
 import com.oubowu.exerciseprogram.viewdraghelper.SwipeActivity;
 
 import butterknife.Bind;
@@ -62,6 +63,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_binding)
     void binding() {
         startActivity(new Intent(this, DataBindingActivity.class));
+    }
+
+    @OnClick(R.id.bt_tail)
+    void tail() {
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 
     @Override

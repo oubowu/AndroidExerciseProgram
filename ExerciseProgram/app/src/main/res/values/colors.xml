@@ -9,6 +9,8 @@
     <color name="refresh_progress_2">#00b0ff</color>
     <color name="refresh_progress_3">#3f51b5</color>
 
+    <color name="left_menu_text_color">#212121</color>
+
     <color name="material_amber_100">#ffecb3</color>
     <color name="material_amber_200">#ffe082</color>
     <color name="material_amber_300">#ffd54f</color>

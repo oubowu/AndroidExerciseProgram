@@ -19,7 +19,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -33,23 +33,19 @@
         <activity android:name=".mvp.MvpActivity"/>
         <activity
             android:name=".refreshrecyclerview.RefreshActivity"
-            android:label="@string/title_activity_refresh"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_refresh">
         </activity>
         <activity
             android:name=".floatlayout.FloatLeafActivity"
-            android:label="@string/bazier"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/bazier">
         </activity>
         <activity
             android:name=".kotlin.KotlinActivity"
-            android:label="@string/kotlin"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/kotlin">
         </activity>
         <activity
             android:name=".kotlin.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_login">
         </activity>
         <activity android:name=".rxjava.RxJavaActivity">
         </activity>
@@ -58,6 +54,8 @@
         <activity android:name=".viewdraghelper.SwipeActivity">
         </activity>
         <activity android:name=".databinding.DataBindingActivity">
+        </activity>
+        <activity android:name=".tailview.SettingsActivity">
         </activity>
     </application>
 

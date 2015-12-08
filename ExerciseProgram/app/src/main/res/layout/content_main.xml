@@ -79,4 +79,13 @@
         android:text="尾部设置文字的TextView"
         android:textSize="12sp"/>
 
+    <Button
+        android:id="@+id/bt_touch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_rxjava"
+        android:layout_toRightOf="@+id/bt_tail"
+        android:text="事件传递机制"
+        android:textSize="12sp"/>
+
 </RelativeLayout>

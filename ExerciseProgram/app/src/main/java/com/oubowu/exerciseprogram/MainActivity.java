@@ -11,6 +11,7 @@ import com.oubowu.exerciseprogram.mvp.MvpActivity;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
 import com.oubowu.exerciseprogram.rxjava.RxJavaActivity;
 import com.oubowu.exerciseprogram.tailview.SettingsActivity;
+import com.oubowu.exerciseprogram.toucheventdelivery.TouchEventActivity;
 import com.oubowu.exerciseprogram.viewdraghelper.SwipeActivity;
 
 import butterknife.Bind;
@@ -68,6 +69,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_tail)
     void tail() {
         startActivity(new Intent(this, SettingsActivity.class));
+    }
+
+    @OnClick(R.id.bt_touch)
+    void touch() {
+        startActivity(new Intent(this, TouchEventActivity.class));
     }
 
     @Override

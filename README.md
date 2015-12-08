@@ -38,3 +38,5 @@ Android练手项目，记录所思所学
 1.继承TextView实现一个可在末尾设置文字的功能<br>
 ![github](http://raw.github.com/oubowu/AndroidExerciseProgram/master/ExerciseProgram/images/tail.png)<br>
 
+## 2015-12-09<br>
+1.复习Android的事件传递机制，通过简单自定义几个控件打Log观察传递的过程，并总结在文件“事件传递机制分析.txt”中<br>

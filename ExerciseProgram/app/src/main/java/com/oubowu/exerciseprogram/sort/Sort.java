@@ -5,37 +5,43 @@ import java.util.Scanner;
 
 public class Sort {
 
-	/*请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 0.退出
-	1
-	消耗时间： 2398470ms
+	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
+	// 1
+	// 消耗时间： 88766ms
+	//
+	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
+	// 2
+	// 消耗时间： 10150ms
+	//
+	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
+	// 3
+	// 消耗时间： 26216ms
+	//
+	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
+	// 4
+	// 消耗时间： 34ms
+	//
+	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
+	// 5
+	// 消耗时间： 36ms
+	//
+	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
+	// 6
+	// 消耗时间： 43ms
 
-	请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 0.退出
-	2
-	消耗时间： 125043ms
-
-	请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 0.退出
-	3
-	消耗时间： 572ms
-
-	请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 0.退出
-	4
-	消耗时间： 264ms
-
-	请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 0.退出
-	5
-	消耗时间： 68ms*/
-	
 	public static void main(String[] args) {
-		int[] arr = new int[500000];
-		Random random = new Random(1000);
-		for (int i = 0; i < 500000; i++) {
-			arr[i] = random.nextInt();
-		}
+
 		// int[] arr = { 1, 6, 3, 8, 4, 3, 12, 5 };
 		Scanner scanner = new Scanner(System.in); // 参数对象是系统进来的流
 		int sName = -1;
+		int[] arr = new int[200000];
+		Random random = new Random(1000);
+		for (int i = 0; i < 200000; i++) {
+			arr[i] = random.nextInt();
+		}
 		while (sName != 0) {
-			System.out.println("请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 0.退出");
+			int[] tmp = arr.clone();
+			System.out.println("请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出");
 			sName = scanner.nextInt(); // next()方法用来接收控制台输入的字符串
 			long t = System.currentTimeMillis();
 			switch (sName) {
@@ -44,19 +50,22 @@ public class Sort {
 				System.exit(1);
 				break;
 			case 1:
-				bubbleSort(arr);
+				bubbleSort(tmp);
 				break;
 			case 2:
-				selectionSort(arr);
+				selectionSort(tmp);
 				break;
 			case 3:
-				insertionSort(arr);
+				insertionSort(tmp);
 				break;
 			case 4:
-				mergeSort(arr);
+				mergeSort(tmp);
 				break;
 			case 5:
-				quickSort(arr);
+				quickSort(tmp);
+				break;
+			case 6:
+				heapSort(tmp);
 				break;
 			}
 			System.out.println("消耗时间： " + (System.currentTimeMillis() - t) + "ms");
@@ -180,6 +189,53 @@ public class Sort {
 
 		quickSort(arr, left, index - 1);
 		quickSort(arr, index + 1, right);
+	}
+
+	// 堆排序
+	private static void heapSort(int[] arr) {
+		int lastIndex = arr.length - 1;
+		// 构建最大堆
+		buildMaxHeap(arr, lastIndex);
+
+		while (lastIndex > 0) {
+			// 堆顶放到最末尾
+			swap(arr, 0, lastIndex--);
+			// 对除了末尾元素的数组进行堆排序
+			percDown(arr, 0, lastIndex);
+		}
+
+	}
+
+	// 获取节点左孩子，因为堆按数组排序，位置从0开始(跟二叉堆从1开始算起不同)，所以左孩子位置为2 * i + 1
+	private static int leftChild(int parent) {
+		return parent * 2 + 1;
+	}
+
+	// 构建最大堆
+	private static void buildMaxHeap(int[] arr, int lastIndex) {
+		for (int i = lastIndex / 2; i >= 0; i--) {
+			percDown(arr, i, lastIndex);
+		}
+	}
+
+	// 下滤法
+	private static void percDown(int[] arr, int parent, int lastIndex) {
+		// 记录父节点的左右子节点的最大值的位置
+		int child = 0;
+		// 父节点左孩子不能超过数组范围，循环一次后，父节点变为上次左右子节点的最大值的位置（也就是上次父节点处理完后往下走，即为下滤）
+		for (; leftChild(parent) <= lastIndex; parent = child) {
+			child = leftChild(parent);
+			if (child < lastIndex && arr[child] < arr[child + 1]) {
+				// 左节点位置不能为数组最后一个元素，因为这里要左节点和右节点比较取最大值的位置，用于下面和父节点进行比较
+				// 左节点比右节点小，位置变为右节点的位置
+				child++;
+			}
+			if (arr[parent] < arr[child]) {
+				// 父节点小于子节点的话，交换数据
+				swap(arr, parent, child);
+			}
+		}
+
 	}
 
 }

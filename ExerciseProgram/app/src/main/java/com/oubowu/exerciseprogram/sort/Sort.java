@@ -62,7 +62,7 @@ public class Sort {
 
 	private static void print(int[] arr) {
 		System.out.println();
-		for (int i = 0; i < arr.length/100; i++) {
+		for (int i = 0; i < arr.length / 100; i++) {
 			System.out.print(arr[i] + "*");
 		}
 		System.out.println();
@@ -98,16 +98,29 @@ public class Sort {
 	// 插入排序
 	private static void insertionSort(int[] arr) {
 		int current = 0;
+		// 显示交换策略
+//		for (int i = 1; i < arr.length; i++) {
+//			current = arr[i];
+//			for (int j = i; j > 0; j--) {
+//				if (current < arr[j - 1]) {
+//					swap(arr, j - 1, j);
+//				} else {
+//					break;
+//				}
+//			}
+//		}
+		// 非显示交换策略
+		int j;
 		for (int i = 1; i < arr.length; i++) {
 			current = arr[i];
-			for (int j = i - 1; j >= 0; j--) {
-				if (current < arr[j]) {
-					swap(arr, i, j);
-					i--;
+			for (j = i; j > 0; j--) {
+				if (current < arr[j - 1]) {
+					arr[j] = arr[j - 1];
 				} else {
 					break;
 				}
 			}
+			arr[j] = current;
 		}
 	}
 
@@ -224,17 +237,30 @@ public class Sort {
 
 		int length = arr.length;
 		int i;
+		// 非显示的交换策略
+//		for (int step = length / 2; step > 0; step /= 2) {
+//			// step为步长,逐步缩小步长
+//			for (int index = step; index < length; index++) {
+//				// 从位置step到最后一位做步长为step的插入排序
+//				int tmp = arr[index];
+//				for (i = index; i >= step && arr[i - step] > tmp; i -= step) {
+//					// 前面元素大于当前元素(tmp)，将前面元素的值放到当前位置，tmp不用改变，因为它仍然是最小的，可以继续往下比
+//					arr[i] = arr[i - step];
+//				}
+//				// i<step或者i >= step && arr[i - step]<=
+//				// tmp的时候，退出循环，此时arr[i]为未交换值，将tmp赋给它
+//				arr[i] = tmp;
+//			}
+//		}
+		// 显示交换策略
 		for (int step = length / 2; step > 0; step /= 2) {
 			// step为步长,逐步缩小步长
 			for (int index = step; index < length; index++) {
 				// 从位置step到最后一位做步长为step的插入排序
 				int tmp = arr[index];
 				for (i = index; i >= step && arr[i - step] > tmp; i -= step) {
-					// 前面元素大于当前元素(tmp)，将前面元素的值放到当前位置，tmp不用改变，因为它仍然是最小的，可以继续往下比
-					arr[i] = arr[i - step];
+					swap(arr, i, i - step);
 				}
-				// i<step或者i >= step && arr[i - step]<= tmp的时候，退出循环，此时arr[i]为未交换值，将tmp赋给它
-				arr[i] = tmp;
 			}
 		}
 

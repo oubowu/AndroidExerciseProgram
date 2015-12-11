@@ -5,43 +5,19 @@ import java.util.Scanner;
 
 public class Sort {
 
-	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
-	// 1
-	// 消耗时间： 88766ms
-	//
-	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
-	// 2
-	// 消耗时间： 10150ms
-	//
-	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
-	// 3
-	// 消耗时间： 26216ms
-	//
-	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
-	// 4
-	// 消耗时间： 34ms
-	//
-	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
-	// 5
-	// 消耗时间： 36ms
-	//
-	// 请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出
-	// 6
-	// 消耗时间： 43ms
-
 	public static void main(String[] args) {
 
 		// int[] arr = { 1, 6, 3, 8, 4, 3, 12, 5 };
 		Scanner scanner = new Scanner(System.in); // 参数对象是系统进来的流
 		int sName = -1;
 		int[] arr = new int[200000];
-		Random random = new Random(1000);
+		Random random = new Random();
 		for (int i = 0; i < 200000; i++) {
-			arr[i] = random.nextInt();
+			arr[i] = random.nextInt(10000);
 		}
 		while (sName != 0) {
 			int[] tmp = arr.clone();
-			System.out.println("请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 0.退出");
+			System.out.println("请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 7.希尔排序 0.退出");
 			sName = scanner.nextInt(); // next()方法用来接收控制台输入的字符串
 			long t = System.currentTimeMillis();
 			switch (sName) {
@@ -67,9 +43,12 @@ public class Sort {
 			case 6:
 				heapSort(tmp);
 				break;
+			case 7:
+				hellSort(tmp);
+				break;
 			}
 			System.out.println("消耗时间： " + (System.currentTimeMillis() - t) + "ms");
-			// print(arr);
+			print(tmp);
 			System.out.println();
 		}
 
@@ -82,9 +61,11 @@ public class Sort {
 	}
 
 	private static void print(int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i] + " ");
+		System.out.println();
+		for (int i = 0; i < arr.length/100; i++) {
+			System.out.print(arr[i] + "*");
 		}
+		System.out.println();
 	}
 
 	// 冒泡排序
@@ -233,6 +214,27 @@ public class Sort {
 			if (arr[parent] < arr[child]) {
 				// 父节点小于子节点的话，交换数据
 				swap(arr, parent, child);
+			}
+		}
+
+	}
+
+	// 希尔排序，插入排序升级版
+	private static void hellSort(int[] arr) {
+
+		int length = arr.length;
+		int i;
+		for (int step = length / 2; step > 0; step /= 2) {
+			// step为步长,逐步缩小步长
+			for (int index = step; index < length; index++) {
+				// 从位置step到最后一位做步长为step的插入排序
+				int tmp = arr[index];
+				for (i = index; i >= step && arr[i - step] > tmp; i -= step) {
+					// 前面元素大于当前元素(tmp)，将前面元素的值放到当前位置，tmp不用改变，因为它仍然是最小的，可以继续往下比
+					arr[i] = arr[i - step];
+				}
+				// i<step或者i >= step && arr[i - step]<= tmp的时候，退出循环，此时arr[i]为未交换值，将tmp赋给它
+				arr[i] = tmp;
 			}
 		}
 

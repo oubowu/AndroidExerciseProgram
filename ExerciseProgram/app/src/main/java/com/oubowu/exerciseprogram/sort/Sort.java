@@ -97,12 +97,10 @@ public class Sort {
 
 	// 插入排序
 	private static void insertionSort(int[] arr) {
-		int current = 0;
 		// 显示交换策略
 //		for (int i = 1; i < arr.length; i++) {
-//			current = arr[i];
 //			for (int j = i; j > 0; j--) {
-//				if (current < arr[j - 1]) {
+//				if (arr[j] < arr[j - 1]) {
 //					swap(arr, j - 1, j);
 //				} else {
 //					break;
@@ -110,6 +108,7 @@ public class Sort {
 //			}
 //		}
 		// 非显示交换策略
+		int current = 0;
 		int j;
 		for (int i = 1; i < arr.length; i++) {
 			current = arr[i];
@@ -257,8 +256,7 @@ public class Sort {
 			// step为步长,逐步缩小步长
 			for (int index = step; index < length; index++) {
 				// 从位置step到最后一位做步长为step的插入排序
-				int tmp = arr[index];
-				for (i = index; i >= step && arr[i - step] > tmp; i -= step) {
+				for (i = index; i >= step && arr[i - step] > arr[i]; i -= step) {
 					swap(arr, i, i - step);
 				}
 			}

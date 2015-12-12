@@ -1,4 +1,4 @@
-package test;
+﻿package com.oubowu.exerciseprogram.sort;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -8,16 +8,20 @@ public class Sort {
 	public static void main(String[] args) {
 
 		// int[] arr = { 1, 6, 3, 8, 4, 3, 12, 5 };
-		Scanner scanner = new Scanner(System.in); // 参数对象是系统进来的流
+		Scanner scanner = new Scanner(System.in);
+		// 参数对象是系统进来的流
 		int sName = -1;
-		int[] arr = new int[200000];
+		int length = 200000;
+//		length = 15;
+		int[] arr = new int[length];
 		Random random = new Random();
-		for (int i = 0; i < 200000; i++) {
-			arr[i] = random.nextInt(10000);
+		int range = 10000;
+		for (int i = 0; i < length; i++) {
+			arr[i] = random.nextInt(range);
 		}
 		while (sName != 0) {
 			int[] tmp = arr.clone();
-			System.out.println("请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 7.希尔排序 0.退出");
+			System.out.println("请选择排序: 1.冒泡 2.选择 3.插入 4.归并 5.快速 6.堆 7.希尔排序 8.计数排序 9.基数排序  0.退出");
 			sName = scanner.nextInt(); // next()方法用来接收控制台输入的字符串
 			long t = System.currentTimeMillis();
 			switch (sName) {
@@ -46,9 +50,15 @@ public class Sort {
 			case 7:
 				hellSort(tmp);
 				break;
+			case 8:
+				countingSort(tmp, range);
+				break;
+			case 9:
+				radixSort(tmp, range);
+				break;
 			}
 			System.out.println("消耗时间： " + (System.currentTimeMillis() - t) + "ms");
-			print(tmp);
+//			print(tmp);
 			System.out.println();
 		}
 
@@ -61,11 +71,11 @@ public class Sort {
 	}
 
 	private static void print(int[] arr) {
-		System.out.println();
-		for (int i = 0; i < arr.length / 100; i++) {
+		System.out.println("\n开始打印");
+		for (int i = 0; i < arr.length; i++) {
 			System.out.print(arr[i] + "*");
 		}
-		System.out.println();
+		System.out.println("\n结束打印");
 	}
 
 	// 冒泡排序
@@ -98,15 +108,15 @@ public class Sort {
 	// 插入排序
 	private static void insertionSort(int[] arr) {
 		// 显示交换策略
-//		for (int i = 1; i < arr.length; i++) {
-//			for (int j = i; j > 0; j--) {
-//				if (arr[j] < arr[j - 1]) {
-//					swap(arr, j - 1, j);
-//				} else {
-//					break;
-//				}
-//			}
-//		}
+		// for (int i = 1; i < arr.length; i++) {
+		// for (int j = i; j > 0; j--) {
+		// if (arr[j] < arr[j - 1]) {
+		// swap(arr, j - 1, j);
+		// } else {
+		// break;
+		// }
+		// }
+		// }
 		// 非显示交换策略
 		int current = 0;
 		int j;
@@ -237,20 +247,20 @@ public class Sort {
 		int length = arr.length;
 		int i;
 		// 非显示的交换策略
-//		for (int step = length / 2; step > 0; step /= 2) {
-//			// step为步长,逐步缩小步长
-//			for (int index = step; index < length; index++) {
-//				// 从位置step到最后一位做步长为step的插入排序
-//				int tmp = arr[index];
-//				for (i = index; i >= step && arr[i - step] > tmp; i -= step) {
-//					// 前面元素大于当前元素(tmp)，将前面元素的值放到当前位置，tmp不用改变，因为它仍然是最小的，可以继续往下比
-//					arr[i] = arr[i - step];
-//				}
-//				// i<step或者i >= step && arr[i - step]<=
-//				// tmp的时候，退出循环，此时arr[i]为未交换值，将tmp赋给它
-//				arr[i] = tmp;
-//			}
-//		}
+		// for (int step = length / 2; step > 0; step /= 2) {
+		// // step为步长,逐步缩小步长
+		// for (int index = step; index < length; index++) {
+		// // 从位置step到最后一位做步长为step的插入排序
+		// int tmp = arr[index];
+		// for (i = index; i >= step && arr[i - step] > tmp; i -= step) {
+		// // 前面元素大于当前元素(tmp)，将前面元素的值放到当前位置，tmp不用改变，因为它仍然是最小的，可以继续往下比
+		// arr[i] = arr[i - step];
+		// }
+		// // i<step或者i >= step && arr[i - step]<=
+		// // tmp的时候，退出循环，此时arr[i]为未交换值，将tmp赋给它
+		// arr[i] = tmp;
+		// }
+		// }
 		// 显示交换策略
 		for (int step = length / 2; step > 0; step /= 2) {
 			// step为步长,逐步缩小步长
@@ -275,6 +285,64 @@ public class Sort {
 			if (bucket[i] >0 ) {
 				for (int j = 0; j < bucket[i]; j++) {
 					arr[index++]=i;
+				}
+			}
+		}
+	}
+
+	// 计数排序
+	private static void countingSort(int[] arr, int max) {
+		// 准备最大元素值个桶
+		int[] bucket = new int[max + 1];
+		for (int i = 0; i < arr.length; i++) {
+			// 元素放入桶中，桶中记录元素的个数
+			bucket[arr[i]] += 1;
+		}
+		int index = 0;
+		for (int i = 0; i < bucket.length; i++) {
+			for (int j = 0; j < bucket[i]; j++) {
+				// 桶的元素依次倒出
+				arr[index++] = i;
+			}
+		}
+	}
+
+	// 基数排序
+	private static void radixSort(int[] arr, int max) {
+
+		// 位数
+		int bit = 1;
+
+		if (max == 0) {
+			return;
+		}
+
+		// 计算位数
+		while ((max/=10)!=0) {
+			bit++;
+		}
+
+		// 数组元素为10进制数，准备0~9十个桶
+		Queue<Integer>[] bucket = new Queue[10];
+
+		for (int i = 1; i <= bit; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				
+				// 计算当前位上的值
+				int s=arr[j];
+				s/=Math.pow(10, i-1);
+				s%=10;
+				
+				if (bucket[s] == null) {
+					bucket[s] = new LinkedList<>();
+				}
+				bucket[s].add(arr[j]);
+			}
+			// 倒出
+			int index = 0;
+			for (int j = 0; j < bucket.length; j++) {
+				while (bucket[j] != null && bucket[j].size() != 0) {
+					arr[index++] = bucket[j].poll();
 				}
 			}
 		}

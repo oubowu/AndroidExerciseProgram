@@ -1,5 +1,4 @@
-package test;
-
+package com.oubowu.exerciseprogram.reflection;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -10,11 +9,11 @@ public class Reflection {
 	public static void main(String[] args)
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException,
 			SecurityException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-		Class<?> class1 = Class.forName("test.Sub");
+		Class<?> class1 = Class.forName("com.oubowu.exerciseprogram.reflection.Sub");
 		Base base = (Base) class1.newInstance();
 		base.printClassName();
 
-		Class<?> clz = Class.forName("test.Sub");
+		Class<?> clz = Class.forName("com.oubowu.exerciseprogram.reflection.Sub");
 		Sub sub = (Sub) clz.newInstance();
 
 		Field field = clz.getDeclaredField("str");

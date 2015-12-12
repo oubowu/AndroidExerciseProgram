@@ -1,4 +1,4 @@
-package test;
+package com.oubowu.exerciseprogram.reflection;
 
 public class Base {
 

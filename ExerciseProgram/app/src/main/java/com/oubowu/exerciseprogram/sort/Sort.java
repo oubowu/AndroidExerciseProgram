@@ -273,22 +273,6 @@ public class Sort {
 		}
 
 	}
-	
-	// 计数排序
-	private static void countingSort(int[] arr,int max) {
-		int[] bucket = new int[max+1];
-		for (int i = 0; i < arr.length; i++) {
-			bucket[arr[i]] += 1;
-		}
-		int index=0;
-		for (int i = 0; i < bucket.length; i++) {
-			if (bucket[i] >0 ) {
-				for (int j = 0; j < bucket[i]; j++) {
-					arr[index++]=i;
-				}
-			}
-		}
-	}
 
 	// 计数排序
 	private static void countingSort(int[] arr, int max) {

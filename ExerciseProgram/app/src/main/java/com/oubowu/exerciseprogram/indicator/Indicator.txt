@@ -1,0 +1,116 @@
+﻿/**
+ * 类名： Indicator
+ * 作者: oubowu
+ * 时间： 2015/12/21 19:29
+ * 功能：
+ * svn版本号:$$Rev$$
+ * 更新时间:$$Date$$
+ * 更新人:$$Author$$
+ * 更新描述:
+ */
+public class Indicator extends View {
+
+    private int mOffset;
+
+    public Indicator(Context context) {
+        super(context);
+    }
+
+    public Indicator(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public Indicator(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private Paint mPaint;
+
+    private float mTriangleLength = -1;
+
+    private Path mPath;
+
+    private void init() {
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        mPaint.setColor(Color.parseColor("#c4c4c4"));
+        mPaint.setStrokeWidth(MeasureUtil.dip2px(getContext(), 2f));
+        mPaint.setStyle(Paint.Style.STROKE);
+        mTriangleLength = MeasureUtil.dip2px(getContext(), 30f);
+        mPath = new Path();
+
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+
+        Log.e("tag", "绘制");
+
+
+        // ___________/\__________中点________/\_____________
+
+        if (mTriangleLength == -1)
+            mTriangleLength = (float) (getMeasuredHeight()*2/Math.sqrt(3));
+
+        mPaint.setStrokeWidth(MeasureUtil.dip2px(getContext(), 2f));
+
+        canvas.drawLine(getPaddingLeft(), getMeasuredHeight(), (getMeasuredWidth() / 2 - mTriangleLength) / 2 + mOffset, getMeasuredHeight(), mPaint);
+
+        canvas.drawLine((getMeasuredWidth() / 2 - mTriangleLength) / 2 + mTriangleLength + mOffset, getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight(), mPaint);
+
+        mPaint.setStrokeWidth(MeasureUtil.dip2px(getContext(), 1f));
+
+        mPath.moveTo((getMeasuredWidth() / 2 - mTriangleLength) / 2 + mOffset, getMeasuredHeight());
+        mPath.lineTo((getMeasuredWidth() / 2 - mTriangleLength) / 2 + mTriangleLength / 2 + mOffset, 0);
+        mPath.lineTo((getMeasuredWidth() / 2 - mTriangleLength) / 2 + mTriangleLength + mOffset, getMeasuredHeight());
+        canvas.drawPath(mPath, mPaint);
+
+        mPath.reset();
+
+    }
+
+    private boolean mIsAllowTouchEvent = true;
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void switchToNext(boolean toRight) {
+        if (!mIsAllowTouchEvent)
+            return;
+
+        ValueAnimator valueAnimator = new ValueAnimator();
+        if (toRight && mOffset == 0) {
+            valueAnimator.setIntValues(0, getMeasuredWidth() / 2 + getMeasuredWidth() / 10, getMeasuredWidth() / 2);
+        } else if (!toRight && mOffset != 0) {
+            valueAnimator.setIntValues(getMeasuredWidth() / 2, -getMeasuredWidth() / 10, 0);
+        } else {
+            return;
+        }
+        valueAnimator.setDuration(500);
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mOffset = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                mIsAllowTouchEvent = false;
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mIsAllowTouchEvent = true;
+            }
+        });
+        valueAnimator.start();
+
+    }
+
+
+}

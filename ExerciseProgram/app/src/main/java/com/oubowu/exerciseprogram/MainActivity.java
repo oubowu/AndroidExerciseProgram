@@ -3,6 +3,7 @@ package com.oubowu.exerciseprogram;
 import android.content.Intent;
 import android.widget.Button;
 
+import com.oubowu.exerciseprogram.aigestudiostudy.AigeActivity;
 import com.oubowu.exerciseprogram.databinding.DataBindingActivity;
 import com.oubowu.exerciseprogram.jsonparse.JsonParseActivity;
 import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
@@ -74,6 +75,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_touch)
     void touch() {
         startActivity(new Intent(this, TouchEventActivity.class));
+    }
+
+    @OnClick(R.id.bt_aige)
+    void aige() {
+        startActivity(new Intent(this, AigeActivity.class));
     }
 
     @Override

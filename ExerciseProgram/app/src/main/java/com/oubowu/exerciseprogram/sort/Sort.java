@@ -1,7 +1,7 @@
-﻿package com.oubowu.exerciseprogram.sort;
+package com.oubowu.exerciseprogram.sort;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Sort {
 

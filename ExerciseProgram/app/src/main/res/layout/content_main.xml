@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,83 +9,98 @@
     tools:context="com.oubowu.exerciseprogram.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:id="@+id/bt_mvp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/bt_refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/bt_mvp"
-        android:text="封装刷新加载控件"/>
+        <Button
+            android:id="@+id/bt_mvp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/bt_leaf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/bt_refresh"
-        android:text="飘动落叶"/>
+        <Button
+            android:id="@+id/bt_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/bt_mvp"
+            android:text="封装刷新加载控件"/>
 
-    <Button
-        android:id="@+id/bt_kotlin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/bt_leaf"
-        android:text="Kotlin"
-        android:textSize="12sp"/>
+        <Button
+            android:id="@+id/bt_leaf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/bt_refresh"
+            android:text="飘动落叶"/>
 
-    <Button
-        android:id="@+id/bt_rxjava"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bt_mvp"
-        android:text="RxJava"
-        android:textSize="12sp"/>
+        <Button
+            android:id="@+id/bt_kotlin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/bt_leaf"
+            android:text="Kotlin"
+            android:textSize="12sp"/>
 
-    <Button
-        android:id="@+id/bt_json"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bt_mvp"
-        android:layout_toRightOf="@+id/bt_rxjava"
-        android:text="Json解析"
-        android:textSize="12sp"/>
+        <Button
+            android:id="@+id/bt_rxjava"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_mvp"
+            android:text="RxJava"
+            android:textSize="12sp"/>
 
-    <Button
-        android:id="@+id/bt_drag_helper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bt_mvp"
-        android:layout_toRightOf="@+id/bt_json"
-        android:text="ViewDragHelper"
-        android:textSize="12sp"/>
+        <Button
+            android:id="@+id/bt_json"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_mvp"
+            android:layout_toRightOf="@+id/bt_rxjava"
+            android:text="Json解析"
+            android:textSize="12sp"/>
 
-    <Button
-        android:id="@+id/bt_binding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bt_mvp"
-        android:layout_toRightOf="@+id/bt_drag_helper"
-        android:text="DataBinding"
-        android:textSize="12sp"/>
+        <Button
+            android:id="@+id/bt_drag_helper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_mvp"
+            android:layout_toRightOf="@+id/bt_json"
+            android:text="ViewDragHelper"
+            android:textSize="12sp"/>
 
-    <Button
-        android:id="@+id/bt_tail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bt_rxjava"
-        android:text="尾部设置文字的TextView"
-        android:textSize="12sp"/>
+        <Button
+            android:id="@+id/bt_binding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_mvp"
+            android:layout_toRightOf="@+id/bt_drag_helper"
+            android:text="DataBinding"
+            android:textSize="12sp"/>
 
-    <Button
-        android:id="@+id/bt_touch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bt_rxjava"
-        android:layout_toRightOf="@+id/bt_tail"
-        android:text="事件传递机制"
-        android:textSize="12sp"/>
+        <Button
+            android:id="@+id/bt_tail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_rxjava"
+            android:text="尾部设置文字的TextView"
+            android:textSize="12sp"/>
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/bt_touch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_rxjava"
+            android:layout_toRightOf="@+id/bt_tail"
+            android:text="事件传递机制"
+            android:textSize="12sp"/>
+
+        <Button
+            android:id="@+id/bt_aige"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_rxjava"
+            android:layout_toRightOf="@+id/bt_touch"
+            android:text="爱哥自定义控件学习"
+            android:textSize="12sp"/>
+
+    </RelativeLayout>
+</ScrollView>
+

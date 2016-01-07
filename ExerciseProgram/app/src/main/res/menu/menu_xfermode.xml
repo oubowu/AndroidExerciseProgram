@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_add"
+            android:checked="true"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.ADD 饱和相加"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_clear"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.CLEAR 清除"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_darken"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.DARKEN 变暗"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_lighten"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.LIGHTEN 变亮"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_dst"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.DST 只绘制目标图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_dst_atop"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.DST_ATOP 在源图像和目标图像相交的地方绘制目标图像而在不相交的地方绘制源图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_dst_in"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.DST_IN 只在源图像和目标图像相交的地方绘制目标图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_dst_out"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.DST_OUT 只在源图像和目标图像不相交的地方绘制目标图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_dst_over"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.DST_OVER 在源图像的上方绘制目标图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_multiply"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.MULTIPLY 正片叠底"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_overlay"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.OVERLAY 叠加"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_screen"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.SCREEN 滤色"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_src"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.SRC 显示源图"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_src_atop"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.SRC_ATOP 在源图像和目标图像相交的地方绘制源图像，在不相交的地方绘制目标图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_src_in"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.SRC_IN 只在源图像和目标图像相交的地方绘制源图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_src_out"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.SRC_OUT 只在源图像和目标图像不相交的地方绘制源图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_src_over"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.SRC_OVER 在目标图像的顶部绘制源图像"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_xor"
+            android:orderInCategory="100"
+            android:title="PorterDuff.Mode.XOR 在源图像和目标图像重叠之外的任何地方绘制他们，而在重叠的地方不绘制任何内容"
+            app:showAsAction="never"/>
+
+    </group>
+
+</menu>

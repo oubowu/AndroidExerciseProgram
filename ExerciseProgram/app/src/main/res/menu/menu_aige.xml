@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_matrix"
+            android:orderInCategory="100"
+            android:title="ColorMatrixColorFilter"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_ligting"
+            android:orderInCategory="100"
+            android:title="LightingColorFilter"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_duff"
+            android:orderInCategory="100"
+            android:title="PorterDuffColorFilter"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_xfermode"
+            android:orderInCategory="100"
+            android:title="PorterDuffXfermode"
+            app:showAsAction="never"/>
+    </group>
+
+</menu>

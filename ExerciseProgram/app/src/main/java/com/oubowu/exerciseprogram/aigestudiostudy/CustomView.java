@@ -23,6 +23,7 @@ import com.oubowu.exerciseprogram.utils.MeasureUtil;
 public class CustomView extends View implements Runnable {
     public void ondestroy() {
         this.mIsRun = false;
+        setVisibility(GONE);
     }
 
     private boolean mIsRun = true;

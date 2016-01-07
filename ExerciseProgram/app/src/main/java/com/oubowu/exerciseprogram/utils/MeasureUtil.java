@@ -7,10 +7,12 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -26,6 +28,33 @@ import com.oubowu.exerciseprogram.R;
  * UpdateDate：
  */
 public class MeasureUtil {
+    /**
+     * 应用程序App区域宽高等尺寸获取,最好在Activity的onWindowFocusChanged ()方法或者之后调运
+     */
+    public static Rect getAppAreaRect(Activity context) {
+        Rect rect = new Rect();
+        context.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        return rect;
+    }
+
+    /**
+     * 获取状态栏高度,最好在Activity的onWindowFocusChanged ()方法或者之后调运
+     */
+    public static int getStatusBarHeight(Activity context) {
+        Rect rect = new Rect();
+        context.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        return rect.top;
+    }
+
+    /**
+     * View布局区域宽高等尺寸获取,最好在Activity的onWindowFocusChanged ()方法或者之后调运
+     */
+    public static Rect getContentViewRect(Activity context) {
+        Rect rect = new Rect();
+        context.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getDrawingRect(rect);
+        return rect;
+    }
+
     /**
      * 获取状态栏的高度
      *
@@ -65,13 +94,14 @@ public class MeasureUtil {
         v.draw(canvas);
         return bitmap;
     }
+
     /**
      * 可将当前view保存为图片的工具
      *
      * @param view
      * @return
      */
-    public static Bitmap convertViewToBitmap(View view){
+    public static Bitmap convertViewToBitmap(View view) {
         view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
         view.buildDrawingCache();
@@ -79,6 +109,7 @@ public class MeasureUtil {
 
         return bitmap;
     }
+
     /**
      * 获取app内部资源的uri，用于fresco设置本地图片
      *

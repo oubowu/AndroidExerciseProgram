@@ -36,4 +36,7 @@
     <string name="language_settings">Language Setting</string>
     <string name="currency_settings">Currency Setting</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

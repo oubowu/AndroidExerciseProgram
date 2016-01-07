@@ -67,6 +67,9 @@ public class PorterDuffXfermodeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         item.setChecked(true);
         ccv.porterDuffXfermode(item);
+
+//        ccv.setXfermode(PorterDuff.Mode.valueOf(item.getTitle().toString()));
+
         return true;
     }
 

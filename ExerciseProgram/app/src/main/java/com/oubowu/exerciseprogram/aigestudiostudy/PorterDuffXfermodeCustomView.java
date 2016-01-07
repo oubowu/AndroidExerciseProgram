@@ -3,13 +3,13 @@ package com.oubowu.exerciseprogram.aigestudiostudy;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -35,10 +35,10 @@ public class PorterDuffXfermodeCustomView extends View {
 
     private Bitmap mDisBitmap;
     private Bitmap mSrcBitmap;
-    private Rect appAreaRect;
-    private PorterDuffXfermode mXfermode;
+    private Rect mAppAreaRect;
     private StringBuilder mDesctiption = new StringBuilder("PorterDuff.Mode.ADD 饱和相加");
-    private StaticLayout layout;
+    private StaticLayout mLayout;
+    private Bitmap mXfermodeBitmap;
 
     public PorterDuffXfermodeCustomView(Context context) {
         super(context);
@@ -55,51 +55,21 @@ public class PorterDuffXfermodeCustomView extends View {
         initPaint();
     }
 
-    private Paint mPaint;
+    private Paint mXfermodePaint;
     private TextPaint mTextPaint;
+    private Paint mTextPaint1;
 
     private void initPaint() {
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-       /*
-        * 设置画笔样式为描边，圆环嘛……当然不能填充不然就么意思了
-        *
-        * 画笔样式分三种：
-        * 1.Paint.Style.STROKE：描边
-        * 2.Paint.Style.FILL_AND_STROKE：描边并填充
-        * 3.Paint.Style.FILL：填充
-        */
-        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-
-        // 设置画笔颜色为自定义颜色
-        mPaint.setColor(Color.argb(255, 255, 128, 103));
-
-       /*
-        * 设置描边的粗细，单位：像素px
-       * 注意：当setStrokeWidth(0)的时候描边宽度并不为0而是只占一个像素
-        */
-        mPaint.setStrokeWidth(10);
-
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.mipmap.ic_baifeng, options);
-
-        mDisBitmap = MeasureUtil.decodeSampledBitmapFromResource(getResources(),
-                R.mipmap.ic_baifeng,
-                MeasureUtil.getScreenWidth((Activity) getContext()),
-                MeasureUtil.getScreenWidth((Activity) getContext()) * options.outHeight / options.outWidth);
-
-        BitmapFactory.decodeResource(getResources(), R.mipmap.ic_shaosiming, options);
-        mSrcBitmap = MeasureUtil.decodeSampledBitmapFromResource(getResources(),
-                R.mipmap.ic_shaosiming,
-                mDisBitmap.getHeight() * 3 / 4 * options.outWidth / options.outHeight,
-                mDisBitmap.getHeight() * 3 / 4);
-
-        mXfermode = new PorterDuffXfermode(PorterDuff.Mode.ADD);
+        mXfermodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        PorterDuffXfermode mXfermode = new PorterDuffXfermode(PorterDuff.Mode.ADD);
+        mXfermodePaint.setXfermode(mXfermode);
 
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextSize(30);
 
+        mTextPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint1.setTextSize(25);
     }
 
     public void porterDuffXfermode(MenuItem item) {
@@ -136,89 +106,82 @@ public class PorterDuffXfermodeCustomView extends View {
 
         switch (item.getItemId()) {
             case R.id.action_add:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.ADD);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
                 KLog.e("ADD");
                 break;
             case R.id.action_clear:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
                 KLog.e("CLEAR");
                 break;
             case R.id.action_darken:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.DARKEN);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
                 KLog.e("DARKEN");
                 break;
             case R.id.action_lighten:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
                 KLog.e("LIGHTEN");
                 break;
             case R.id.action_dst:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST));
                 KLog.e("DST");
                 break;
             case R.id.action_dst_atop:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
                 KLog.e("DST_ATOP");
                 break;
             case R.id.action_dst_in:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
                 KLog.e("DST_IN");
                 break;
             case R.id.action_dst_out:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_OUT);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
                 KLog.e("DST_OUT");
                 break;
             case R.id.action_dst_over:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_OVER);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
                 KLog.e("DST_OVER");
                 break;
             case R.id.action_multiply:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
                 KLog.e("MULTIPLY");
                 break;
             case R.id.action_overlay:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.OVERLAY);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
                 KLog.e("OVERLAY");
                 break;
             case R.id.action_screen:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SCREEN);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SCREEN));
                 KLog.e("SCREEN");
                 break;
             case R.id.action_src:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
                 KLog.e("SRC");
                 break;
             case R.id.action_src_atop:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
                 KLog.e("SRC_ATOP");
                 break;
             case R.id.action_src_in:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
                 KLog.e("SRC_IN");
                 break;
             case R.id.action_src_out:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
                 KLog.e("SRC_OUT");
                 break;
             case R.id.action_src_over:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
                 KLog.e("SRC_OVER");
                 break;
             case R.id.action_xor:
-                mXfermode = new PorterDuffXfermode(PorterDuff.Mode.XOR);
+                mXfermodePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
                 KLog.e("XOR");
                 break;
         }
 
-        /*final int length = mDesctiption.length();
-        int start = 0;
-        int end;
-        for (end = 1; end < length - 1; end++) {
-            if (mTextPaint.measureText(mDesctiption.substring(start, end)) >= appAreaRect.width()) {
-                mDesctiption.insert(end, "\n");
-                start = end;
-            }
-        }*/
-        layout = new StaticLayout(mDesctiption.toString(), mTextPaint, appAreaRect.width(),
+        mXfermodeBitmap = createXfermodeBitmap();
+
+        mLayout = new StaticLayout(mDesctiption.toString(), mTextPaint, mAppAreaRect.width(),
                 Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
         invalidate();
     }
@@ -227,9 +190,35 @@ public class PorterDuffXfermodeCustomView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (appAreaRect == null) return;
+        if (mAppAreaRect == null) return;
 
-        canvas.drawColor(Color.LTGRAY);
+        canvas.save();
+        canvas.drawColor(Color.WHITE);
+        mLayout.draw(canvas);
+
+//        mTextPaint1.setColor(Color.RED);
+//        canvas.drawText("红色为目标图", (mAppAreaRect.width() - mXfermodeBitmap.getWidth()) / 2,
+//                (mAppAreaRect.height() - MeasureUtil.getToolbarHeight(getContext()) - mXfermodeBitmap.getHeight()) / 2 - (mTextPaint1.getFontMetrics().ascent + mTextPaint1.getFontMetrics().descent) * 2,
+//                mTextPaint1);
+//
+//        mTextPaint1.setColor(Color.BLUE);
+//        canvas.drawText("蓝色为源图", (mAppAreaRect.width() - mXfermodeBitmap.getWidth()) / 2 * 8,
+//                (mAppAreaRect.height() - MeasureUtil.getToolbarHeight(getContext()) - mXfermodeBitmap.getHeight()) / 2 - (mTextPaint1.getFontMetrics().ascent + mTextPaint1.getFontMetrics().descent) * 2,
+//                mTextPaint1);
+
+        mTextPaint1.setColor(Color.RED);
+        canvas.drawText("红色为目标图",
+                (mAppAreaRect.width() - mXfermodeBitmap.getWidth()) / 2,
+                (mAppAreaRect.height() - MeasureUtil.getToolbarHeight(getContext()) - mXfermodeBitmap.getHeight()) / 2 - 20,
+                mTextPaint1);
+
+        mTextPaint1.setColor(Color.BLUE);
+        canvas.drawText("蓝色为源图",
+                (mAppAreaRect.width() - mXfermodeBitmap.getWidth()) / 2 * 5,
+                (mAppAreaRect.height() - MeasureUtil.getToolbarHeight(getContext()) - mXfermodeBitmap.getHeight()) / 2 - 20,
+                mTextPaint1);
+
+        canvas.restore();
 
         // baseline 的位置 相当于 四线中 第三条线
         // ascent 的位置相当于 四线中 有 f 的时候 他是固定在 f 的最上方
@@ -238,42 +227,54 @@ public class PorterDuffXfermodeCustomView extends View {
         // bottom  的位置 相当于 baseline 到四线最下面线的位置
         // canvas.drawText(mDesctiption.toString(), 0, -(mTextPaint.getFontMetrics().ascent + mTextPaint.getFontMetrics().descent) * 2, mTextPaint);
 
-        // Src为源图像，意为将要绘制的图像；Dis为目标图像，意为我们将要把源图像绘制到的图像
+        canvas.drawBitmap(mXfermodeBitmap, (mAppAreaRect.width() - mXfermodeBitmap.getWidth()) / 2,
+                (mAppAreaRect.height() - MeasureUtil.getToolbarHeight(getContext()) - mXfermodeBitmap.getHeight()) / 2, null);
 
-        // 离屏缓存
-        final int i = canvas.saveLayer(appAreaRect.left, appAreaRect.top, appAreaRect.right, appAreaRect.bottom, null, Canvas.ALL_SAVE_FLAG);
+    }
 
-        // 先绘制dis，然后再绘制src
-        canvas.drawBitmap(mDisBitmap, (appAreaRect.width() - mDisBitmap.getWidth()) / 2,
-                (appAreaRect.height() - MeasureUtil.getToolbarHeight(getContext()) - mDisBitmap.getHeight()) / 2,
-                mPaint);
+    private Bitmap createBitamp(int w, int h) {
+        return Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+    }
 
-        mPaint.setXfermode(mXfermode);
-
-        canvas.drawBitmap(mSrcBitmap, (appAreaRect.width() - mSrcBitmap.getWidth()) / 2,
-                (appAreaRect.height() - MeasureUtil.getToolbarHeight(getContext()) - mSrcBitmap.getHeight()) / 2 + mSrcBitmap.getHeight() / 2,
-                mPaint);
-
-        mPaint.setXfermode(null);
-
-        // 还原画布
+    private Bitmap createXfermodeBitmap() {
+        Bitmap bitmap = createBitamp(mSrcBitmap.getWidth(), mSrcBitmap.getHeight());
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawColor(Color.LTGRAY);
+        final int i = canvas.saveLayer(0, 0, bitmap.getWidth(), bitmap.getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        // 两个图片大小一致，且重叠？
+        canvas.drawBitmap(mDisBitmap, 0, 0, null);
+        canvas.drawBitmap(mSrcBitmap, 0, 0, mXfermodePaint);
         canvas.restoreToCount(i);
-
-        canvas.save();
-        layout.draw(canvas);
-        canvas.restore();
-
+        return bitmap;
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         if (hasWindowFocus) {
-            appAreaRect = MeasureUtil.getAppAreaRect((Activity) getContext());
-            layout = new StaticLayout(mDesctiption.toString(), mTextPaint, appAreaRect.width(),
+            mAppAreaRect = MeasureUtil.getAppAreaRect((Activity) getContext());
+            mLayout = new StaticLayout(mDesctiption.toString(), mTextPaint, mAppAreaRect.width(),
                     Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+
+            Bitmap bm = createBitamp(mAppAreaRect.width() / 2, mAppAreaRect.width() / 2);
+            Canvas c = new Canvas(bm);
+            Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+            p.setColor(0xFFFF0000);
+            c.drawOval(new RectF(0, 0, mAppAreaRect.width() / 2, mAppAreaRect.width() / 2), p);
+            mDisBitmap = bm;
+
+            Bitmap bm1 = createBitamp(mAppAreaRect.width() / 2 + mDisBitmap.getWidth() / 2, mAppAreaRect.width() / 2 + mDisBitmap.getHeight() / 2);
+            Canvas c1 = new Canvas(bm1);
+            Paint p1 = new Paint(Paint.ANTI_ALIAS_FLAG);
+            p1.setColor(0xFF0000FF);
+            c1.drawRect(mDisBitmap.getWidth() / 2, mDisBitmap.getHeight() / 2, mAppAreaRect.width(), (mAppAreaRect.height() - MeasureUtil.getToolbarHeight(getContext())) / 2 + mDisBitmap.getHeight() / 2, p1);
+            mSrcBitmap = bm1;
+
+            mXfermodeBitmap = createXfermodeBitmap();
+
             invalidate();
         }
     }
+
 
 }

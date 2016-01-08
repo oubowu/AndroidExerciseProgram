@@ -121,7 +121,7 @@ public class PorterDuffColorCustomView extends View {
         /*
          * 当画布中有跟opColor色一样的地方时候才“染”色
          */
-//        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         avoidXfermode = new AvoidXfermode(0XFFFFFFFF, 100, AvoidXfermode.Mode.AVOID);
         mPaint1.setXfermode(avoidXfermode);
         // “染”什么色是由我们自己决定的
@@ -141,38 +141,6 @@ public class PorterDuffColorCustomView extends View {
         // 并自己计算异或运算的值是否与得出的颜色值一样，这里我就不讲了，Because it was deprecated and useless。
 
     }
-
-    private void porterDuffXfermode() {
-        // PorterDuffXfermode
-        // 该类同样有且只有一个含参的构造方法PorterDuffXfermode(PorterDuff.Mode mode)，这个PorterDuff.Mode大家看后是否会有些面熟，
-        // 它跟上面我们讲ColorFilter时候用到的PorterDuff.Mode是一样的！麻雀虽小五脏俱全，虽说构造方法的签名列表里只有一个PorterDuff.Mode的参数，
-        // 但是它可以实现很多酷毙的图形效果！
-        // 图片从一定程度上形象地说明了图形混合的作用，两个图形一圆一方通过一定的计算产生不同的组合效果，在API中Android为我们提供了18种（比上图多了两种ADD和OVERLAY）模式
-
-        // Src为源图像，意为将要绘制的图像；Dis为目标图像，意为我们将要把源图像绘制到的图像
-        // src先绘制，然后再绘制dis
-
-        // PorterDuff.Mode.ADD 计算方式：Saturate(S + D)；Chinese：饱和相加
-        // PorterDuff.Mode.CLEAR 计算方式：[0, 0]；Chinese：清除
-        // PorterDuff.Mode.DARKEN 计算方式：[Sa + Da - Sa*Da, Sc*(1 - Da) + Dc*(1 - Sa) + min(Sc, Dc)]；Chinese：变暗
-        // PorterDuff.Mode.LIGHTEN 计算方式：[Sa + Da - Sa*Da, Sc*(1 - Da) + Dc*(1 - Sa) + max(Sc, Dc)]；Chinese：变亮
-        // PorterDuff.Mode.DST 计算方式：[Da, Dc]；Chinese：只绘制目标图像
-        // PorterDuff.Mode.DST_ATOP 计算方式：[Sa, Sa * Dc + Sc * (1 - Da)]；Chinese：在源图像和目标图像相交的地方绘制目标图像而在不相交的地方绘制源图像
-        // PorterDuff.Mode.DST_IN 计算方式：[Sa * Da, Sa * Dc]；Chinese：只在源图像和目标图像相交的地方绘制目标图像
-        // PorterDuff.Mode.DST_OUT 计算方式：[Da * (1 - Sa), Dc * (1 - Sa)]；Chinese：只在源图像和目标图像不相交的地方绘制目标图像
-        // PorterDuff.Mode.DST_OVER 计算方式：[Sa + (1 - Sa)*Da, Rc = Dc + (1 - Da)*Sc]；Chinese：在源图像的上方绘制目标图像
-        // PorterDuff.Mode.MULTIPLY 计算方式：[Sa * Da, Sc * Dc]；Chinese：正片叠底
-        // PorterDuff.Mode.OVERLAY 计算方式：未给出；Chinese：叠加
-        // PorterDuff.Mode.SCREEN 计算方式：[Sa + Da - Sa * Da, Sc + Dc - Sc * Dc]；Chinese：滤色
-        // PorterDuff.Mode.SRC 计算方式：[Sa, Sc]；Chinese：显示源图
-        // PorterDuff.Mode.SRC_ATOP 计算方式：[Da, Sc * Da + (1 - Sa) * Dc]；Chinese：在源图像和目标图像相交的地方绘制源图像，在不相交的地方绘制目标图像
-        // PorterDuff.Mode.SRC_IN 计算方式：[Sa * Da, Sc * Da]；Chinese：只在源图像和目标图像相交的地方绘制源图像
-        // PorterDuff.Mode.SRC_OUT 计算方式：[Sa * (1 - Da), Sc * (1 - Da)]；Chinese：只在源图像和目标图像不相交的地方绘制源图像
-        // PorterDuff.Mode.SRC_OVER 计算方式：[Sa + (1 - Sa)*Da, Rc = Sc + (1 - Sa)*Dc]；Chinese：在目标图像的顶部绘制源图像
-        // PorterDuff.Mode.XOR 计算方式：[Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc]；Chinese：在源图像和目标图像重叠之外的任何地方绘制他们，而在不重叠的地方不绘制任何内容
-
-    }
-
 
     @Override
     protected void onDraw(Canvas canvas) {

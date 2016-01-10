@@ -1873,10 +1873,10 @@ public open class KotlinActivity : BaseActivity() {
     println(user.age)  // Prints 25
     var 可以用 mapVar*/
 
-    class Example {
-        // p代理了Delegate，当使用KLog.e(e.p)会调用Delegate的get方法，使用e.p = "google"会调用Delegate的set方法
-        var p: String by Delegate()
-    }
+//    class Example {
+//        // p代理了Delegate，当使用KLog.e(e.p)会调用Delegate的get方法，使用e.p = "google"会调用Delegate的set方法
+//        var p: String by Delegate()
+//    }
 
     class Delegate {
         fun get(thisRef: Any?, prop: PropertyMetadata): String {

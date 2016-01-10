@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+           <item
+               android:id="@+id/action_solid"
+               android:checked="true"
+               android:orderInCategory="100"
+               android:title="SOLID"
+               app:showAsAction="never"/>
+
+           <item
+               android:id="@+id/action_normal"
+               android:orderInCategory="100"
+               android:title="NORMAL"
+               app:showAsAction="never"/>
+
+           <item
+               android:id="@+id/action_outer"
+               android:orderInCategory="100"
+               android:title="OUTER"
+               app:showAsAction="never"/>
+
+           <item
+               android:id="@+id/action_inner"
+               android:orderInCategory="100"
+               android:title="INNER"
+               app:showAsAction="never"/>
+
+    </group>
+
+</menu>

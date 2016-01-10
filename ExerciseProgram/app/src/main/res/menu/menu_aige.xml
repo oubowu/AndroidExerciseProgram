@@ -26,6 +26,31 @@
             android:orderInCategory="100"
             android:title="PorterDuffXfermode"
             app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_blur"
+            android:orderInCategory="100"
+            android:title="BlurMaskFilter"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_shadow"
+            android:orderInCategory="100"
+            android:title="ShadowLayer"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_ecg"
+            android:orderInCategory="100"
+            android:title="DrawPath"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_bitmapshaper"
+            android:orderInCategory="100"
+            android:title="Bitmapshaper"
+            app:showAsAction="never"/>
+
     </group>
 
 </menu>

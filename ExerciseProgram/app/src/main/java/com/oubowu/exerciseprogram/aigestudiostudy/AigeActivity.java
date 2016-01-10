@@ -59,6 +59,17 @@ public class AigeActivity extends BaseActivity {
                 break;
             case R.id.action_xfermode:
                 FragmentManage.changeFragment(new PorterDuffXfermodeFragment(), getSupportFragmentManager(), R.id.fl, ColorMatrixFragment.class.getSimpleName());
+            case R.id.action_blur:
+                FragmentManage.changeFragment(new BlurMaskFilterFragment(), getSupportFragmentManager(), R.id.fl, BlurMaskFilterFragment.class.getSimpleName());
+                break;
+            case R.id.action_shadow:
+                FragmentManage.changeFragment(new ShadowViewFragment(), getSupportFragmentManager(), R.id.fl, ShadowViewFragment.class.getSimpleName());
+                break;
+            case R.id.action_ecg:
+                FragmentManage.changeFragment(new ECGViewFragment(), getSupportFragmentManager(), R.id.fl, ECGViewFragment.class.getSimpleName());
+                break;
+            case R.id.action_bitmapshaper:
+                FragmentManage.changeFragment(new BrickViewFragment(), getSupportFragmentManager(), R.id.fl, BrickViewFragment.class.getSimpleName());
                 break;
         }
         return super.onOptionsItemSelected(item);

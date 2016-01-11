@@ -241,7 +241,7 @@ public class PorterDuffXfermodeCustomView extends View {
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(Color.LTGRAY);
         final int i = canvas.saveLayer(0, 0, bitmap.getWidth(), bitmap.getHeight(), null, Canvas.ALL_SAVE_FLAG);
-        // 两个图片大小一致，且重叠？
+        // mSrcBitmap包住mDisBitmap
         canvas.drawBitmap(mDisBitmap, 0, 0, null);
         canvas.drawBitmap(mSrcBitmap, 0, 0, mXfermodePaint);
         canvas.restoreToCount(i);

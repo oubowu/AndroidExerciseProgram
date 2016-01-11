@@ -50,7 +50,7 @@ public class BrickView extends View {
         // BitmapShader (Bitmap bitmap, Shader.TileMode tileX, Shader.TileMode tileY)的第一个参数是位图这个很显然，而后两个参数则分别表示XY方向上的着色模式
         // Shader.TileMode里有三种模式：CLAMP、MIRROR和REPETA
         // REPEAT也就是重复的意思，同理MIRROR也就是镜像的意思,CLAMP的意思就是边缘拉伸
-        // CLAMP  ：如果渲染器超出原始边界范围，会复制范围内边缘染色。(所以实现圆图的话可以用BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)，然后drawCircle，只要画的半径恰好为bitmap一半宽度即可)
+        // CLAMP  ：如果渲染器超出原始边界范围，会复制范围内边缘染色。(所以实现圆图的话可以用BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)，然后drawCircle，只要画的半径恰好为bitmap一半宽度即可)
         // REPEAT ：横向和纵向的重复渲染器图片，平铺。
         // MIRROR ：横向和纵向的重复渲染器图片，这个和REPEAT 重复方式不一样，他是以镜像方式平铺。
 

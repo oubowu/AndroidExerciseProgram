@@ -50,6 +50,28 @@
             android:orderInCategory="100"
             android:title="Bitmapshaper"
             app:showAsAction="never"/>
+        <item
+            android:id="@+id/action_reflect"
+            android:orderInCategory="100"
+            android:title="LinearGradient"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_dream"
+            android:orderInCategory="100"
+            android:title="RadialGradient"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/action_matrix_image"
+            android:orderInCategory="100"
+            android:title="MatrixImage"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_camera"
+            android:orderInCategory="100"
+            android:title="Camera"
+            app:showAsAction="never"/>
 
     </group>
 

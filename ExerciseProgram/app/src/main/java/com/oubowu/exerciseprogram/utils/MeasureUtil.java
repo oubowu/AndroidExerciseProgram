@@ -17,6 +17,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.oubowu.exerciseprogram.R;
+import com.socks.library.KLog;
 
 
 /**
@@ -274,6 +275,7 @@ public class MeasureUtil {
             // 一定都会大于等于目标的宽和高。
             inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
         }
+        KLog.e("inSampleSize=" + inSampleSize);
         return inSampleSize;
     }
 

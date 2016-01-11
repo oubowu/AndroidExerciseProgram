@@ -1,18 +1,23 @@
 package com.oubowu.exerciseprogram.aigestudiostudy;
 
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
 import com.oubowu.exerciseprogram.utils.FragmentManage;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class AigeActivity extends BaseActivity {
 
     @Bind(R.id.cv)
     CustomView cv;
+    @Bind(R.id.ev)
+    EraserView ev;
 
     @Override
     protected int provideLayoutId() {
@@ -44,6 +49,7 @@ public class AigeActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         cv.ondestroy();
+        ev.setVisibility(View.GONE);
         if (item.isChecked())
             return true;
         item.setChecked(true);
@@ -59,6 +65,7 @@ public class AigeActivity extends BaseActivity {
                 break;
             case R.id.action_xfermode:
                 FragmentManage.changeFragment(new PorterDuffXfermodeFragment(), getSupportFragmentManager(), R.id.fl, ColorMatrixFragment.class.getSimpleName());
+                break;
             case R.id.action_blur:
                 FragmentManage.changeFragment(new BlurMaskFilterFragment(), getSupportFragmentManager(), R.id.fl, BlurMaskFilterFragment.class.getSimpleName());
                 break;
@@ -71,6 +78,18 @@ public class AigeActivity extends BaseActivity {
             case R.id.action_bitmapshaper:
                 FragmentManage.changeFragment(new BrickViewFragment(), getSupportFragmentManager(), R.id.fl, BrickViewFragment.class.getSimpleName());
                 break;
+            case R.id.action_reflect:
+                FragmentManage.changeFragment(new ReflectViewFragment(), getSupportFragmentManager(), R.id.fl, ReflectViewFragment.class.getSimpleName());
+                break;
+            case R.id.action_dream:
+                FragmentManage.changeFragment(new DreamEffectFragment(), getSupportFragmentManager(), R.id.fl, DreamEffectFragment.class.getSimpleName());
+                break;
+            case R.id.action_matrix_image:
+                FragmentManage.changeFragment(new MatrixImageFragment(), getSupportFragmentManager(), R.id.fl, MatrixImageFragment.class.getSimpleName());
+                break;
+            case R.id.action_camera:
+                FragmentManage.changeFragment(new CameraFragment(), getSupportFragmentManager(), R.id.fl, CameraFragment.class.getSimpleName());
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -81,5 +100,12 @@ public class AigeActivity extends BaseActivity {
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             finish();
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

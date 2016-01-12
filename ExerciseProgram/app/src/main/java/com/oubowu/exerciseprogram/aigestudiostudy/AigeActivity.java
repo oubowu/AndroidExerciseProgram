@@ -102,6 +102,9 @@ public class AigeActivity extends BaseActivity {
             case R.id.action_path_clip:
                 FragmentManage.changeFragment(new PathClipViewFragment(), getSupportFragmentManager(), R.id.fl, PathClipViewFragment.class.getSimpleName());
                 break;
+            case R.id.action_wave:
+                FragmentManage.changeFragment(new WaveViewFragment(), getSupportFragmentManager(), R.id.fl, WaveViewFragment.class.getSimpleName());
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

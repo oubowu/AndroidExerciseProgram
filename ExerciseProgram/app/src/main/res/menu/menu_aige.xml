@@ -97,6 +97,12 @@
             android:title="Path&amp;Clip"
             app:showAsAction="never"/>
 
+        <item
+            android:id="@+id/action_wave"
+            android:orderInCategory="100"
+            android:title="Wave"
+            app:showAsAction="never"/>
+
     </group>
 
 </menu>

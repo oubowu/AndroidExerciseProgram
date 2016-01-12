@@ -90,6 +90,18 @@ public class AigeActivity extends BaseActivity {
             case R.id.action_camera:
                 FragmentManage.changeFragment(new CameraFragment(), getSupportFragmentManager(), R.id.fl, CameraFragment.class.getSimpleName());
                 break;
+            case R.id.action_circle:
+                FragmentManage.changeFragment(new MultiCircleFragment(), getSupportFragmentManager(), R.id.fl, MultiCircleFragment.class.getSimpleName());
+                break;
+            case R.id.action_bitmap_mesh:
+                FragmentManage.changeFragment(new BitmapMeshFragment(), getSupportFragmentManager(), R.id.fl, BitmapMeshFragment.class.getSimpleName());
+                break;
+            case R.id.action_bitmap_mesh1:
+                FragmentManage.changeFragment(new BitmapMeshFragment1(), getSupportFragmentManager(), R.id.fl, BitmapMeshFragment1.class.getSimpleName());
+                break;
+            case R.id.action_path_clip:
+                FragmentManage.changeFragment(new PathClipViewFragment(), getSupportFragmentManager(), R.id.fl, PathClipViewFragment.class.getSimpleName());
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -73,6 +73,30 @@
             android:title="Camera"
             app:showAsAction="never"/>
 
+        <item
+            android:id="@+id/action_circle"
+            android:orderInCategory="100"
+            android:title="Canvas"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_bitmap_mesh"
+            android:orderInCategory="100"
+            android:title="BitmapMesh"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_bitmap_mesh1"
+            android:orderInCategory="100"
+            android:title="BitmapMesh1"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_path_clip"
+            android:orderInCategory="100"
+            android:title="Path&amp;Clip"
+            app:showAsAction="never"/>
+
     </group>
 
 </menu>

@@ -14,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.oubowu.exerciseprogram.aigestudiostudy.CustomView
+        <com.oubowu.exerciseprogram.aigestudiostudy.customview.CustomView
             android:id="@+id/cv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
 
-        <com.oubowu.exerciseprogram.aigestudiostudy.EraserView
+        <com.oubowu.exerciseprogram.aigestudiostudy.customview.EraserView
             android:id="@+id/ev"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

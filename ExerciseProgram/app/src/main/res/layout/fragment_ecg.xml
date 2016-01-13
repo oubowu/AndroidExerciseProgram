@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.oubowu.exerciseprogram.aigestudiostudy.AigeActivity">
 
-    <com.oubowu.exerciseprogram.aigestudiostudy.ECGView
+    <com.oubowu.exerciseprogram.aigestudiostudy.customview.ECGView
         android:id="@+id/ccv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -6,6 +6,7 @@ import android.view.Window;
 
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.ColorMatrixFragment;
 import com.oubowu.exerciseprogram.utils.FragmentManage;
 import com.socks.library.KLog;
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.oubowu.exerciseprogram.aigestudiostudy.AigeActivity">
 
-    <com.oubowu.exerciseprogram.aigestudiostudy.BitmapMeshView1
+    <com.oubowu.exerciseprogram.aigestudiostudy.customview.BitmapMeshView1
         android:id="@+id/ccv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

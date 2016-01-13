@@ -7,12 +7,34 @@ import android.view.View;
 
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.BitmapMeshFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.BitmapMeshFragment1;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.BlurMaskFilterFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.BrickViewFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.CameraFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.ClipRegionFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.ColorMatrixFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.CustomView;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.DreamEffectFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.ECGViewFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.EraserView;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.LightingColorFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.MatrixImageFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.MultiCircleFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.PathClipViewFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.PolyLineViewFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.PorterDuffColorFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.PorterDuffXfermodeFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.ReflectViewFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.ShadowViewFragment;
+import com.oubowu.exerciseprogram.aigestudiostudy.customview.WaveViewFragment;
 import com.oubowu.exerciseprogram.utils.FragmentManage;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class AigeActivity extends BaseActivity {
+
 
     @Bind(R.id.cv)
     CustomView cv;
@@ -36,8 +58,8 @@ public class AigeActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         cv.ondestroy();
+        super.onDestroy();
     }
 
     @Override
@@ -48,7 +70,6 @@ public class AigeActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        cv.ondestroy();
         ev.setVisibility(View.GONE);
         if (item.isChecked())
             return true;

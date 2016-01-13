@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_difference"
+            android:checked="true"
+            android:orderInCategory="100"
+            android:title="DIFFERENCE,最终区域为第一个区域与第二个区域不同的区域"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_intersect"
+            android:orderInCategory="100"
+            android:title="INTERSECT,最终区域为第一个区域与第二个区域相交的区域"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_replace"
+            android:orderInCategory="100"
+            android:title="REPLACE,最终区域为第二个区域"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_reverse_difference"
+            android:orderInCategory="100"
+            android:title="REVERSE_DIFFERENCE,最终区域为第二个区域与第一个区域不同的区域"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_union"
+            android:orderInCategory="100"
+            android:title="UNION,最终区域为第一个区域加第二个区域"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_xor"
+            android:orderInCategory="100"
+            android:title="XOR,最终区域为第一个区域加第二个区域并减去两者相交的区域"
+            app:showAsAction="never"/>
+
+    </group>
+
+</menu>

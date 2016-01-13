@@ -103,6 +103,18 @@
             android:title="Wave"
             app:showAsAction="never"/>
 
+        <item
+            android:id="@+id/action_poly"
+            android:orderInCategory="100"
+            android:title="PolyLine"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_clip_region"
+            android:orderInCategory="100"
+            android:title="ClipRegion"
+            app:showAsAction="never"/>
+
     </group>
 
 </menu>

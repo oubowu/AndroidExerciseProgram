@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.widget.Button;
 
 import com.oubowu.exerciseprogram.aigestudiostudy.AigeActivity;
+import com.oubowu.exerciseprogram.aigestudiostudy.AigeActivity1;
 import com.oubowu.exerciseprogram.databinding.DataBindingActivity;
-import com.oubowu.exerciseprogram.jsonparse.JsonParseActivity;
 import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
+import com.oubowu.exerciseprogram.jsonparse.JsonParseActivity;
 import com.oubowu.exerciseprogram.kotlin.LoginActivity;
 import com.oubowu.exerciseprogram.mvp.MvpActivity;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshActivity;
@@ -80,6 +81,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_aige)
     void aige() {
         startActivity(new Intent(this, AigeActivity.class));
+    }
+
+    @OnClick(R.id.bt_aige1)
+    void aige1() {
+        startActivity(new Intent(this, AigeActivity1.class));
     }
 
     @Override

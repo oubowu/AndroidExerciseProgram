@@ -1,13 +1,17 @@
 package com.oubowu.exerciseprogram.aigestudiostudy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.oubowu.exerciseprogram.utils.MeasureUtil;
 
 /**
  * 类名： CanvasView
@@ -21,6 +25,7 @@ import android.view.View;
  */
 public class PathClipView extends View {
 
+    private final TextPaint mTextPaint;
     private Paint mPaint;
     private Path mPath;
 
@@ -29,7 +34,7 @@ public class PathClipView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(3);
-        mPaint.setColor(Color.GREEN);
+        mPaint.setColor(Color.parseColor("#ff2d6f"));
 
         mPath = new Path();
 
@@ -70,14 +75,17 @@ public class PathClipView extends View {
         // 这个方法呢很简单沿着Path绘制一段文字，参数也是一看就该懂得了不多说。Path.Direction只有两个常量值
         // CCW和CW分别表示逆时针方向闭合和顺时针方向闭合
 
+        mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.LINEAR_TEXT_FLAG);
+        mTextPaint.setColor(Color.parseColor("#304ffe"));
+        mTextPaint.setTextSize(20);
 
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.BLUE);
-        canvas.clipRect(0, 0, 500, 900);
-        canvas.drawColor(Color.RED);
+        canvas.drawColor(Color.parseColor("#2baf2b"));
+        canvas.clipRect(0, 0, 500, MeasureUtil.getScreenHeight((Activity) getContext()) - MeasureUtil.getStatusBarHeight(getContext()) - MeasureUtil.getToolbarHeight(getContext()));
+        canvas.drawColor(Color.parseColor("#fb8c00"));
 
         mPath.reset();
         mPath.moveTo(20, 20);
@@ -126,7 +134,25 @@ public class PathClipView extends View {
         // 添加一条弧线到Path中
         oval = new RectF(10, 540, 100, 640);
         mPath.addArc(oval, 30, 150);
+        oval = new RectF(10, 700, 100, 800);
+        // CCW和CW分别表示逆时针方向闭合和顺时针方向闭合
+        mPath.addRoundRect(oval, 10, 20, Path.Direction.CCW);
         canvas.drawPath(mPath, mPaint);
+
+        mPath.reset();
+        oval = new RectF(150, 700, 250, 900);
+        // CCW和CW分别表示逆时针方向闭合和顺时针方向闭合
+        mPath.addOval(oval, Path.Direction.CW);
+        canvas.drawPath(mPath, mPaint);
+        // mPath.addOval(oval, Path.Direction.CCW);
+        // 沿着Path的文字全都在闭合曲线的“内部”了，Path.Direction闭合方向大概就是这么个意思。
+        canvas.drawTextOnPath("我欲乘风归去，又恐琼楼玉宇，高处不胜寒", mPath, -5, -5, mTextPaint);
+
+        mPath.reset();
+        oval = new RectF(300, 700, 400, 900);
+        mPath.addOval(oval, Path.Direction.CCW);
+        canvas.drawPath(mPath, mPaint);
+        canvas.drawTextOnPath("我欲乘风归去，又恐琼楼玉宇，高处不胜寒", mPath, -5, -5, mTextPaint);
 
         // 我们在以[500,600]为圆心绘制一个半径为100px的绿色圆，按道理来说，
         // 这个圆应该刚好与红色区域下方相切对吧，但是事实上呢我们见不到任何效果，为什么？

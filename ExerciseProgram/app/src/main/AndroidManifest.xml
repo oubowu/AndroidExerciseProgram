@@ -64,8 +64,13 @@
             android:label="Activity为总统"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         </activity>
-        <activity android:name=".aigestudiostudy.AigeActivity"
-            >
+        <activity
+            android:name=".aigestudiostudy.AigeActivity"
+            android:label="Canvas相关知识">
+        </activity>
+        <activity
+            android:name=".aigestudiostudy.AigeActivity1"
+            android:label="绘制流程相关知识">
         </activity>
     </application>
 

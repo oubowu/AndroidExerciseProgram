@@ -41,6 +41,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
     @SuppressWarnings("unchecked")
     protected <T extends View> T getViewById(int id) {
         // 泛型强转

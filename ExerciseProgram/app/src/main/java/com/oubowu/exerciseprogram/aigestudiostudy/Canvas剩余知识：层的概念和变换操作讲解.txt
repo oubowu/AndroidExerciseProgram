@@ -1,0 +1,48 @@
+1.层的理解
+
+至此结合上一节对Canvas的一些原理阐述我们该对它有个全新的认识，之前我们一直称其为画布，其实更准确地说Canvas是一个容器，如果把Canvas理解成画板，
+那么我们的“层”就像张张夹在画板上的透明的纸，而这些纸对应到Android则是一个个封装在Canvas中的Bitmap。
+除了save()方法Canvas还给我们提供了一系列的saveLayerXXX方法给我们保存画布，与save()方法不同的是，
+saveLayerXXX方法会将所有的操作存到一个新的Bitmap中而不影响当前Canvas的Bitmap，而save()方法则是在当前的Bitmap中进行操作，
+并且只能针对Bitmap的形变和裁剪进行操作，saveLayerXXX方法则无所不能，当然两者还有很多的不同，我们稍作讲解。
+虽然save和saveLayerXXX方法有着很大的区别但是在一般应用上两者能实现的功能是差不多
+
+saveLayerXXX方法会将操作保存到一个新的Bitmap中，而这个Bitmap的大小取决于我们传入的参数大小，Bitmap是个相当危险的对象，
+很多朋友在操作Bitmap时不太理解其原理经常导致OOM，在saveLayer时我们会依据传入的参数获取一个相同大小的Bitmap，虽然这个Bitmap是空的但是其会占用一定的内存空间，
+我们希望尽可能小地保存该保存的区域，而saveLayer则提供了这样的功能，顺带提一下，onDraw方法传入的Canvas对象的Bitmap在Android没引入HW之前理论上是无限大的，
+实际上其依然是根据你的图像来不断计算的，而在引入HW之后，该Bitmap受到限制，具体多大大家可以尝试画一个超长的path运行下你就可以在Logcat中看到warning。
+
+除了saveLayer，Canvas还提供了一个saveLayerAlpha方法，顾名思义，该方法可以在我们保存画布时设置画布的透明度
+
+如果大家留心，会发现save()也有个重载方法save (int saveFlags)，而saveLayer和saveLayerAlpha你也会发现又一个类似的参数，那么这个参数是干嘛用的呢？
+在Canvas中有六个常量值：
+这六个常量值分别标识了我们在调用restore方法后还原什么，六个标识位除了CLIP_SAVE_FLAG、MATRIX_SAVE_FLAG和ALL_SAVE_FLAG是save和saveLayerXXX方法都通用外
+其余三个只能使saveLayerXXX方法有效，ALL_SAVE_FLAG很简单也是我们新手级常用的标识保存所有，
+CLIP_SAVE_FLAG和MATRIX_SAVE_FLAG也很好理解，一个是裁剪的标识位一个是变换的标识位，
+CLIP_TO_LAYER_SAVE_FLAG、FULL_COLOR_LAYER_SAVE_FLAG和HAS_ALPHA_LAYER_SAVE_FLAG只对saveLayer和saveLayerAlpha有效，
+CLIP_TO_LAYER_SAVE_FLAG表示对当前图层执行裁剪操作需要对齐图层边界，FULL_COLOR_LAYER_SAVE_FLAG表示当前图层的色彩模式至少需要是8位色，
+而HAS_ALPHA_LAYER_SAVE_FLAG表示在当前图层中将需要使用逐像素Alpha混合模式，关于色彩深度和Alpha混合大家可以参考维基百科，
+平时使用大家可以直接ALL_SAVE_FLAG。
+
+所有的save、saveLayer和saveLayerAlpha方法都有一个int型的返回值，该返回值作为一个标识给与了一个你当前保存操作的唯一ID编号，
+我们可以利用restoreToCount(int saveCount)方法来指定在还原的时候还原哪一个保存操作
+
+save和saveLayerXXX方法有着本质的区别，saveLayerXXX方法会将所有操作在一个新的Bitmap中进行，而save则是依靠stack栈来进行
+
+Canvas会默认保存一个底层的空间给我们绘制一些东西，当我们没有调用save方法时所有的绘图操作都在这个Default Stack ID中进行，
+每当我们调用一次save就会往Stack中存入一个ID，将其后所有的操作都在这个ID所指向的空间进行直到我们调用restore方法还原操作
+
+restoreToCount(int saveCount)方法接受一个标识值，我们可以根据这个标识值来还原特定的栈空间，效果类似就不多说了。
+每当我们调用restore还原Canvas，对应的save栈空间就会从Stack中弹出去，Canvas提供了getSaveCount()方法来为我们提供查询当前栈中有多少save的空间
+
+2.Canvas中的变换操作
+
+无非就几种：平移、旋转、缩放和错切，而我们的Canvas也继承了变换的精髓，同样提供了这几种相应的方法，前面的很多章节我们也都用到了，
+像translate(float dx, float dy)方法平移画布用了无数次，这里再次强调，translate方法会改变画布的原点坐标，原点坐标对变换的影响弥足轻重，
+前面也多次强调了！scale(float sx, float sy)缩放也很好理解，但是它有一个重载方法scale(float sx, float sy, float px, float py)，
+后两个参数用于指定缩放的中心点，前两个参数用于指定横纵向的缩放比率值在0-1之间为缩小
+
+rotate(float degrees)和重载方法rotate(float degrees, float px, float py)类似前面也用过不少就不多说了，没接触过的只有skew(float sx, float sy)错切方法，
+关于错切的概念前面我们都有讲过很多，其实知道原理，方法再怎么变都不难
+
+Canvas也提供了对应的方法来便于我们设置Matrix直接变换Canvas,canvas.setMatrix(matrix)

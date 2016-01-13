@@ -105,6 +105,12 @@ public class AigeActivity extends BaseActivity {
             case R.id.action_wave:
                 FragmentManage.changeFragment(new WaveViewFragment(), getSupportFragmentManager(), R.id.fl, WaveViewFragment.class.getSimpleName());
                 break;
+            case R.id.action_poly:
+                FragmentManage.changeFragment(new PolyLineViewFragment(), getSupportFragmentManager(), R.id.fl, PolyLineViewFragment.class.getSimpleName());
+                break;
+            case R.id.action_clip_region:
+                FragmentManage.changeFragment(new ClipRegionFragment(), getSupportFragmentManager(), R.id.fl, ClipRegionFragment.class.getSimpleName());
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

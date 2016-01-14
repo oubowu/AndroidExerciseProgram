@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.oubowu.exerciseprogram.R;
+import com.oubowu.exerciseprogram.refreshrecyclerview.adapter.BaseRecyclerViewAdapter;
 import com.pnikosis.materialishprogress.ProgressWheel;
 import com.socks.library.KLog;
 
@@ -45,7 +46,7 @@ public class RefreshRecyclerView extends RelativeLayout {
     private OnScrollListener mScrollListeners;
     private OnRefreshListener mRefreshListener;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private BaseRecyclerViewAdapter mAdapter;
     private int mLastVisiblePosition[] = new int[2];
     private int mLoadingFooterHeight;
     private boolean mIsLoadAll;
@@ -202,7 +203,7 @@ public class RefreshRecyclerView extends RelativeLayout {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    public void setAdapterAndLayoutManager(RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager) {
+    public void setAdapterAndLayoutManager(BaseRecyclerViewAdapter adapter, RecyclerView.LayoutManager layoutManager) {
         mLayoutManager = layoutManager;
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = adapter;
@@ -213,7 +214,7 @@ public class RefreshRecyclerView extends RelativeLayout {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (mScrollListeners != null)
                     mScrollListeners.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mRefreshListener != null && mAdapter != null && !mAdapter.isDisableFooter()) {
                     if (mIsLoadAll) return;
                     if (mLayoutManager instanceof StaggeredGridLayoutManager) {
                         ((StaggeredGridLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPositions(mLastVisiblePosition);
@@ -322,6 +323,11 @@ public class RefreshRecyclerView extends RelativeLayout {
     // 显示圆形刷新头
     public void showRefreshCircleView() {
         mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    // 隐藏圆形刷新头
+    public void hideRefreshCircleView() {
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void smoothScrollToPosition(int position) {

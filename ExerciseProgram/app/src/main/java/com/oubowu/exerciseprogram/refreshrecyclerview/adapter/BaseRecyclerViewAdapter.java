@@ -26,6 +26,12 @@ import java.util.List;
  */
 public abstract class BaseRecyclerViewAdapter<T extends BaseRecyclerViewHolder, V> extends RecyclerView.Adapter<T> {
 
+    public boolean isDisableFooter() {
+        return mDisableFooter;
+    }
+
+    private boolean mDisableFooter;
+
     public List<V> getDatas() {
         return mDatas;
     }
@@ -33,6 +39,7 @@ public abstract class BaseRecyclerViewAdapter<T extends BaseRecyclerViewHolder, 
     public void setDatas(List<V> datas) {
         this.mDatas = datas;
         mRefreshRecyclerView.refreshComplete();
+        notifyDataSetChanged();
     }
 
     public void addMoreDatas(List<V> datas) {
@@ -54,6 +61,13 @@ public abstract class BaseRecyclerViewAdapter<T extends BaseRecyclerViewHolder, 
         this.mDatas = datas;
         this.mRefreshRecyclerView = refreshRecyclerView;
         this.mContext = context;
+    }
+
+    public BaseRecyclerViewAdapter(Context context, List<V> datas, RefreshRecyclerView refreshRecyclerView, boolean disableFooter) {
+        this.mDatas = datas;
+        this.mRefreshRecyclerView = refreshRecyclerView;
+        this.mContext = context;
+        this.mDisableFooter = disableFooter;
     }
 
     @SuppressWarnings("unchecked")
@@ -98,7 +112,7 @@ public abstract class BaseRecyclerViewAdapter<T extends BaseRecyclerViewHolder, 
 
     @Override
     public int getItemViewType(int position) {
-        if (mRefreshRecyclerView.isLoadAll() && position == getItemCount() - 1) {
+        if (mRefreshRecyclerView.isLoadAll() && position == getItemCount() - 1 && !mDisableFooter) {
             return TYPE_LOAD_ALL;
         }
         return getCustomItemViewType(position);
@@ -108,7 +122,7 @@ public abstract class BaseRecyclerViewAdapter<T extends BaseRecyclerViewHolder, 
 
     @Override
     public int getItemCount() {
-        return mDatas == null ? 0 : mDatas.size() + (mRefreshRecyclerView.isLoadAll() ? 1 : 0);
+        return mDatas == null ? 0 : mDatas.size() + (mRefreshRecyclerView.isLoadAll() && !mDisableFooter ? 1 : 0);
     }
 
 }

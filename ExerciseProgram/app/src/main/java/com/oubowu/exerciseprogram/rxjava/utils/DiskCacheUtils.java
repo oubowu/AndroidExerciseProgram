@@ -7,10 +7,11 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 
-import com.google.repacked.apache.commons.io.IOUtils;
-import com.oubowu.exerciseprogram.utils.ImageLoader.DiskLruCache;
+import com.oubowu.exerciseprogram.utils.DiskLruCache;
+import com.socks.library.KLog;
 
 import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 类名： DiskCahe
+ * 类名： DiskCacheUtils
  * 作者: oubowu
  * 时间： 2016/1/14 17:14
  * 功能：
@@ -28,7 +29,7 @@ import java.security.NoSuchAlgorithmException;
  * 更新人:$$Author$$
  * 更新描述:
  */
-public class DiskCahe {
+public class DiskCacheUtils {
 
     // 1mb
     private static final int MB = 1024 * 1024;
@@ -39,9 +40,9 @@ public class DiskCahe {
     private DiskLruCache mDiskLruCache;
 
     // 实例
-    private static volatile DiskCahe mDiskCahe;
+    private static volatile DiskCacheUtils mDiskCahe;
 
-    private DiskCahe(Context context) {
+    private DiskCacheUtils(Context context) {
         initDiskCache(context);
     }
 
@@ -51,11 +52,11 @@ public class DiskCahe {
      * @param context
      * @return
      */
-    public static DiskCahe getInstance(Context context) {
+    public static DiskCacheUtils getInstance(Context context) {
         if (mDiskCahe == null) {
-            synchronized (DiskCahe.class) {
+            synchronized (DiskCacheUtils.class) {
                 if (mDiskCahe == null) {
-                    mDiskCahe = new DiskCahe(context);
+                    mDiskCahe = new DiskCacheUtils(context);
                 }
             }
         }
@@ -99,7 +100,7 @@ public class DiskCahe {
             final DiskLruCache.Snapshot snapshot = mDiskLruCache.get(hashKeyFormUrl(name));
             final InputStream is = snapshot.getInputStream(0);
             Bitmap bitmap = BitmapFactory.decodeStream(is);
-            IOUtils.closeQuietly(is);
+            closeQuietly(is);
             return bitmap;
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,14 +117,15 @@ public class DiskCahe {
             // 但不知结果如何。然后调用commit()方法表示写入缓存成功，这时会向journal中写入一条CLEAN记录，
             // 意味着这条“脏”数据被“洗干净了”，调用abort()方法表示写入缓存失败，这时会向journal中写入一条REMOVE记录。
             final DiskLruCache.Editor editor = mDiskLruCache.edit(hashKeyFormUrl(name));
-            if (editor != null) {
+            if (editor != null && mDiskLruCache.get(hashKeyFormUrl(name)) == null) {
+                KLog.e("储存图片: " + name);
                 OutputStream os = editor.newOutputStream(0);
                 if (writeBitmapToDisk(bitmap, os)) {
                     editor.commit();
                 } else {
                     editor.abort();
                 }
-                IOUtils.closeQuietly(os);
+                closeQuietly(os);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,7 +143,7 @@ public class DiskCahe {
             e.printStackTrace();
             res = false;
         } finally {
-            IOUtils.closeQuietly(bos);
+            closeQuietly(bos);
         }
         return res;
     }
@@ -177,6 +179,17 @@ public class DiskCahe {
             sb.append(hex);
         }
         return sb.toString();
+    }
+
+    public void closeQuietly(Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+
+        } catch (IOException var1) {
+            ;
+        }
     }
 
 }

@@ -12,12 +12,8 @@ import android.view.View;
  * 更新人:$$Author$$
  * 更新描述:
  */
-public abstract class OnItemClickListener {
-    public void onItemClick(View view, int position) {
+public interface OnItemClickListener {
+    void onItemClick(View view, int position);
 
-    }
-
-    public void onItemLongClick(View view, int position) {
-
-    }
+    void onItemLongClick(View view, int position);
 }

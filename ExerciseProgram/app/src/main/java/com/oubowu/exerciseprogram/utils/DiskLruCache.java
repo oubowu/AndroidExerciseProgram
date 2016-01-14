@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.oubowu.exerciseprogram.utils.ImageLoader;
+package com.oubowu.exerciseprogram.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;

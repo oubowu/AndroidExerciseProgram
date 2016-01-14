@@ -1,12 +1,17 @@
 package com.oubowu.exerciseprogram.rxjava;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.wifi.WifiManager;
 import android.view.View;
 import android.widget.Button;
 
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
+import com.oubowu.exerciseprogram.rxjava.bean.AppInfo;
+import com.oubowu.exerciseprogram.rxjava.utils.BitmapUtils;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -22,6 +27,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import rx.subjects.AsyncSubject;
+import rx.subjects.BehaviorSubject;
+import rx.subjects.PublishSubject;
+import rx.subjects.ReplaySubject;
 
 public class RxJavaActivity extends BaseActivity {
 
@@ -48,7 +57,6 @@ public class RxJavaActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
     }
 
     @Override
@@ -63,6 +71,146 @@ public class RxJavaActivity extends BaseActivity {
 //        test8();
 //        test9();
 //        test10();
+
+
+//        rxjavaEssentialsTest();
+
+
+    }
+
+    private Observable<AppInfo> getApps() {
+        return Observable.create(subscriber -> {
+
+            final Intent intent = new Intent(Intent.ACTION_MAIN, null);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+            final List<ResolveInfo> infos = getPackageManager().queryIntentActivities(intent, 0);
+            for (ResolveInfo info : infos) {
+                BitmapDrawable icon = (BitmapDrawable) info.activityInfo.loadIcon(getPackageManager());
+                BitmapUtils.storeBitmap(RxJavaActivity.this, icon.getBitmap(), info.activityInfo.name);
+            }
+
+        });
+    }
+
+
+    private final PublishSubject<Boolean> mDoneSubject = PublishSubject.create();
+
+    private void rxjavaEssentialsTest() {
+        Observable<Integer> observable = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                for (int i = 0; i < 5; i++) {
+                    subscriber.onNext(i);
+                }
+                subscriber.onCompleted();
+            }
+        });
+
+        final Subscription subscription = observable.subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                KLog.e("onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                KLog.e(e.getMessage());
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                KLog.e("收到：" + integer);
+            }
+        });
+
+        StringBuilder sb = new StringBuilder();
+        Observable.from(Arrays.asList("I", " am", " hehe", " chinese!"))
+                .filter(s -> !s.equals(" hehe"))
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        KLog.e(sb.toString());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        sb.append(s);
+                    }
+                });
+
+        Observable.just("I'm a patriot!").subscribe(s -> KLog.e(s));
+
+        // Subject = Observable + Observer
+        // subject是一个神奇的对象，它可以是一个Observable同时也可以是一个Observer：
+        // 它作为连接这两个世界的一座桥梁。一个Subject可以订阅一个Observable，就像一个观察者，
+        // 并且它可以发射新的数据，或者传递它接受到的数据，就像一个Observable。
+        // 很明显，作为一个Observable，观察者们或者其它Subject都可以订阅它。
+        PublishSubject<String> stringPublishSubject = PublishSubject.create();
+        // 创建了一个PublishSubject，用create()方法发射一个String值，然后我们订阅了PublishSubject。
+        // 此时，没有数据要发送，因此我们的观察者只能等待，没有阻塞线程，也没有消耗资源。
+        // 就在这随时准备从subject接收值，如果subject没有发射值那么我们的观察者就会一直在等待。
+        stringPublishSubject.subscribe(s -> KLog.e(s));
+        // 手动发射字符串“Hello World”,它触发了观察者的onNext()方法
+        stringPublishSubject.onNext("China is one.");
+
+        // 有一个private声明的Observable，外部不能访问。Observable在它生命周期内发射值，我们不用关心这些值，我们只关心他们的结束
+        // 创建一个新的PublishSubject来响应它的onNext()方法，并且外部也可以访问它
+        mDoneSubject.subscribe(s -> KLog.e("PublishSubject done: " + s));
+        // 创建“私有”的Observable，只有subject才可以访问的到
+        Observable
+                .create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        for (int i = 0; i < 5; i++) {
+                            subscriber.onNext(i);
+                        }
+                        subscriber.onCompleted();
+                    }
+                })
+                .doOnCompleted(() -> mDoneSubject.onNext(true))
+                .subscribe();
+        // doOnCompleted()方法指定当Observable结束时要做什么事情：在subject上发射true。最后，我们订阅了Observable。
+        // 很明显，空的subscribe()调用仅仅是为了开启Observable，而不用管已发出的任何值，也不用管完成事件或者错误事件。
+        // 创建了一个可以连接Observables并且同时可被观测的实体。当我们想为公共资源创建独立、抽象或更易观测的点时，这是极其有用的
+
+        // BehaviorSubject
+        // 简单的说，BehaviorSubject会首先向他的订阅者发送截至订阅前最新的一个数据对象（或初始值）,然后正常发送订阅后的数据流。
+        BehaviorSubject<Integer> behaviorSubject = BehaviorSubject.create(1);
+        // 在这个短例子中，我们创建了一个能发射整形(Integer)的BehaviorSubject。由于每当Observes订阅它时就会发射最新的数据，所以它需要一个初始值。
+        // 无论是否调用behaviorSubject.onNext(),都会输出默认值
+        behaviorSubject.subscribe(i -> KLog.e("BehaviorSubject输出：" + i));
+        behaviorSubject.onNext(111);
+
+        //ReplaySubject
+        // ReplaySubject会缓存它所订阅的所有数据,向任意一个订阅它的观察者重发:
+        ReplaySubject<Integer> replaySubject = ReplaySubject.create();
+        replaySubject.subscribe(i -> KLog.e("ReplaySubject输出：" + i));
+        replaySubject.onNext(110);
+        replaySubject.onNext(111);
+        replaySubject.onNext(112);
+
+        // AsyncSubject
+        // 当Observable完成时AsyncSubject只会发布最后一个数据给已经订阅的每一个观察者。
+        AsyncSubject<Integer> asyncSubject = AsyncSubject.create();
+        asyncSubject.subscribe(i -> KLog.e("AsyncSubject输出：" + i));
+        Observable
+                .create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        for (int i = 0; i < 5; i++) {
+                            // AsyncSubject只会输出最后的4
+                            subscriber.onNext(i);
+                        }
+                        subscriber.onCompleted();
+                    }
+                })
+                .subscribe(asyncSubject);
 
     }
 

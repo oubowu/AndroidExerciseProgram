@@ -20,6 +20,7 @@ import com.oubowu.exerciseprogram.rxjava.bean.AppInfo;
 import com.oubowu.exerciseprogram.rxjava.rxbus.RxBus;
 import com.oubowu.exerciseprogram.rxjava.utils.DiskCacheUtils;
 import com.oubowu.exerciseprogram.utils.ToastUtil;
+import com.socks.library.KLog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +30,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -58,15 +60,10 @@ public class RxJavaActivity extends BaseActivity {
     protected void initView() {
         mAdapter = new MyAdapter(RxJavaActivity.this, null, mRefreshRecyclerView, true, true);
         mRefreshRecyclerView.setAdapterAndLayoutManager(mAdapter, new LinearLayoutManager(RxJavaActivity.this, LinearLayoutManager.VERTICAL, false));
-        mRefreshRecyclerView.setOnRefreshListener(new RefreshRecyclerView.OnRefreshListener() {
+        mRefreshRecyclerView.setOnRefreshListener(new RefreshRecyclerView.OnRefreshListenerAdapter() {
             @Override
             public void onRefresh() {
-//                refreshList();
-            }
-
-            @Override
-            public void onLoadMore() {
-
+                refreshList();
             }
         });
     }
@@ -74,7 +71,7 @@ public class RxJavaActivity extends BaseActivity {
     @Override
     protected void initData() {
 
-//        refreshList();
+        initList();
 
         register = RxBus.get().register(TAG, String.class);
         register.observeOn(AndroidSchedulers.mainThread())
@@ -82,11 +79,25 @@ public class RxJavaActivity extends BaseActivity {
                     ToastUtil.showShort(RxJavaActivity.this, s);
                 });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister(TAG, register);
+    }
+
+    private void initList() {
+
         final Intent intent = new Intent(Intent.ACTION_MAIN, null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         final List<ResolveInfo> infos = getPackageManager().queryIntentActivities(intent, 0);
         Observable
                 .from(infos)
+                        // 过滤空的对象和名称含有Leaks的应用
+                .filter(resolveInfo -> resolveInfo != null && !resolveInfo.loadLabel(getPackageManager()).toString().contains("Leaks"))
+                        // 重复两次
+                .repeat(2)
                 .map(info -> {
                     try {
                         Thread.sleep(500);
@@ -100,7 +111,7 @@ public class RxJavaActivity extends BaseActivity {
                             info.activityInfo.name);
                 })
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(() -> mRefreshRecyclerView.showRefreshCircleView())
+                .doOnSubscribe(mRefreshRecyclerView::showRefreshCircleView)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
@@ -115,16 +126,9 @@ public class RxJavaActivity extends BaseActivity {
                     mAdapter.addData(appInfo);
                     mRefreshRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
                 });
-
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.get().unregister(TAG, register);
-    }
-
-    /*private void refreshList() {
+    private void refreshList() {
 
         getApps()
                 .toSortedList()
@@ -188,7 +192,6 @@ public class RxJavaActivity extends BaseActivity {
                     // 在发射新的数据或者完成序列之前要检测观察者的订阅情况。这样的话代码会更高效，因为如果没有观察者等待时我们就不生成没有必要的数据项。
                     return;
                 }
-//                KLog.e("getApps");
                 subscriber.onNext(new AppInfo(1, info.activityInfo.loadLabel(getPackageManager()).toString() + " : " + sdf.format(new Date()),
                         info.activityInfo.name));
             }
@@ -203,7 +206,7 @@ public class RxJavaActivity extends BaseActivity {
             }
 
         });
-    }*/
+    }
 
     class MyViewHolder extends BaseRecyclerViewHolder {
 

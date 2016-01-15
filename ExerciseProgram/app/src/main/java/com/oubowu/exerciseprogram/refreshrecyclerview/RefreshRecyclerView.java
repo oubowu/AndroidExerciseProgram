@@ -426,6 +426,18 @@ public class RefreshRecyclerView extends RelativeLayout implements View.OnClickL
         void onLoadMore();
     }
 
+    public static class OnRefreshListenerAdapter implements OnRefreshListener {
+        @Override
+        public void onRefresh() {
+
+        }
+
+        @Override
+        public void onLoadMore() {
+
+        }
+    }
+
     public void addOnScrollListener(OnScrollListener listener) {
         this.mScrollListeners = listener;
     }

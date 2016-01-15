@@ -2,13 +2,18 @@ package com.oubowu.exerciseprogram.refreshrecyclerview;
 
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorRes;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,8 +23,12 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,7 +47,20 @@ import com.socks.library.KLog;
  * 更新人:$$Author$$
  * 更新描述:
  */
-public class RefreshRecyclerView extends RelativeLayout {
+public class RefreshRecyclerView extends RelativeLayout implements View.OnClickListener {
+
+    private FloatingActionButton mFab;
+    private float offset = 200;
+    private AppBarLayout mAppBarLayout;
+
+    /**
+     * 悬浮按钮是否添加到布局中的标示位,true为不添加，false为添加
+     */
+    private boolean mFloatButtonDisable;
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return mSwipeRefreshLayout;
+    }
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -48,6 +70,7 @@ public class RefreshRecyclerView extends RelativeLayout {
     private RecyclerView.LayoutManager mLayoutManager;
     private BaseRecyclerViewAdapter mAdapter;
     private int mLastVisiblePosition[] = new int[2];
+    private int mFirstVisiblePosition[] = new int[2];
     private int mLoadingFooterHeight;
     private boolean mIsLoadAll;
     private ProgressWheel mWheel;
@@ -93,10 +116,38 @@ public class RefreshRecyclerView extends RelativeLayout {
                 R.color.refresh_progress_1,
                 R.color.refresh_progress_2,
                 R.color.refresh_progress_3);
-        addView(mSwipeRefreshLayout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        addView(mSwipeRefreshLayout, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
         mRecyclerView = new RecyclerView(context);
-        mSwipeRefreshLayout.addView(mRecyclerView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+
+            private int downX, downY;
+            private int upX, upY;
+            private int mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(ViewConfiguration.get(getContext()));
+
+            @Override
+            public boolean onTouch(View v, MotionEvent ev) {
+                switch (ev.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        downX = (int) ev.getX();
+                        downY = (int) ev.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        upX = (int) ev.getX();
+                        upY = (int) ev.getY();
+                        if (upX - downX > mTouchSlop && (upX - downX) > Math.abs(upY - downY) * 2) {
+                            ((ViewParent) ((Activity) getContext()).findViewById(android.R.id.content)).requestDisallowInterceptTouchEvent(false);
+                        } else {
+                            ((ViewParent) ((Activity) getContext()).findViewById(android.R.id.content)).requestDisallowInterceptTouchEvent(true);
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+
+        mSwipeRefreshLayout.addView(mRecyclerView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         mLoadingFooter = LayoutInflater.from(context).inflate(R.layout.common_loading_footer_layout, this, false);
         addView(mLoadingFooter, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -126,6 +177,8 @@ public class RefreshRecyclerView extends RelativeLayout {
             mLoadAllTextString = getResources().getString(R.string.no_more_products);
         }
 
+        mFloatButtonDisable = a.getBoolean(R.styleable.RefreshRecyclerView_float_button_disable, true);
+
         a.recycle();
 
         mWheel = (ProgressWheel) findViewById(R.id.pw_favorite);
@@ -142,6 +195,45 @@ public class RefreshRecyclerView extends RelativeLayout {
 
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        if (mFloatButtonDisable)
+            return;
+
+        if (getParent() instanceof CoordinatorLayout) {
+            CoordinatorLayout mCoordinatorLayout = (CoordinatorLayout) getParent();
+            for (int i = 0; i < mCoordinatorLayout.getChildCount(); i++) {
+                if (mCoordinatorLayout.getChildAt(i) instanceof AppBarLayout) {
+                    mAppBarLayout = (AppBarLayout) mCoordinatorLayout.getChildAt(i);
+                    break;
+                }
+            }
+            mFab = (FloatingActionButton) ((ViewGroup) getParent()).findViewById(R.id.fab);
+        } else {
+            mFab = (FloatingActionButton) LayoutInflater.from(getContext()).inflate(R.layout.refresh_float_action_button, this, false);
+            addView(mFab, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            LayoutParams fabLp = (LayoutParams) mFab.getLayoutParams();
+            fabLp.addRule(ALIGN_PARENT_BOTTOM);
+            fabLp.addRule(ALIGN_PARENT_RIGHT);
+            int m = getResources().getDimensionPixelSize(R.dimen.fab_margin);
+            fabLp.setMargins(m, m, m, m);
+        }
+        if (mFab != null) {
+            mFab.setOnClickListener(this);
+            mFab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    offset = mFab.getMeasuredHeight() + getResources().getDimensionPixelSize(R.dimen.fab_margin) + mFab.getPaddingBottom();
+                    ObjectAnimator.ofFloat(mFab, "translationY", 0, offset).setDuration(0).start();
+                    mFab.setTag("hide");
+                    mFab.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+            });
+        }
+
+    }
 
     public void setWheelBarColor(int color) {
         mWheel.setBarColor(color);
@@ -208,26 +300,49 @@ public class RefreshRecyclerView extends RelativeLayout {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = adapter;
         mRecyclerView.setAdapter(mAdapter);
+
+        // 瀑布流需要做特殊处理
+        if (mLayoutManager instanceof StaggeredGridLayoutManager) {
+            // 根据列数生成mLastVisiblePosition数组和mFirstVisiblePosition数组
+            final int spanCount = ((StaggeredGridLayoutManager) mLayoutManager).getSpanCount();
+            KLog.e("瀑布流的列数：" + spanCount);
+            mLastVisiblePosition = new int[spanCount];
+            mFirstVisiblePosition = new int[spanCount];
+        }
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (mScrollListeners != null)
                     mScrollListeners.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && mRefreshListener != null && mAdapter != null && !mAdapter.isDisableFooter()) {
-                    if (mIsLoadAll) return;
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && !mIsLoadAll
+                        && mRefreshListener != null
+                        && mAdapter != null
+                        && !mAdapter.disableLoadMore()) {
+                    if (mAdapter == null || mAdapter.getDatas() == null)
+                        return;
                     if (mLayoutManager instanceof StaggeredGridLayoutManager) {
                         ((StaggeredGridLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPositions(mLastVisiblePosition);
                     }
                     if (mLayoutManager instanceof GridLayoutManager) {
-                        mLastVisiblePosition[1] = mLastVisiblePosition[0] = ((GridLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPosition();
+                        mLastVisiblePosition[0] = ((GridLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPosition();
                     }
                     if (mLayoutManager instanceof LinearLayoutManager) {
-                        mLastVisiblePosition[1] = mLastVisiblePosition[0] = ((LinearLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPosition();
+                        mLastVisiblePosition[0] = ((LinearLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPosition();
                     }
-                    if ((mLastVisiblePosition[1] == mAdapter.getItemCount() - 1) ||
-                            mLastVisiblePosition[0] == mAdapter.getItemCount() - 1) {
-                        KLog.e("显示正在加载尾部");
+                    if (mLayoutManager instanceof StaggeredGridLayoutManager) {
+                        for (int i = 0; i < mLastVisiblePosition.length; i++) {
+                            if (mLastVisiblePosition[i] == mAdapter.getItemCount() - 1) {
+                                mLoadingFooter.setVisibility(View.VISIBLE);
+                                ObjectAnimator.ofFloat(mSwipeRefreshLayout, "translationY", 0, -mLoadingFooterHeight).setDuration(0).start();
+                                if (mRefreshListener != null)
+                                    mRefreshListener.onLoadMore();
+                                break;
+                            }
+                        }
+                    } else if (mLastVisiblePosition[0] == mAdapter.getItemCount() - 1) {
                         mLoadingFooter.setVisibility(View.VISIBLE);
                         ObjectAnimator.ofFloat(mSwipeRefreshLayout, "translationY", 0, -mLoadingFooterHeight).setDuration(0).start();
                         mRefreshListener.onLoadMore();
@@ -240,6 +355,34 @@ public class RefreshRecyclerView extends RelativeLayout {
                 super.onScrolled(recyclerView, dx, dy);
                 if (mScrollListeners != null)
                     mScrollListeners.onScrolled(recyclerView, dx, dy);
+
+                if (mAdapter == null || mAdapter.getDatas() == null)
+                    return;
+
+                if (mFab == null || mFab.getTag() == null)
+                    return;
+
+                if (mLayoutManager instanceof StaggeredGridLayoutManager) {
+                    ((StaggeredGridLayoutManager) mLayoutManager).findFirstCompletelyVisibleItemPositions(mFirstVisiblePosition);
+                }
+                if (mLayoutManager instanceof GridLayoutManager) {
+                    mFirstVisiblePosition[0] = ((GridLayoutManager) mLayoutManager).findFirstCompletelyVisibleItemPosition();
+                }
+                if (mLayoutManager instanceof LinearLayoutManager) {
+                    mFirstVisiblePosition[0] = ((LinearLayoutManager) mLayoutManager).findFirstCompletelyVisibleItemPosition();
+                }
+
+                if (mFirstVisiblePosition[0] == 0) {
+                    // 滑动到顶部，隐藏悬浮按钮
+                    if (mFab.getTag().equals("show")) {
+                        ObjectAnimator.ofFloat(mFab, "translationY", 0, offset).setDuration(300).start();
+                        mFab.setTag("hide");
+                    }
+                } else if (mFab.getTag().equals("hide")) {
+                    //  显示悬浮按钮
+                    ObjectAnimator.ofFloat(mFab, "translationY", offset, 0).setDuration(300).start();
+                    mFab.setTag("show");
+                }
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -258,8 +401,23 @@ public class RefreshRecyclerView extends RelativeLayout {
     }
 
     public void refreshComplete() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        hideRefreshCircleView();
         restoreLoadAll();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.fab) {
+            if (mFab.getTag().equals("hide"))
+                return;
+            if (mFirstVisiblePosition[0] <= 80) {
+                mRecyclerView.smoothScrollToPosition(0);
+            } else {
+                mRecyclerView.scrollToPosition(0);
+            }
+            if (mAppBarLayout != null)
+                mAppBarLayout.setExpanded(true);
+        }
     }
 
     public interface OnRefreshListener {
@@ -304,6 +462,7 @@ public class RefreshRecyclerView extends RelativeLayout {
 
     public void loadMoreOrRefreshFailed() {
         loadMoreComplete();
+        hideRefreshCircleView();
     }
 
     public boolean isLoadAll() {
@@ -311,13 +470,24 @@ public class RefreshRecyclerView extends RelativeLayout {
     }
 
     public void loadAllComplete() {
+        loadAllComplete(false);
+    }
+
+    /**
+     * 告知全部加载完毕
+     *
+     * @param scrollToFinalPosition true的话滑动到尾部
+     */
+    public void loadAllComplete(boolean scrollToFinalPosition) {
         mIsLoadAll = true;
         mRecyclerView.getAdapter().notifyItemInserted(mRecyclerView.getAdapter().getItemCount());
-        mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount());
+        if (scrollToFinalPosition)
+            mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount());
         if (ViewCompat.getTranslationY(mSwipeRefreshLayout) != 0) {
             ObjectAnimator.ofFloat(mSwipeRefreshLayout, "translationY", -mLoadingFooterHeight, 0).setDuration(0).start();
             mLoadingFooter.setVisibility(INVISIBLE);
         }
+        hideRefreshCircleView();
     }
 
     // 显示圆形刷新头
@@ -330,6 +500,11 @@ public class RefreshRecyclerView extends RelativeLayout {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    // 是否在刷新
+    public boolean isRefreshing() {
+        return mSwipeRefreshLayout.isRefreshing();
+    }
+
     public void smoothScrollToPosition(int position) {
         mRecyclerView.smoothScrollToPosition(position);
     }
@@ -340,6 +515,33 @@ public class RefreshRecyclerView extends RelativeLayout {
 
     private void restoreLoadAll() {
         mIsLoadAll = false;
+    }
+
+    private View mEmptyView;
+
+    public void setEmptyView(View view) {
+
+        if (mEmptyView != null)
+            this.removeView(mEmptyView);
+
+        mEmptyView = view;
+
+        if (mEmptyView.getParent() != null)
+            ((ViewGroup) mEmptyView.getParent()).removeView(mEmptyView);
+
+        this.addView(mEmptyView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+        mEmptyView.setVisibility(GONE);
+    }
+
+    public void showEmptyView() {
+        if (mEmptyView != null)
+            mEmptyView.setVisibility(VISIBLE);
+    }
+
+    public void hideEmptyView() {
+        if (mEmptyView != null)
+            mEmptyView.setVisibility(INVISIBLE);
     }
 
 }

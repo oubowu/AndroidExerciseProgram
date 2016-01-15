@@ -11,6 +11,7 @@
         <attr name="load_all_text_color" format="reference|color"/>
         <attr name="load_all_text" format="string"/>
         <attr name="loading_wheel_width_height" format="dimension"/>
+        <attr name="float_button_disable" format="boolean"/>
     </declare-styleable>
 
 </resources>

@@ -75,11 +75,6 @@ public class RefreshActivity extends BaseActivity {
                 for (int i = 0; i < 20; i++) {
                     arrayList.add("位置" + (i + count));
                 }
-                count += 20;
-                if (adapter.getItemCount() > 50) {
-                    rrv.loadAllComplete();
-                    count = 20;
-                }
                 new Thread() {
                     @Override
                     public void run() {
@@ -92,6 +87,11 @@ public class RefreshActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 adapter.addMoreDatas(arrayList);
+                                count += 20;
+                                if (adapter.getItemCount() > 50) {
+                                    rrv.loadAllComplete();
+                                    count = 20;
+                                }
                             }
                         });
                     }

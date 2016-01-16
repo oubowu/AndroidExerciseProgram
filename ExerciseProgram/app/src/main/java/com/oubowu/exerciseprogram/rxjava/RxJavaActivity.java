@@ -26,11 +26,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -79,13 +82,52 @@ public class RxJavaActivity extends BaseActivity {
                     ToastUtil.showShort(RxJavaActivity.this, s);
                 });
 
+        // 创建一个新的Observable并且应用defer()
+        Observable<Integer> deferred = Observable.defer(this::getInt);
+        // 一旦我们订阅了，create()方法就会被调用
+        deferred.subscribe(i -> {
+            KLog.e("输出：" + i);
+        });
+
+        // range()函数用两个数字作为参数：第一个是起始点，第二个是我们想发射数字的个数
+        Observable
+                .range(10, 3)
+                .subscribe(i -> {
+                    KLog.e(i);
+                });
+
+        // 一个指定两次发射的时间间隔，另一个是用到的时间单位
+        // 每隔3秒发送一个“I say N(N从0开始算起) ”，一直跑下去直到调用unsubscribe()
+        final Subscription stopMePlease = Observable
+                .interval(3, TimeUnit.SECONDS)
+                .subscribe(i -> {
+                    KLog.e("I say " + i);
+                });
+
+        // 一段时间之后才发送的Observable
+        // 十秒后发送0，然后就完成了
+        Observable.timer(10, TimeUnit.SECONDS)
+                .subscribe(i -> {
+                    KLog.e("取消stopMePlease的订阅;同时发送值" + i);
+                    stopMePlease.unsubscribe();
+                });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.get().unregister(TAG, register);
+    // 声明一个Observable但是你又想推迟这个Observable的创建直到观察者订阅
+    private Observable<Integer> getInt() {
+        return Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                if (subscriber.isUnsubscribed()) {
+                    return;
+                }
+                KLog.e("GetInt");
+                subscriber.onNext(110);
+                subscriber.onCompleted();
+            }
+        });
     }
+
 
     private void initList() {
 
@@ -95,7 +137,9 @@ public class RxJavaActivity extends BaseActivity {
         Observable
                 .from(infos)
                         // 过滤空的对象和名称含有Leaks的应用
-                .filter(resolveInfo -> resolveInfo != null && !resolveInfo.loadLabel(getPackageManager()).toString().contains("Leaks"))
+                        // filter()函数最常用的用法之一时过滤null对象
+                .filter(resolveInfo -> resolveInfo != null
+                        && !resolveInfo.loadLabel(getPackageManager()).toString().contains("Leaks"))
                         // 重复两次
                 .repeat(2)
                 .map(info -> {
@@ -105,7 +149,8 @@ public class RxJavaActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                     BitmapDrawable icon = (BitmapDrawable) info.activityInfo.loadIcon(getPackageManager());
-                    DiskCacheUtils.getInstance(RxJavaActivity.this).storeBitmap(RxJavaActivity.this, icon.getBitmap(), info.activityInfo.name);
+                    DiskCacheUtils.getInstance(RxJavaActivity.this)
+                            .storeBitmap(RxJavaActivity.this, icon.getBitmap(), info.activityInfo.name);
                     return new AppInfo(1,
                             info.activityInfo.loadLabel(getPackageManager()).toString() + " : " + sdf.format(new Date()),
                             info.activityInfo.name);
@@ -242,6 +287,12 @@ public class RxJavaActivity extends BaseActivity {
             return 0;
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister(TAG, register);
     }
 
 }

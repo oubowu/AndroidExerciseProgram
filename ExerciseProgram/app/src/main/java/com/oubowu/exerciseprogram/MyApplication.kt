@@ -34,7 +34,7 @@ class MyApplication : Application() {
         super.onCreate()
         LeakCanary.install(this)
         KLog.init(true)
-        KLog.e("LeakCanary.install(this)")
+//        KLog.e("LeakCanary.install(this)")
 
     }
 

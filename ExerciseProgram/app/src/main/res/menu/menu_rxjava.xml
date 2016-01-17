@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_ifeng"
+        android:orderInCategory="100"
+        android:title="Rtrofit&amp;Rxjava使用例子"
+        app:showAsAction="always"/>
+
+</menu>

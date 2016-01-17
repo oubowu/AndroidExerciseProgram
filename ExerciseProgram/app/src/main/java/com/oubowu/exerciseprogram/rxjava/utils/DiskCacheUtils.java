@@ -8,7 +8,6 @@ import android.os.Environment;
 import android.os.StatFs;
 
 import com.oubowu.exerciseprogram.utils.DiskLruCache;
-import com.socks.library.KLog;
 
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -84,7 +83,7 @@ public class DiskCacheUtils {
         return new File(cachePath + File.separator + uniqueName);
     }
 
-    private long getUsableSpace(File path) {
+    public static long getUsableSpace(File path) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             return path.getUsableSpace();
         }
@@ -117,8 +116,9 @@ public class DiskCacheUtils {
             // 但不知结果如何。然后调用commit()方法表示写入缓存成功，这时会向journal中写入一条CLEAN记录，
             // 意味着这条“脏”数据被“洗干净了”，调用abort()方法表示写入缓存失败，这时会向journal中写入一条REMOVE记录。
             final DiskLruCache.Editor editor = mDiskLruCache.edit(hashKeyFormUrl(name));
-            if (editor != null && mDiskLruCache.get(hashKeyFormUrl(name)) == null) {
-                KLog.e("储存图片: " + name);
+            final DiskLruCache.Snapshot snapshot = mDiskLruCache.get(hashKeyFormUrl(name));
+            if (editor != null && snapshot == null) {
+//                KLog.e("储存图片: " + name);
                 OutputStream os = editor.newOutputStream(0);
                 if (writeBitmapToDisk(bitmap, os)) {
                     editor.commit();
@@ -126,6 +126,8 @@ public class DiskCacheUtils {
                     editor.abort();
                 }
                 closeQuietly(os);
+            } else if (snapshot != null) {
+                snapshot.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -188,7 +190,6 @@ public class DiskCacheUtils {
             }
 
         } catch (IOException var1) {
-            ;
         }
     }
 

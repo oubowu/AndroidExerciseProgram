@@ -51,6 +51,7 @@
         </activity>
         <activity android:name=".rxjava.RxJavaActivity">
         </activity>
+        <activity android:name=".rxjava.IfengActivity"/>
         <activity android:name=".jsonparse.JsonParseActivity">
         </activity>
         <activity android:name=".viewdraghelper.SwipeActivity">

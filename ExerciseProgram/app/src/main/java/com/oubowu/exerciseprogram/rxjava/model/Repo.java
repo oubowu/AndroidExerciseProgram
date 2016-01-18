@@ -1,4 +1,4 @@
-package com.oubowu.exerciseprogram.rxjava.bean;
+package com.oubowu.exerciseprogram.rxjava.model;
 
 /**
  * ClassName:

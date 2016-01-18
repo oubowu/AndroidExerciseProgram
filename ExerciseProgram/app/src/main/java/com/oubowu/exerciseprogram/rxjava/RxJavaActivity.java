@@ -24,7 +24,7 @@ import com.oubowu.exerciseprogram.R;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshRecyclerView;
 import com.oubowu.exerciseprogram.refreshrecyclerview.adapter.BaseRecyclerViewAdapter;
 import com.oubowu.exerciseprogram.refreshrecyclerview.viewholder.BaseRecyclerViewHolder;
-import com.oubowu.exerciseprogram.rxjava.bean.AppInfo;
+import com.oubowu.exerciseprogram.rxjava.model.AppInfo;
 import com.oubowu.exerciseprogram.rxjava.rxbus.RxBus;
 import com.oubowu.exerciseprogram.rxjava.utils.DiskCacheUtils;
 import com.oubowu.exerciseprogram.utils.ToastUtil;
@@ -67,6 +67,7 @@ public class RxJavaActivity extends BaseActivity {
     private Observable<String> register;
 
     SimpleDateFormat mSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private Subscription mSubscription;
 
     @OnClick(R.id.bt)
     void runBus() {
@@ -189,7 +190,7 @@ public class RxJavaActivity extends BaseActivity {
                         ToastUtil.showShort(RxJavaActivity.this, "下载完成");
                         Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
                         File file = new File(finalDestination);
-                        intent.setDataAndType(Uri.fromFile(file),"video/avi");
+                        intent.setDataAndType(Uri.fromFile(file), "video/avi");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
@@ -620,13 +621,13 @@ public class RxJavaActivity extends BaseActivity {
                     });
 
             // 创建了几个发射AppInfo数据的Observable，用来填充我们的列表。我们想保留字母排序和分组排序。我们将创建一个新的Observable将所有的联系起来，像往常一样然后订阅它
-            Observable
+            mSubscription = Observable
                     .concat(groupedItems)
                     .filter(resolveInfo -> resolveInfo != null
                             && !resolveInfo.loadLabel(getPackageManager()).toString().contains("Leaks"))
                     .map(info -> {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(100);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -672,7 +673,7 @@ public class RxJavaActivity extends BaseActivity {
                             //.repeat(2)
                     .map(info -> {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(100);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -847,6 +848,8 @@ public class RxJavaActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         RxBus.get().unregister(TAG, register);
+        if (!mSubscription.isUnsubscribed())
+            mSubscription.unsubscribe();
     }
 
     @Override
@@ -859,7 +862,7 @@ public class RxJavaActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_ifeng:
-                startActivity(new Intent(this, IfengActivity.class));
+                startActivity(new Intent(this, NbaActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

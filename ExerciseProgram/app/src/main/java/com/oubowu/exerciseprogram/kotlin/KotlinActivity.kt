@@ -1916,8 +1916,8 @@ public open class KotlinActivity : BaseActivity() {
 
     class User1(val map: Map<String, Any?>) {
         // Delegates.mapVal() 拥有一个 map 实例并返回一个可以从 map 中读其中属性的代理
-        val name: String by Delegates.mapVal(map)
-        val age: Int     by Delegates.mapVal(map)
+//        val name: String by Delegates.mapVal(map)
+//        val age: Int     by Delegates.mapVal(map)
     }
 
     val user = User1(mapOf(

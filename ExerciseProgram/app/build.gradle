@@ -206,6 +206,7 @@ dependencies {
         exclude group: 'com.google.code.gson', module: 'gson'
     }
 //    compile 'com.squareup.okhttp3:okhttp:3.0.1'
+    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
 
     provided 'org.glassfish:javax.annotation:10.0-b28'
 }

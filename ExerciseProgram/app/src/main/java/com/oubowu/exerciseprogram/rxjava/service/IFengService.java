@@ -1,10 +1,13 @@
-package com.oubowu.exerciseprogram.rxjava.api;
+package com.oubowu.exerciseprogram.rxjava.service;
 
-import com.oubowu.exerciseprogram.rxjava.bean.TopicList;
+import com.oubowu.exerciseprogram.rxjava.model.ifeng.TopicList;
+
+import java.util.List;
+import java.util.Map;
 
 import retrofit.Call;
 import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit.http.QueryMap;
 
 /**
  * ClassName:
@@ -14,10 +17,13 @@ import retrofit.http.Path;
  * UpdateUser:
  * UpdateDate:
  */
-public interface IFengApi {
+public interface IFengService {
 
-    @GET("/pageindex/{index}"/*/pagesize/{size}*/)
-    Call<TopicList> getTopicList(@Path("index") String pageIndex/*, @Path("size") String pageSize*/);
+    // http://i.ifeng.com/topicList?pageindex=1&pagesize=15
+
+    @GET("topicList")
+    Call<List<TopicList>> getTopicList(@QueryMap Map<String, String> params);
+
 
     /**
      注意到每个endpoint 都指定了一个关于HTTP(GET, POST, 等等。)  方法的注解以及用于分发网络调用的方法。而且这些方法的参数也可以有特殊的注解。

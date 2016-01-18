@@ -1,6 +1,6 @@
-package com.oubowu.exerciseprogram.rxjava.api;
+package com.oubowu.exerciseprogram.rxjava.service;
 
-import com.oubowu.exerciseprogram.rxjava.bean.Repo;
+import com.oubowu.exerciseprogram.rxjava.model.Repo;
 
 import retrofit.Call;
 import retrofit.http.GET;
@@ -15,6 +15,8 @@ import retrofit.http.Path;
  * UpdateDate:
  */
 public interface GitHubService {
+
+    // "https://api.github.com/users/drakeet"
     @GET("/users/{user}")
     Call<Repo> listRepos(@Path("user") String user);
 }

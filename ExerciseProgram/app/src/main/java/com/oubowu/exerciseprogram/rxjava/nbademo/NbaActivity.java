@@ -1,5 +1,6 @@
-package com.oubowu.exerciseprogram.rxjava;
+package com.oubowu.exerciseprogram.rxjava.nbademo;
 
+import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -8,14 +9,14 @@ import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.BuildConfig;
 import com.oubowu.exerciseprogram.R;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshRecyclerView;
-import com.oubowu.exerciseprogram.rxjava.adapter.NbaAdapter;
+import com.oubowu.exerciseprogram.rxjava.nbademo.adapter.NbaAdapter;
 import com.oubowu.exerciseprogram.rxjava.model.Repo;
 import com.oubowu.exerciseprogram.rxjava.model.ifeng.TopicList;
-import com.oubowu.exerciseprogram.rxjava.model.nba.MatchList;
-import com.oubowu.exerciseprogram.rxjava.model.nba.NBA;
+import com.oubowu.exerciseprogram.rxjava.nbademo.model.MatchList;
+import com.oubowu.exerciseprogram.rxjava.nbademo.model.NBA;
 import com.oubowu.exerciseprogram.rxjava.service.GitHubService;
 import com.oubowu.exerciseprogram.rxjava.service.IFengService;
-import com.oubowu.exerciseprogram.rxjava.service.NbaService;
+import com.oubowu.exerciseprogram.rxjava.nbademo.service.NbaService;
 import com.oubowu.exerciseprogram.utils.ToastUtil;
 import com.socks.library.KLog;
 
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -48,6 +50,11 @@ public class NbaActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+
+    @OnClick(R.id.bt)
+    void toMvpActivity() {
+        startActivity(new Intent(this, com.oubowu.exerciseprogram.rxjava.nbabymvp.NbaActivity.class));
+    }
 
     NbaAdapter mNbaAdapter;
 

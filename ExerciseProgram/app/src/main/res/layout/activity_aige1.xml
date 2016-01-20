@@ -9,11 +9,18 @@
 
     <include layout="@layout/common_toolbar"/>
 
-    <FrameLayout
-        android:id="@+id/fl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <com.oubowu.exerciseprogram.aigestudiostudy.ImgView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp"/>
 
-    </FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="我们是共产主义接班人"
+        android:textSize="30sp"/>
 
 </LinearLayout>

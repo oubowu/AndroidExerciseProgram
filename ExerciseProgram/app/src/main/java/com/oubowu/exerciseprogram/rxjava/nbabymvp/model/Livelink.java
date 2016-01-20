@@ -1,5 +1,5 @@
 
-package com.oubowu.exerciseprogram.rxjava.model.nba;
+package com.oubowu.exerciseprogram.rxjava.nbabymvp.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class Teammatch {
+public class Livelink {
 
-    @SerializedName("name")
+    @SerializedName("text")
     @Expose
-    public String name;
+    public String text;
     @SerializedName("url")
     @Expose
     public String url;

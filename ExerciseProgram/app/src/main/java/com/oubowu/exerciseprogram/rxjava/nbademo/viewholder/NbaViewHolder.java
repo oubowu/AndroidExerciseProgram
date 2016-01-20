@@ -1,4 +1,4 @@
-package com.oubowu.exerciseprogram.rxjava.viewholder;
+package com.oubowu.exerciseprogram.rxjava.nbademo.viewholder;
 
 import android.view.View;
 import android.widget.ImageView;

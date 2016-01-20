@@ -1,5 +1,5 @@
 
-package com.oubowu.exerciseprogram.rxjava.model.nba;
+package com.oubowu.exerciseprogram.rxjava.nbademo.model;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

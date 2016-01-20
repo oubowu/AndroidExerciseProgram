@@ -1,7 +1,8 @@
-package com.oubowu.exerciseprogram.rxjava;
+package com.oubowu.exerciseprogram.rxjava.nbabymvp;
 
-import com.oubowu.exerciseprogram.rxjava.model.nba.NBA;
-import com.oubowu.exerciseprogram.rxjava.service.NbaService;
+
+import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.NBA;
+import com.oubowu.exerciseprogram.rxjava.nbabymvp.service.NbaService;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;

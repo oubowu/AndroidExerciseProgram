@@ -1,37 +1,22 @@
 
-package com.oubowu.exerciseprogram.rxjava.model.nba;
+package com.oubowu.exerciseprogram.rxjava.nbademo.model;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class Tr {
+public class Live {
 
-    @SerializedName("link1text")
-    @Expose
-    public String link1text;
-    @SerializedName("link1url")
-    @Expose
-    public String link1url;
-    @SerializedName("link2text")
-    @Expose
-    public String link2text;
-    @SerializedName("link2url")
-    @Expose
-    public String link2url;
-    @SerializedName("m_link1url")
-    @Expose
-    public String mLink1url;
-    @SerializedName("m_link2url")
-    @Expose
-    public String mLink2url;
     @SerializedName("player1")
     @Expose
     public String player1;
-    @SerializedName("player1logo")
+    @SerializedName("player1info")
     @Expose
-    public String player1logo;
+    public String player1info;
+    @SerializedName("player1location")
+    @Expose
+    public String player1location;
     @SerializedName("player1logobig")
     @Expose
     public String player1logobig;
@@ -41,9 +26,12 @@ public class Tr {
     @SerializedName("player2")
     @Expose
     public String player2;
-    @SerializedName("player2logo")
+    @SerializedName("player2info")
     @Expose
-    public String player2logo;
+    public String player2info;
+    @SerializedName("player2location")
+    @Expose
+    public String player2location;
     @SerializedName("player2logobig")
     @Expose
     public String player2logobig;
@@ -56,8 +44,11 @@ public class Tr {
     @SerializedName("status")
     @Expose
     public int status;
-    @SerializedName("time")
+    @SerializedName("title")
     @Expose
-    public String time;
+    public String title;
+    @SerializedName("liveurl")
+    @Expose
+    public String liveurl;
 
 }

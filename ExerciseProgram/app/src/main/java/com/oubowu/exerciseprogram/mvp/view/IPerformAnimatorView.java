@@ -17,6 +17,7 @@ import com.oubowu.exerciseprogram.mvp.bean.AnimateType;
  * 更新描述:
  */
 public interface IPerformAnimatorView {
+
     AnimateType getAnimateType();
 
     View getAnimateView();

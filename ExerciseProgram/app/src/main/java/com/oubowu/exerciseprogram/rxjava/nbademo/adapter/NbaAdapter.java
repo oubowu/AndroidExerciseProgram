@@ -1,4 +1,4 @@
-package com.oubowu.exerciseprogram.rxjava.adapter;
+package com.oubowu.exerciseprogram.rxjava.nbademo.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide;
 import com.oubowu.exerciseprogram.R;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshRecyclerView;
 import com.oubowu.exerciseprogram.refreshrecyclerview.adapter.BaseRecyclerViewAdapter;
-import com.oubowu.exerciseprogram.rxjava.model.nba.Tr;
-import com.oubowu.exerciseprogram.rxjava.viewholder.NbaViewHolder;
+import com.oubowu.exerciseprogram.rxjava.nbademo.model.Tr;
+import com.oubowu.exerciseprogram.rxjava.nbademo.viewholder.NbaViewHolder;
 import com.oubowu.exerciseprogram.utils.MeasureUtil;
 
 import java.util.List;

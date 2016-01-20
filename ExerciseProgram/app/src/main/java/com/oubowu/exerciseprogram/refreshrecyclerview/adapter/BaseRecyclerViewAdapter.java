@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.oubowu.exerciseprogram.R;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshRecyclerView;
+import com.oubowu.exerciseprogram.refreshrecyclerview.listener.OnItemClickListener;
 import com.oubowu.exerciseprogram.refreshrecyclerview.viewholder.BaseRecyclerViewHolder;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public abstract class BaseRecyclerViewAdapter<T extends BaseRecyclerViewHolder, 
      * 是否不显示加载完的尾巴
      */
     protected boolean mIsHideLoadAllFooter;
+    protected OnItemClickListener mItemListener;
 
     public boolean disableLoadMore() {
         return mDisableLoadMore;
@@ -181,6 +183,10 @@ public abstract class BaseRecyclerViewAdapter<T extends BaseRecyclerViewHolder, 
         else
             mRefreshRecyclerView.hideEmptyView();
         return mDatas == null ? 0 : mIsHideLoadAllFooter || mDisableLoadMore ? mDatas.size() : mDatas.size() + (mRefreshRecyclerView.isLoadAll() ? 1 : 0);
+    }
+
+    public void setOnItemClickedListener(OnItemClickListener listener){
+        mItemListener=listener;
     }
 
 }

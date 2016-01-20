@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_ifeng"
         android:orderInCategory="100"
-        android:title="Rtrofit&amp;Rxjava使用例子"
+        android:title="Retrofit&amp;Rxjava使用例子"
         app:showAsAction="always"/>
 
 </menu>

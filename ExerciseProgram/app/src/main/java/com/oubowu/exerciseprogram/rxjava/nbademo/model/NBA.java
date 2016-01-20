@@ -1,5 +1,5 @@
 
-package com.oubowu.exerciseprogram.rxjava.model.nba;
+package com.oubowu.exerciseprogram.rxjava.nbademo.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

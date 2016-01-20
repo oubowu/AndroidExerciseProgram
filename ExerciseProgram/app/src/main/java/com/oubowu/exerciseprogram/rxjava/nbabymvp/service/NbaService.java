@@ -1,6 +1,7 @@
-package com.oubowu.exerciseprogram.rxjava.service;
+package com.oubowu.exerciseprogram.rxjava.nbabymvp.service;
 
-import com.oubowu.exerciseprogram.rxjava.model.nba.NBA;
+
+import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.NBA;
 
 import retrofit.Call;
 import retrofit.http.GET;

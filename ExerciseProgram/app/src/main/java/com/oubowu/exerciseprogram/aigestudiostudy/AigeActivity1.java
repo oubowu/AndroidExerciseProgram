@@ -1,5 +1,7 @@
 package com.oubowu.exerciseprogram.aigestudiostudy;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -10,8 +12,13 @@ import com.oubowu.exerciseprogram.aigestudiostudy.customview.ColorMatrixFragment
 import com.oubowu.exerciseprogram.utils.FragmentManage;
 import com.socks.library.KLog;
 
+import butterknife.Bind;
+
 public class AigeActivity1 extends BaseActivity {
 
+
+    @Bind(R.id.imageView)
+    ImgView imageView;
 
     @Override
     protected int provideLayoutId() {
@@ -22,6 +29,10 @@ public class AigeActivity1 extends BaseActivity {
     protected void initView() {
         // 界面的真正根视图
         KLog.e(getWindow().getDecorView() + ";" + getWindow().findViewById(Window.ID_ANDROID_CONTENT));
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_pal);
+        imageView.setBitmap(bitmap);
+
     }
 
     @Override

@@ -25,6 +25,7 @@ import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshRecyclerView;
 import com.oubowu.exerciseprogram.refreshrecyclerview.adapter.BaseRecyclerViewAdapter;
 import com.oubowu.exerciseprogram.refreshrecyclerview.viewholder.BaseRecyclerViewHolder;
 import com.oubowu.exerciseprogram.rxjava.model.AppInfo;
+import com.oubowu.exerciseprogram.rxjava.nbademo.NbaActivity;
 import com.oubowu.exerciseprogram.rxjava.rxbus.RxBus;
 import com.oubowu.exerciseprogram.rxjava.utils.DiskCacheUtils;
 import com.oubowu.exerciseprogram.utils.ToastUtil;

@@ -69,10 +69,12 @@ public class RxJavaActivity extends BaseActivity {
 
     SimpleDateFormat mSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     private Subscription mSubscription;
+    private Subscription mDownLoadSubscription;
+    private Subscription mPlaySubscription;
 
     @OnClick(R.id.bt)
     void runBus() {
-        RxBus.get().post(TAG, "我是中国人！！！");
+        RxBus.get().post(TAG, "开始下载视频！！！");
         download();
     }
 
@@ -153,7 +155,7 @@ public class RxJavaActivity extends BaseActivity {
 
     private void download() {
 
-        mDownloadProgress.distinct()
+        mDownLoadSubscription = mDownloadProgress.distinct()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Integer>() {
                     @Override
@@ -182,14 +184,14 @@ public class RxJavaActivity extends BaseActivity {
         }
 
         final String finalDestination = destination;
-        observableDownload("http://bsycdn.miaopai.com/stream/J2ZmMdaLvvAQtYjEUVFeOw__.mp4", destination)
+        mPlaySubscription = observableDownload("http://bsycdn.miaopai.com/stream/J2ZmMdaLvvAQtYjEUVFeOw__.mp4", destination)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {
                         ToastUtil.showShort(RxJavaActivity.this, "下载完成");
-                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
                         File file = new File(finalDestination);
                         intent.setDataAndType(Uri.fromFile(file), "video/avi");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -851,6 +853,10 @@ public class RxJavaActivity extends BaseActivity {
         RxBus.get().unregister(TAG, register);
         if (!mSubscription.isUnsubscribed())
             mSubscription.unsubscribe();
+        if (mDownLoadSubscription != null && !mDownLoadSubscription.isUnsubscribed())
+            mDownLoadSubscription.unsubscribe();
+        if (mPlaySubscription != null && !mPlaySubscription.isUnsubscribed())
+            mPlaySubscription.unsubscribe();
     }
 
     @Override

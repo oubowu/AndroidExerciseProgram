@@ -57,7 +57,6 @@ public class IconView extends View {
     private void calArgs(Context context) {
         // 获取屏幕宽
         int sreenW = MeasureUtil.getScreenSize((Activity) context)[0];
-
         // 计算文本尺寸
         mTextSize = sreenW * 1.0f / 10F;
     }

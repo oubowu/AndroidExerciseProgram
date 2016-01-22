@@ -46,7 +46,7 @@ public class FloatLeafActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         fl.onDestroy();
+        super.onDestroy();
     }
 }

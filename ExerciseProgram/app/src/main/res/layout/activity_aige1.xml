@@ -62,6 +62,10 @@
               android:layout_gravity="center"
               android:background="#ffffff">
 
+    <com.oubowu.exerciseprogram.aigestudiostudy.LifeCycleView
+        android:layout_width="10dp"
+        android:layout_height="10dp"/>
+
     <com.oubowu.exerciseprogram.aigestudiostudy.SquareLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,12 +81,12 @@
             xmlns:aigestudio="http://schemas.android.com/apk/res-auto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="#125793"
             android:text="tomorrow"
             android:textSize="24sp"
             android:textStyle="bold"
             android:typeface="serif"
-            android:layout_gravity="center"
             aigestudio:alpha="20%"
             aigestudio:my_gravity="left"/>
 

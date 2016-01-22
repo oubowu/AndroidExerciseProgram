@@ -14,4 +14,61 @@
         <attr name="float_button_disable" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="SquareLayout">
+        <attr name="my_orientation" format="enum">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <!--我们的xml属性定义中则可以直接使用android:layout_gravity这样的name而无需定义类型值，
+            这样则表示我们的属性使用的Android自带的标签，
+            之后我们只需根据布局文件中layout_gravity属性的值调用Gravity类下的方法去计算对齐方式则可-->
+        <attr name="android:layout_gravity"/>
+        <attr name="my_gravity" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="center" value="2"/>
+            <enum name="top" value="3"/>
+            <enum name="bottom" value="4"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- http://blog.csdn.net/aigestudio -->
+    <declare-styleable name="AttrView">
+        <!-- 引用资源 -->
+        <attr name="image" format="reference"/>
+        <!-- 颜色 -->
+        <attr name="text_color" format="color"/>
+        <!-- 布尔值 -->
+        <attr name="text_display" format="boolean"/>
+        <!-- 尺寸大小 -->
+        <attr name="temp1" format="dimension"/>
+        <!-- 浮点值 -->
+        <attr name="temp2" format="float"/>
+        <!-- 整型值 -->
+        <attr name="temp3" format="integer"/>
+        <!-- 字符串 -->
+        <attr name="text" format="string"/>
+        <!-- 百分比 -->
+        <attr name="alpha" format="fraction"/>
+        <!--fraction百分比这个类型，其在TypedArray的对应方法如下：
+            getFraction(int index, int base, int pbase, float defValue)
+            第一个参数很好理解表示我们定义的属性资源ID，最后一个参数呢也和前面的getInt类似，主要是这第二、三个参数，其作用是分开来的，
+            当我们在xml中使用百分比属性时有两种写法，一种是标准的10%而另一种是带p的10%p：
+            aigestudio:alpha="10%"
+            aigestudio:alpha="10%p"  -->
+        <!-- 枚举 -->
+        <attr name="text_align" format="integer">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="center" value="2"/>
+        </attr>
+        <!-- 位运算 -->
+        <!-- 位运算则可以选多个并通过“|”组合各种结果 -->
+        <attr name="text_optimize" format="integer">
+            <flag name="anti" value="0x001"/>
+            <flag name="dither" value="0x002"/>
+            <flag name="linear" value="0x004"/>
+        </attr>
+    </declare-styleable>
+
 </resources>

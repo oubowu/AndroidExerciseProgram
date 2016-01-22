@@ -137,6 +137,7 @@ public class IconView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        canvas.drawColor(Color.DKGRAY);
         /*
          * 绘制
          * 参数就不做单独处理了因为只会Draw一次不会频繁调用

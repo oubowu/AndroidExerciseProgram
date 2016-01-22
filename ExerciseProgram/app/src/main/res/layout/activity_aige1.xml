@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<!--<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,5 +22,107 @@
         android:layout_weight="1"
         android:text="我们是共产主义接班人"
         android:textSize="30sp"/>
+
+</LinearLayout>-->
+
+<!--
+<com.oubowu.exerciseprogram.aigestudiostudy.CustomViewGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="30dp"
+    android:background="#ffff45"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.oubowu.exerciseprogram.aigestudiostudy.IconView
+        android:id="@+id/main_pv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="50dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="AigeStudio"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="35dp"
+        android:text="AigeStudio"/>
+
+</com.oubowu.exerciseprogram.aigestudiostudy.CustomViewGroup>-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:background="#ffffff">
+
+    <com.oubowu.exerciseprogram.aigestudiostudy.SquareLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="#679135"
+        android:paddingBottom="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="7dp"
+        android:paddingTop="12dp">
+
+        <Button
+            xmlns:aigestudio="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#125793"
+            android:text="tomorrow"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:layout_gravity="center"
+            aigestudio:alpha="20%"
+            aigestudio:my_gravity="left"/>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="#495287"
+            android:text="AigeStudio"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:background="#976234">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_baoqiang"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#594342"
+            android:text="AigeStudio"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#961315"
+            android:text="Welcome AigeStudio"/>
+    </com.oubowu.exerciseprogram.aigestudiostudy.SquareLayout>
 
 </LinearLayout>

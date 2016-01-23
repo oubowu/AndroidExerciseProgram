@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.oubowu.exerciseprogram"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="com.oubowu.exerciseprogram"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
@@ -13,11 +12,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <!--android:hardwareAccelerated="false"-->
+
+    <!-- android:hardwareAccelerated="false" -->
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -73,6 +72,8 @@
         <activity
             android:name=".aigestudiostudy.AigeActivity1"
             android:label="绘制流程相关知识">
+        </activity>
+        <activity android:name=".customview.CustomActivity">
         </activity>
     </application>
 

@@ -109,6 +109,15 @@
             android:text="爱哥-绘制流程相关"
             android:textSize="12sp"/>
 
+        <Button
+            android:id="@+id/bt_custom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_tail"
+            android:layout_toRightOf="@+id/bt_aige1"
+            android:text="自定义控件练习"
+            android:textSize="12sp"/>
+
     </RelativeLayout>
 </ScrollView>
 

@@ -1,7 +1,5 @@
 package com.oubowu.exerciseprogram.customview;
 
-import android.view.View;
-
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
 
@@ -24,11 +22,6 @@ public class CustomActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        loadingView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingView.startLoading();
-            }
-        });
+
     }
 }

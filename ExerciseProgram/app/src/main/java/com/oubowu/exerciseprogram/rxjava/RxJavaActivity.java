@@ -72,10 +72,14 @@ public class RxJavaActivity extends BaseActivity {
     private Subscription mDownLoadSubscription;
     private Subscription mPlaySubscription;
 
+    private Observable<AppInfo> register1;
+
     @OnClick(R.id.bt)
     void runBus() {
-        RxBus.get().post(TAG, "开始下载视频！！！");
-        download();
+//        RxBus.get().post(TAG, "开始下载视频！！！");
+//        download();
+        AppInfo appInfo = new AppInfo(100, "Oubowu", "Chinese");
+        RxBus.get().post(TAG, appInfo);
     }
 
     MyAdapter mAdapter;
@@ -113,11 +117,16 @@ public class RxJavaActivity extends BaseActivity {
 
         initList(true);
 
-        register = RxBus.get().register(TAG, String.class);
+        /*register = RxBus.get().register(TAG, String.class);
         register.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
                     ToastUtil.showShort(RxJavaActivity.this, s);
-                });
+                });*/
+
+        register1 = RxBus.get().register(TAG, AppInfo.class);
+        register1.subscribe(appInfo -> {
+            ToastUtil.showShort(RxJavaActivity.this, appInfo.toString());
+        });
 
         // someFilterMethod();
 
@@ -850,6 +859,7 @@ public class RxJavaActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        RxBus.get().unregister(TAG, register1);
         RxBus.get().unregister(TAG, register);
         if (!mSubscription.isUnsubscribed())
             mSubscription.unsubscribe();

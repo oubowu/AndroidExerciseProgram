@@ -6,9 +6,46 @@
     android:layout_height="match_parent"
     tools:context="com.oubowu.exerciseprogram.customview.CustomActivity">
 
-    <com.oubowu.exerciseprogram.customview.ThreePointLoadingView
+    <!--<com.oubowu.exerciseprogram.customview.ThreePointLoadingView
         android:id="@+id/tlv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
+
+    <!--<SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:max="100"
+        android:progress="1"/>
+
+    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshFirstStepView
+        android:id="@+id/meituan_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekbar"
+        android:layout_centerHorizontal="true"/>
+
+    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshSecondStepView
+        android:id="@+id/meituan_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/meituan_first"
+        android:layout_centerHorizontal="true"/>
+
+    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshThirdStepView
+        android:id="@+id/meituan_third"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/meituan_second"
+        android:layout_centerHorizontal="true"/>-->
+
+    <com.oubowu.exerciseprogram.customview.MeituanListView
+        android:id="@+id/mt_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.oubowu.exerciseprogram.customview.MeituanListView>
 
 </RelativeLayout>

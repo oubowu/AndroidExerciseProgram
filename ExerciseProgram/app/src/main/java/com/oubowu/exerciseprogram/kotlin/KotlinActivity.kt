@@ -1878,7 +1878,7 @@ public open class KotlinActivity : BaseActivity() {
 //        var p: String by Delegate()
 //    }
 
-    class Delegate {
+    /*class Delegate {
         fun get(thisRef: Any?, prop: PropertyMetadata): String {
             return "${thisRef}, thank you for delegating '${prop.name}' to me !"
         }
@@ -1886,7 +1886,7 @@ public open class KotlinActivity : BaseActivity() {
         fun set(thisRef: Any?, prop: PropertyMetadata, value: String) {
             KLog.e("$value has been assigned to '${prop.name} in $thisRef.'")
         }
-    }
+    }*/
 
     class Player {
         // Delegates.observable() 需要俩个参数：一个初始值和一个修改者的 handler

@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +45,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -110,7 +114,57 @@ public class RxJavaActivity extends BaseActivity {
                 refreshList();
             }
         });
+
+        // SimpleCallback构造方法需要我们传入两个参数：
+        // 1、dragDirs - 表示拖拽的方向，有六个类型的值：LEFT、RIGHT、START、END、UP、DOWN
+        // 2、swipeDirs - 表示滑动的方向，有六个类型的值：LEFT、RIGHT、START、END、UP、DOWN
+        // 【注】：如果为0，则表示不触发该操作（滑动or拖拽）
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                // 得到拖动ViewHolder的position
+                final int fromPosition = viewHolder.getAdapterPosition();
+                // 得到目标ViewHolder的position
+                final int toPosition = target.getAdapterPosition();
+                if (fromPosition < toPosition) {
+                    // 分别把中间所有的item的位置重新交换
+                    for (int i = fromPosition; i < toPosition; i++) {
+                        Collections.swap(mAdapter.getDatas(), i, i + 1);
+                    }
+                } else {
+                    for (int i = fromPosition; i > toPosition; i--) {
+                        Collections.swap(mAdapter.getDatas(), i, i - 1);
+                    }
+                }
+                mAdapter.notifyItemMoved(fromPosition, toPosition);
+                // 返回true表示执行拖动
+                KLog.e("返回true表示执行拖动");
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition();
+                mAdapter.getDatas().remove(position);
+                mAdapter.notifyItemRemoved(position);
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                    float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                // 该方法用于Item的绘制，actionState有三种状态SWIPE（滑动）、IDLE（静止）、DRAG（拖动）我们可以根据相应的状态来绘制Item的一些效果
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    //滑动时改变Item的透明度
+                    final float alpha = 1 - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
+                    viewHolder.itemView.setAlpha(alpha);
+                    viewHolder.itemView.setTranslationX(dX);
+                }
+            }
+        });
+        helper.attachToRecyclerView(mRefreshRecyclerView.getRecyclerView());
     }
+
 
     @Override
     protected void initData() {

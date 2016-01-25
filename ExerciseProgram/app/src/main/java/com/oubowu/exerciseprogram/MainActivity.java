@@ -8,6 +8,7 @@ import com.oubowu.exerciseprogram.aigestudiostudy.AigeActivity1;
 import com.oubowu.exerciseprogram.customview.CustomActivity;
 import com.oubowu.exerciseprogram.databinding.DataBindingActivity;
 import com.oubowu.exerciseprogram.floatlayout.FloatLeafActivity;
+import com.oubowu.exerciseprogram.itemtouchhelper.ItemTouchHelperActivity;
 import com.oubowu.exerciseprogram.jsonparse.JsonParseActivity;
 import com.oubowu.exerciseprogram.kotlin.LoginActivity;
 import com.oubowu.exerciseprogram.mvp.MvpActivity;
@@ -92,6 +93,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_custom)
     void custom() {
         startActivity(new Intent(this, CustomActivity.class));
+    }
+
+    @OnClick(R.id.bt_item_touch)
+    void itemTouch() {
+        startActivity(new Intent(this, ItemTouchHelperActivity.class));
     }
 
     @Override

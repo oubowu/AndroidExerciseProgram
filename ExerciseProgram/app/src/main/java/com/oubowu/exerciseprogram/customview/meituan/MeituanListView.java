@@ -274,7 +274,19 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
                 if (mState == PULL_TO_REFRESH) {
                     KLog.e("当用户手指抬起时,如果当前状态为下拉刷新状态：" + (int) (-mHeaderViewHeight + mOffsetY / RATIO) + " ; " + mHeaderViewHeight);
                     //平滑的隐藏headerView
-                    this.smoothScrollBy((int) (-mHeaderViewHeight + mOffsetY / RATIO) + mHeaderViewHeight, 500);
+//                    this.smoothScrollBy((int) (-mHeaderViewHeight + mOffsetY / RATIO) + mHeaderViewHeight, 500);
+
+                    ValueAnimator animator = new ValueAnimator();
+                    animator.setIntValues(mHeaderView.getPaddingTop(), -mHeaderViewHeight);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            mHeaderView.setPadding(0, (Integer) animation.getAnimatedValue(), 0, 0);
+                        }
+                    });
+                    animator.setDuration(500);
+                    animator.start();
+
                     //根据状态改变headerView
                     changeHeaderByState(mState);
                 }
@@ -282,7 +294,19 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
                 if (mState == RELEASE_TO_REFRESH) {
                     KLog.e("当用户手指抬起时,如果当前状态为放开刷新");
                     //平滑的滑到正好显示headerView
-                    this.smoothScrollBy((int) (-mHeaderViewHeight + mOffsetY / RATIO), 500);
+//                    this.smoothScrollBy((int) (-mHeaderViewHeight + mOffsetY / RATIO), 500);
+
+                    ValueAnimator animator = new ValueAnimator();
+                    animator.setIntValues(mHeaderView.getPaddingTop(), 0);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            mHeaderView.setPadding(0, (Integer) animation.getAnimatedValue(), 0, 0);
+                        }
+                    });
+                    animator.setDuration(500);
+                    animator.start();
+
                     //将当前状态设置为正在刷新
                     mState = REFRESHING;
                     //回调接口的onRefresh方法

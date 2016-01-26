@@ -12,6 +12,10 @@ package com.oubowu.exerciseprogram.jni;
  */
 public class NdkJniUtils {
 
+    static {
+        System.loadLibrary("NdkTest");   //defaultConfig.ndk.moduleName
+    }
+
     public native String getCLanguageString();
 
 }

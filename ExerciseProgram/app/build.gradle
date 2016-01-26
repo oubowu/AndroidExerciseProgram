@@ -36,6 +36,14 @@ android {
         versionCode 1
         versionName "1.0"
 //        versionName computeVersionName()
+
+        ndk{
+            moduleName "NdkTest"         //生成的so名字
+            // ldLibs "log", "z", "m"  //链接时使用到的库，对应LOCAL_LDLIBS
+            abiFilters "armeabi", "armeabi-v7a", "x86"  //输出指定三种abi体系结构下的so库。目前可有可无。
+            // 生成的.so文件在AndroidExerciseProgram\ExerciseProgram\app\build\intermediates\ndk中
+        }
+
     }
 
     signingConfigs {

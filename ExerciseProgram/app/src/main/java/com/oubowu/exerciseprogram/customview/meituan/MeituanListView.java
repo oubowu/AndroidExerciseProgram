@@ -1,5 +1,6 @@
-package com.oubowu.exerciseprogram.customview;
+package com.oubowu.exerciseprogram.customview.meituan;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
@@ -62,6 +63,7 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
     private AnimationDrawable mSecondAnim;
     private MeiTuanRefreshThirdStepView mThirdView;
     private AnimationDrawable mThirdAnim;
+    private boolean mOnRefreshComplete;
 
     public MeituanListView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -89,6 +91,7 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
         //一定要将isEnd设置为true，以便于下次的下拉刷新
         mIsEnd = true;
         mState = DONE;
+        mOnRefreshComplete = true;
         changeHeaderByState(mState);
     }
 
@@ -123,6 +126,7 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
         addHeaderView(mHeaderView);
 
         mHeaderViewHeight = mHeaderView.getMeasuredHeight();
+        // 隐藏刷新头部
         mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);
 
         mState = DONE;
@@ -161,6 +165,7 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
                     mIsRecord = true;
                     //将当前y坐标赋值给startY起始y坐标
                     mStartY = ev.getY();
+                    KLog.e("ACTION_DOWN 如果当前是在listview顶部并且没有记录y坐标");
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -172,35 +177,21 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
                     // 计算y的偏移量
                     mOffsetY = tmpY - mStartY;
                     // 计算当前滑动的高度
-                    float currentHeight = (-mHeaderViewHeight + mOffsetY / 3);
+                    float currentHeight = (-mHeaderViewHeight + mOffsetY / RATIO);
                     //用当前滑动的高度和头部headerView的总高度进行比 计算出当前滑动的百分比 0到1
                     float currentProgress = 1 + currentHeight / mHeaderViewHeight;
                     //如果当前百分比大于1了，将其设置为1，目的是让第一个状态的椭圆不再继续变大
                     if (currentProgress >= 1) {
                         currentProgress = 1;
                     }
-
-                    //如果当前的状态是放开刷新，并且已经记录y坐标
-                    if (mState == RELEASE_TO_REFRESH && mIsRecord) {
-                        // 位置回到0处
-                        setSelection(0);
-                        //如果当前滑动的距离小于headerView的总高度
-                        if (-mHeaderViewHeight + mOffsetY / RATIO < 0) {
-                            //将状态置为下拉刷新状态
-                            mState = PULL_TO_REFRESH;
-                            //根据状态改变headerView，主要是更新动画和文字等信息
-                            changeHeaderByState(mState);
-                        }
-                    } else if (mOffsetY <= 0) {
-                        //如果当前y的位移值小于0，即为headerView隐藏了
-                        //将状态变为done
-                        mState = DONE;
-                        //根据状态改变headerView，主要是更新动画和文字等信息
-                        changeHeaderByState(mState);
-                    }
+                    KLog.e("如果当前状态不是正在刷新的状态，并且已经记录了y坐标");
 
                     //如果当前状态为下拉刷新并且已经记录y坐标
                     if (mState == PULL_TO_REFRESH && mIsRecord) {
+
+                        // ③下拉过程中，
+
+                        KLog.e("如果当前状态为下拉刷新并且已经记录y坐标");
                         setSelection(0);
                         //如果下拉距离大于等于headerView的总高度
                         if (-mHeaderViewHeight + mOffsetY / RATIO >= 0) {
@@ -217,8 +208,30 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
                         }
                     }
 
+                    //如果当前的状态是放开刷新，并且已经记录y坐标
+                    if (mState == RELEASE_TO_REFRESH && mIsRecord) {
+                        KLog.e("如果当前的状态是放开刷新，并且已经记录y坐标");
+                        // 位置回到0处
+                        setSelection(0);
+                        //如果当前滑动的距离小于headerView的总高度
+                        if (-mHeaderViewHeight + mOffsetY / RATIO < 0) {
+                            //将状态置为下拉刷新状态
+                            mState = PULL_TO_REFRESH;
+                            //根据状态改变headerView，主要是更新动画和文字等信息
+                            changeHeaderByState(mState);
+                        }
+                    } else if (mOffsetY <= 0) {
+                        KLog.e("如果当前y的位移值小于0，即为headerView隐藏了");
+                        //如果当前y的位移值小于0，即为headerView隐藏了
+                        //将状态变为done
+                        mState = DONE;
+                        //根据状态改变headerView，主要是更新动画和文字等信息
+                        changeHeaderByState(mState);
+                    }
+
                     //如果当前状态为done并且已经记录y坐标
                     if (mState == DONE && mIsRecord) {
+                        // ①将状态改为正在下拉的状态
                         //如果位移值大于0
                         if (mOffsetY >= 0) {
                             //将状态改为下拉刷新状态
@@ -228,6 +241,10 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
 
                     //如果为下拉刷新状态
                     if (mState == PULL_TO_REFRESH) {
+
+                        // ②设置paddingTop实现下拉效果(一开始为-mHeaderViewHeight，然后不断的+mOffsetY / RATIO逐渐变大回到原来的位置)
+
+                        KLog.e("如果为下拉刷新状态");
                         //则改变headerView的padding来实现下拉的效果
                         mHeaderView.setPadding(0, (int) (-mHeaderViewHeight + mOffsetY / RATIO), 0, 0);
                         //给第一个状态的View设置当前进度值
@@ -238,6 +255,7 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
 
                     //如果为放开刷新状态
                     if (mState == RELEASE_TO_REFRESH) {
+                        KLog.e("如果为放开刷新状态");
                         //改变headerView的padding值
                         mHeaderView.setPadding(0, (int) (-mHeaderViewHeight + mOffsetY / RATIO), 0, 0);
                         //给第一个状态的View设置当前进度值
@@ -254,6 +272,7 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
                 //当用户手指抬起时
                 // 如果当前状态为下拉刷新状态
                 if (mState == PULL_TO_REFRESH) {
+                    KLog.e("当用户手指抬起时,如果当前状态为下拉刷新状态：" + (int) (-mHeaderViewHeight + mOffsetY / RATIO) + " ; " + mHeaderViewHeight);
                     //平滑的隐藏headerView
                     this.smoothScrollBy((int) (-mHeaderViewHeight + mOffsetY / RATIO) + mHeaderViewHeight, 500);
                     //根据状态改变headerView
@@ -261,6 +280,7 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
                 }
                 //如果当前状态为放开刷新
                 if (mState == RELEASE_TO_REFRESH) {
+                    KLog.e("当用户手指抬起时,如果当前状态为放开刷新");
                     //平滑的滑到正好显示headerView
                     this.smoothScrollBy((int) (-mHeaderViewHeight + mOffsetY / RATIO), 500);
                     //将当前状态设置为正在刷新
@@ -285,8 +305,23 @@ public class MeituanListView extends ListView implements AbsListView.OnScrollLis
     private void changeHeaderByState(int state) {
         switch (state) {
             case DONE://如果的隐藏的状态
-                //设置headerView的padding为隐藏
-                mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);
+                KLog.e("mHeaderView的top：" + mHeaderView.getPaddingTop());
+                if (mOnRefreshComplete) {
+                    mOnRefreshComplete = false;
+                    ValueAnimator animator = new ValueAnimator();
+                    animator.setIntValues(mHeaderView.getPaddingTop(), -mHeaderViewHeight);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            mHeaderView.setPadding(0, (Integer) animation.getAnimatedValue(), 0, 0);
+                        }
+                    });
+                    animator.setDuration(500);
+                    animator.start();
+                } else {
+                    //设置headerView的padding为隐藏
+                    mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);
+                }
                 //第一状态的view显示出来
                 mFirstView.setVisibility(View.VISIBLE);
                 //第二状态的view隐藏起来

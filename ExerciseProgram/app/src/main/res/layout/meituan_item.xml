@@ -7,14 +7,14 @@
 
     >
 
-    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshFirstStepView
+    <com.oubowu.exerciseprogram.customview.meituan.MeiTuanRefreshFirstStepView
         android:id="@+id/first_view"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_margin="10dp"
         />
 
-    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshSecondStepView
+    <com.oubowu.exerciseprogram.customview.meituan.MeiTuanRefreshSecondStepView
         android:id="@+id/second_view"
         android:layout_width="45dp"
         android:layout_height="45dp"
@@ -22,7 +22,7 @@
         android:visibility="gone"
         />
 
-    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshThirdStepView
+    <com.oubowu.exerciseprogram.customview.meituan.MeiTuanRefreshThirdStepView
         android:id="@+id/third_view"
         android:layout_width="45dp"
         android:layout_height="45dp"

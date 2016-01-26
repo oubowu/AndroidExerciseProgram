@@ -6,6 +6,9 @@ import android.widget.ArrayAdapter;
 
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
+import com.oubowu.exerciseprogram.customview.meituan.MeituanListView;
+import com.oubowu.exerciseprogram.jni.NdkJniUtils;
+import com.socks.library.KLog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -107,7 +110,10 @@ public class CustomActivity extends BaseActivity implements MeituanListView.OnMe
 
         String[] data = new String[]{"hello world", "hello world", "hello world", "hello world",
                 "hello world", "hello world", "hello world", "hello world", "hello world",
-                "hello world", "hello world", "hello world", "hello world", "hello world",};
+                "hello world", "hello world", "hello world", "hello world", "hello world",
+                "hello world", "hello world", "hello world", "hello world",
+                "hello world", "hello world", "hello world", "hello world", "hello world",
+                "hello world", "hello world", "hello world", "hello world", "hello world"};
         mDatas = new ArrayList<String>(Arrays.asList(data));
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDatas);
         mListView.setAdapter(mAdapter);
@@ -119,6 +125,9 @@ public class CustomActivity extends BaseActivity implements MeituanListView.OnMe
     protected void initData() {
 
         mHandler = new MyHandler(this);
+
+        NdkJniUtils ndkJniUtils = new NdkJniUtils();
+        KLog.e("jni调用：" + ndkJniUtils.getCLanguageString());
 
     }
 

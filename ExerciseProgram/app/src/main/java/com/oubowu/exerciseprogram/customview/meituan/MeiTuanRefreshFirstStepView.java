@@ -1,10 +1,9 @@
-package com.oubowu.exerciseprogram.customview;
+package com.oubowu.exerciseprogram.customview.meituan;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -86,7 +85,6 @@ public class MeiTuanRefreshFirstStepView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(Color.LTGRAY);
         // 这个方法是对画布进行缩放，从而达到椭圆形图片的缩放，第一个参数为宽度缩放比例，第二个参数为高度缩放比例，
         // 后两个参数为变化的中心
         canvas.scale(mCurrentProgress, mCurrentProgress, mMeasuredWidth / 2, mMeasuredHeight / 2);

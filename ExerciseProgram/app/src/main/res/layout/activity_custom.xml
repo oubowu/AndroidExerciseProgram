@@ -41,11 +41,11 @@
         android:layout_below="@+id/meituan_second"
         android:layout_centerHorizontal="true"/>-->
 
-    <com.oubowu.exerciseprogram.customview.MeituanListView
+    <com.oubowu.exerciseprogram.customview.meituan.MeituanListView
         android:id="@+id/mt_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.oubowu.exerciseprogram.customview.MeituanListView>
+    </com.oubowu.exerciseprogram.customview.meituan.MeituanListView>
 
 </RelativeLayout>

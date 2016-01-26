@@ -1,4 +1,4 @@
-package com.oubowu.exerciseprogram.customview;
+package com.oubowu.exerciseprogram.customview.meituan;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,11 +18,11 @@ import com.oubowu.exerciseprogram.R;
  * 更新人:$$Author$$
  * 更新描述:
  */
-public class MeiTuanRefreshSecondStepView extends View {
+public class MeiTuanRefreshThirdStepView extends View {
 
     private Bitmap mEndBitmap;
 
-    public MeiTuanRefreshSecondStepView(Context context, AttributeSet attrs) {
+    public MeiTuanRefreshThirdStepView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }

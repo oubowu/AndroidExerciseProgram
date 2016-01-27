@@ -128,6 +128,15 @@
             android:textAllCaps="false"
             android:textSize="12sp"/>
 
+        <Button
+            android:id="@+id/bt_jni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_item_touch"
+            android:text="JNI实例"
+            android:textAllCaps="false"
+            android:textSize="12sp"/>
+
     </RelativeLayout>
 </ScrollView>
 

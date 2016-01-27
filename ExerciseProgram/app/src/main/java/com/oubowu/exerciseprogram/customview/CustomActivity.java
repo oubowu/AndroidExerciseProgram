@@ -7,8 +7,6 @@ import android.widget.ArrayAdapter;
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
 import com.oubowu.exerciseprogram.customview.meituan.MeituanListView;
-import com.oubowu.exerciseprogram.jni.NdkJniUtils;
-import com.socks.library.KLog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -126,9 +124,9 @@ public class CustomActivity extends BaseActivity implements MeituanListView.OnMe
 
         mHandler = new MyHandler(this);
 
-        NdkJniUtils ndkJniUtils = new NdkJniUtils();
-        KLog.e("jni调用：" + ndkJniUtils.getCLanguageString());
-
+//        NdkJniUtils ndkJniUtils = new NdkJniUtils();
+//        KLog.e("jni调用：" + ndkJniUtils.getCLanguageString());
+//        KLog.e("jni调用：" + ndkJniUtils.nativeGenerateKey("oubowu"));
     }
 
     @Override

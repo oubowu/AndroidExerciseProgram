@@ -1,12 +1,11 @@
 package com.oubowu.exerciseprogram.rxjava.nbabymvp.viewholder;
 
+import android.support.annotation.UiThread;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.oubowu.exerciseprogram.R;
+import com.oubowu.exerciseprogram.databinding.NbaRecyclerViewBinding;
 import com.oubowu.exerciseprogram.refreshrecyclerview.viewholder.BaseRecyclerViewHolder;
-import com.oubowu.exerciseprogram.utils.UiUtil;
+import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.Tr;
 
 /**
  * 类名： NbaViewHolder
@@ -20,15 +19,31 @@ import com.oubowu.exerciseprogram.utils.UiUtil;
  */
 public class NbaViewHolder extends BaseRecyclerViewHolder {
 
-    public ImageView home;
-    public ImageView away;
-    public TextView result;
+    final NbaRecyclerViewBinding binding;
 
-    public NbaViewHolder(View itemView) {
-        super(itemView);
-        home = UiUtil.getView(itemView, R.id.iv_home);
-        away = UiUtil.getView(itemView, R.id.iv_away);
-        result = UiUtil.getView(itemView, R.id.tv_result);
+    public NbaViewHolder(final View view, final NbaRecyclerViewBinding binding) {
+        super(view);
+        this.binding = binding;
+    }
+
+    @UiThread
+    public void bindMatchScore(final Tr match) {
+        this.binding.setMatch(match);
+    }
+
+    @UiThread
+    public void bindPlayer1logo(final String player1logobig) {
+        this.binding.setPlayer1logobig(player1logobig);
+    }
+
+    @UiThread
+    public void bindPlayer2logo(final String player2logobig) {
+        this.binding.setPlayer2logobig(player2logobig);
+    }
+
+    @UiThread
+    public void bindImageSize(final int size) {
+        this.binding.setSize(size);
     }
 
 }

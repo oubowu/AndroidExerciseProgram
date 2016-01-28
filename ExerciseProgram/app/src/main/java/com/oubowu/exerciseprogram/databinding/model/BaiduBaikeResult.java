@@ -1,5 +1,10 @@
 package com.oubowu.exerciseprogram.databinding.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.oubowu.exerciseprogram.BR;
+
 /**
  * 类名： BaiduBaikeResult
  * 作者: oubowu
@@ -10,11 +15,27 @@ package com.oubowu.exerciseprogram.databinding.model;
  * 更新人:$$Author$$
  * 更新描述:
  */
-public class BaiduBaikeResult {
+public class BaiduBaikeResult extends BaseObservable {
 
-    private final String chineseName;
-    private final String englishName;
-    private final String abstractX;
+    private String chineseName;
+    private String englishName;
+
+    public void setAbstractX(String abstractX) {
+        this.abstractX = abstractX;
+        notifyPropertyChanged(BR.abstractX);
+    }
+
+    public void setChineseName(String chineseName) {
+        this.chineseName = chineseName;
+        notifyPropertyChanged(BR.chineseName);
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+        notifyPropertyChanged(BR.englishName);
+    }
+
+    private String abstractX;
 
     public BaiduBaikeResult(String chineseName, String englishName, String abstractX) {
         this.chineseName = chineseName;
@@ -22,14 +43,17 @@ public class BaiduBaikeResult {
         this.abstractX = abstractX;
     }
 
+    @Bindable
     public String getChineseName() {
         return chineseName;
     }
 
+    @Bindable
     public String getEnglishName() {
         return englishName;
     }
 
+    @Bindable
     public String getAbstractX() {
         return abstractX;
     }

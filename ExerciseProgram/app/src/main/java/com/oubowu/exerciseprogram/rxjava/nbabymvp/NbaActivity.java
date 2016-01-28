@@ -58,7 +58,7 @@ public class NbaActivity extends BaseActivity implements NbaView {
 
         mNbaPresenter = new NbaPresenterImpl(this);
 
-        return R.layout.activity_nba;
+        return R.layout.activity_nba_mvp;
     }
 
     @Override

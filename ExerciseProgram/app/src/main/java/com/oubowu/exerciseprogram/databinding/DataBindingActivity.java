@@ -3,8 +3,11 @@ package com.oubowu.exerciseprogram.databinding;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,17 +36,27 @@ public class DataBindingActivity extends AppCompatActivity {
 
     @Bind(R.id.iv_head)
     ImageView ivHead;
+
     @Bind(R.id.tv_chinese_name)
     TextView tvChineseName;
+
     @Bind(R.id.tv_english_name)
     TextView tvEnglishName;
+
     @Bind(R.id.tv_abstract)
     TextView tvAbstract;
+
     @Bind(R.id.bt_search)
     Button btSearch;
+
     @Bind(R.id.et_keyword)
     EditText etKeyword;
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
     private BaiduBinding binding;
+
     private BaiduBaikeResult result;
 
     @OnClick(R.id.bt_search)
@@ -59,58 +72,29 @@ public class DataBindingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_data_binding);
-//        result = new BaiduBaikeResult("陈柏霖", "Chen Boling", "简介：\n大仁哥");
-//        binding.setBaiduBaikeResult(result);
-
         ButterKnife.bind(this);
+        initView();
+        initData();
 
     }
 
     protected void initView() {
-
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("ObservableBinding");
+        }
     }
 
     protected void initData() {
         // http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_key=%E9%99%88%E6%9F%8F%E9%9C%96&bk_length=600
 
+        // ObservableBinding的方式，绑定的变量result改变随之改变页面，与普通的bean不同的是需要继承BaseObservable,
+        // getXXX需添加@Bindable注解，setXXX最后调用notifyPropertyChanged(BR.xxx);
+        result = new BaiduBaikeResult("", "", "");
+        binding.setBaiduBaikeResult(result);
     }
 
     private void searchKeyWord(String keyword) {
-        /*new OkHttpRequest.Builder()
-                .url("http://baike.baidu.com/api/openapi/BaikeLemmaCardApi")
-                .addParams("scope", "103")
-                .addParams("format", "json")
-                .addParams("appid", "379020")
-                .addParams("bk_key", keyword)
-                .addParams("bk_length", "600")
-                .get(new ResultCallback<BaiduBaike>() {
-                    @Override
-                    public void onError(Request request, Exception e) {
-                        Toast.makeText(DataBindingActivity.this, "搜索出错!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(BaiduBaike response) {
-                        try {
-                            final ViewGroup.LayoutParams lp = ivHead.getLayoutParams();
-                            lp.height = response.imageHeight * lp.width / response.imageWidth;
-                            ivHead.setLayoutParams(lp);
-                            Glide.with(DataBindingActivity.this)
-                                    .load(response.image)
-                                    .crossFade()
-                                    .error(R.drawable.__leak_canary_icon)
-                                    .into(ivHead);
-
-                            result = new BaiduBaikeResult(
-                                    response.card.get(0).name + response.card.get(0).value,
-                                    response.card.get(1).name + response.card.get(1).value,
-                                    "简介:\n" + response.abstractX);
-                            binding.setBaiduBaikeResult(result);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });*/
         new OkHttpRequest.Builder()
                 .url("http://baike.baidu.com/api/openapi/BaikeLemmaCardApi")
                 .addParams("scope", "103")
@@ -146,11 +130,17 @@ public class DataBindingActivity extends AppCompatActivity {
                             if (m.find()) {
                                 KLog.e(m.group());
                             }
-                            result = new BaiduBaikeResult(
+
+                            // 最基本的绑定方式，每次都去设置一遍数据，不如ObservableBinding灵活
+                            /*result = new BaiduBaikeResult(
                                     baike.card.get(0).name + ": " + Html.fromHtml(baike.card.get(0).value.get(0)),
                                     baike.card.get(1).name + ": " + Html.fromHtml(baike.card.get(1).value.get(0)),
-                                    "简介:\n" + baike.abstractX);
-                            binding.setBaiduBaikeResult(result);
+                                    "简介:\n" + baike.abstractX);*/
+                            // binding.setBaiduBaikeResult(result);
+
+                            result.setChineseName(baike.card.get(0).name + ": " + Html.fromHtml(baike.card.get(0).value.get(0)));
+                            result.setEnglishName(baike.card.get(1).name + ": " + Html.fromHtml(baike.card.get(1).value.get(0)));
+                            result.setAbstractX("简介:\n" + baike.abstractX);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -160,4 +150,22 @@ public class DataBindingActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.data_binding, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_recyclerview_binding:
+
+                break;
+            case R.id.action_customfont_binding:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

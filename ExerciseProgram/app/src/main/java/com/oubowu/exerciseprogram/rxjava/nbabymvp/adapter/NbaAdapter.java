@@ -2,12 +2,13 @@ package com.oubowu.exerciseprogram.rxjava.nbabymvp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.oubowu.exerciseprogram.R;
+import com.oubowu.exerciseprogram.databinding.NbaRecyclerViewBinding;
 import com.oubowu.exerciseprogram.refreshrecyclerview.RefreshRecyclerView;
 import com.oubowu.exerciseprogram.refreshrecyclerview.adapter.BaseRecyclerViewAdapter;
 import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.Tr;
@@ -41,9 +42,8 @@ public class NbaAdapter extends BaseRecyclerViewAdapter<NbaViewHolder, Tr> imple
 
     @Override
     protected NbaViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(mContext).inflate(R.layout.item_match, parent, false);
-        view.setOnClickListener(this);
-        return new NbaViewHolder(view);
+        final NbaRecyclerViewBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.item_match_mvp, parent, false);
+        return new NbaViewHolder(binding.getRoot(), binding);
     }
 
     @Override
@@ -51,29 +51,13 @@ public class NbaAdapter extends BaseRecyclerViewAdapter<NbaViewHolder, Tr> imple
 
         final Tr tr = mDatas.get(position);
 
-        holder.home.getLayoutParams().width = mSize;
-        holder.home.getLayoutParams().height = mSize;
+        holder.bindMatchScore(tr);
 
-        holder.away.getLayoutParams().width = mSize;
-        holder.away.getLayoutParams().height = mSize;
+        holder.bindPlayer1logo(tr.player1logobig);
 
-        Glide.with(mContext)
-                .load(tr.player1logobig)
-                .crossFade()
-                .placeholder(R.mipmap.ic_loading_small_bg)
-                .error(R.mipmap.ic_fail)
-                .into(holder.home);
+        holder.bindPlayer2logo(tr.player2logobig);
 
-        Glide.with(mContext)
-                .load(tr.player2logobig)
-                .crossFade()
-                .placeholder(R.mipmap.ic_loading_small_bg)
-                .error(R.mipmap.ic_fail)
-                .into(holder.away);
-
-        holder.result.setText(String.format("%s\n%s", tr.score, tr.time));
-
-        holder.itemView.setTag(position);
+        holder.bindImageSize(mSize);
 
     }
 

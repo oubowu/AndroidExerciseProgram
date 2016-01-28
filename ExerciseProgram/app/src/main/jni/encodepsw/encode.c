@@ -5,53 +5,46 @@
 #include "com_oubowu_exerciseprogram_jni_CheckUtil.h"
 #include "./utils/android_log_util.h"
 #include "./utils/md5.h"
+#include "./utils/sha1.h"
 
 JNIEXPORT jstring JNICALL get_encode_psw(JNIEnv *env, jobject obj, jstring psw) {
 
-    /*// 声明局部量
-    char key[KEY_SIZE] = {0};
-    //清空数组内存
-    memset(key, 0, sizeof(key));
+    // 先用SHA1算法加密
+    SHA1Context sha;
+    char *pswChar = (char *) (*env)->GetStringUTFChars(env, psw, 0);
 
-    char temp[KEY_NAME_SIZE] = {0};
-
-    //将java传入的name转换为本地utf的char*
-    const char *pName = (*env)->GetStringUTFChars(env, psw, NULL);
-
-    if (NULL != pName) {
-        //将传进来的name拷贝到临时空间
-        strcpy(temp, pName);
-        strcpy(key, generatePws(temp));
-        // java的psw对象不需要再使用，通知虚拟机回收psw
-        (*env)->ReleaseStringUTFChars(env, psw, pName);
+    SHA1Reset(&sha);
+    SHA1Input(&sha, (const unsigned char *) pswChar, strlen(pswChar));
+    char szSha1[32] = {0};
+    if (!SHA1Result(&sha)) {
+        fprintf(stderr, "ERROR-- could not compute message digest\n");
+    } else {
+        int n;
+        for (n = 0; n < 5; n++) {
+            sprintf(szSha1, "%s%02x", szSha1, sha.Message_Digest[n]);
+        }
     }
 
-    return (*env)->NewStringUTF(env, key);*/
+    // SHA1加密后拼接字符串
+    const char *sailvanStr = "oubowu";
+    strcat(szSha1, sailvanStr);
 
-    LOGE("get_encode_psw");
-
-    char *szText = (char *) (*env)->GetStringUTFChars(env, psw, 0);
-
+    // 再用MD5加密
     MD5_CTX context = {0};
     MD5Init(&context);
-    MD5Update(&context, szText, strlen(szText));
+    MD5Update(&context, szSha1, strlen(szSha1));
     unsigned char dest[16] = {0};
     MD5Final(dest, &context);
-    (*env)->ReleaseStringUTFChars(env, psw, szText);
 
     int i = 0;
     char szMd5[32] = {0};
     for (i = 0; i < 16; i++) {
-        /*原型
-        int sprintf( char *buffer, const char *format, [ argument] … );
-        参数列表
-        buffer：char型指针，指向将要写入的字符串的缓冲区。
-        format：格式化字符串。
-        [argument]...：可选参数，可以是任何类型的数据。
-        返回值：字符串长度（strlen）*/
-        // %02x 格式控制: 以十六进制输出,2为指定的输出字段的宽度.如果位数小于2,则左端补0
         sprintf(szMd5, "%s%02x", szMd5, dest[i]);
     }
+
+    // ReleaseStringUTFChars 通知虚拟机平台相关代码无需再访问utf。utf参数是一个指针，可利用GetStringUTFChars()从string获得
+    (*env)->ReleaseStringUTFChars(env, psw, pswChar);
+
     return (*env)->NewStringUTF(env, szMd5);
 
 }

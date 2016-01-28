@@ -5,15 +5,12 @@ import android.widget.EditText;
 import com.oubowu.exerciseprogram.BaseActivity;
 import com.oubowu.exerciseprogram.R;
 import com.oubowu.exerciseprogram.utils.ToastUtil;
+import com.socks.library.KLog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 public class JniActivity extends BaseActivity {
-
-    static {
-        System.loadLibrary("NdkTest");
-    }
 
     @Bind(R.id.et_psw)
     EditText mPswEditText;
@@ -21,8 +18,9 @@ public class JniActivity extends BaseActivity {
     @OnClick(R.id.bt_check)
     void checkPsw() {
         CheckUtil checkUtil = new CheckUtil();
-        final boolean bb = EncodeUtil.getMD5(mPswEditText.getText().toString()).equals(checkUtil.getEncodePsw(mPswEditText.getText().toString()));
+        final boolean bb = EncodeUtil.getEncoderPass(mPswEditText.getText().toString()).equals(checkUtil.getEncodePsw(mPswEditText.getText().toString()));
         ToastUtil.showShort(this, "JNI加密的密码与JAVA加密的密码匹配吗？ " + bb);
+        KLog.e(EncodeUtil.getEncoderPass(mPswEditText.getText().toString()) + "\n" + checkUtil.getEncodePsw(mPswEditText.getText().toString()));
     }
 
     @Override

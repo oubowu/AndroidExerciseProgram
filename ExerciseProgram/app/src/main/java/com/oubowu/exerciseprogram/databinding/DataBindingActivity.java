@@ -1,5 +1,6 @@
 package com.oubowu.exerciseprogram.databinding;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.oubowu.exerciseprogram.R;
 import com.oubowu.exerciseprogram.bean.BaiduBaike;
 import com.oubowu.exerciseprogram.databinding.model.BaiduBaikeResult;
+import com.oubowu.exerciseprogram.rxjava.nbabymvp.NbaActivity;
 import com.socks.library.KLog;
 import com.squareup.okhttp.Request;
 import com.zhy.http.okhttp.callback.ResultCallback;
@@ -160,7 +162,7 @@ public class DataBindingActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_recyclerview_binding:
-
+                startActivity(new Intent(this, NbaActivity.class));
                 break;
             case R.id.action_customfont_binding:
 

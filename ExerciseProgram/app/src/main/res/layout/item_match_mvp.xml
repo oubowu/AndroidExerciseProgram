@@ -20,13 +20,18 @@
             name="player2logobig"
             type="String"/>
 
-        <variable
+        <!--<variable
             name="size"
-            type="int"/>
+            type="int"/>-->
+
+        <variable
+            name="onItemClick"
+            type="com.oubowu.exerciseprogram.rxjava.nbabymvp.adapter.NbaAdapter"/>
 
     </data>
 
     <LinearLayout
+        android:id="@+id/ll_match"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -34,6 +39,7 @@
         android:layout_marginTop="5dp"
         android:background="@color/material_grey_200"
         android:gravity="center_vertical"
+        android:onClick="@{onItemClick.onClick}"
         android:orientation="horizontal"
         android:padding="2dp">
 
@@ -42,9 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:image="@{player1logobig}"
-            app:size="@{size}"/>
-
+            app:image="@{player1logobig}"/>
+        <!--app:size="@{size}"-->
         <TextView
             android:id="@+id/tv_result"
             android:layout_width="wrap_content"
@@ -53,15 +58,14 @@
             android:text='@{match.score+"\n"+match.time}'
             android:textColor="@color/material_deep_orange_a700"
             android:textSize="18sp"/>
-
+        <!--android:text="@{time}"-->
         <ImageView
             android:id="@+id/iv_away"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:image="@{player2logobig}"
-            app:size="@{size}"/>
-
+            app:image="@{player2logobig}"/>
+        <!--app:size="@{size}"-->
     </LinearLayout>
 
 </layout>

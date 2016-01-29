@@ -4,9 +4,69 @@
 
     <data class="BaiduBinding">
 
+        <import type="com.oubowu.exerciseprogram.databinding.model.BaiduBaikeResult"/>
+
+        <import type="android.graphics.Bitmap"/>
+
+        <import type="java.util.ArrayList"/>
+
+        <import type="java.util.HashMap"/>
+
         <variable
             name="baiduBaikeResult"
-            type="com.oubowu.exerciseprogram.databinding.model.BaiduBaikeResult"/>
+            type="BaiduBaikeResult"/>
+
+        <!--和在java里一样，java.lang包里的类，我们是可以不用导包的，再往下，一个boolean和int类型的变量，都是java基本类型的，
+        所以说嘛，在这里定义变量，你就想成是在java里定义就ok-->
+
+        <variable
+            name="str"
+            type="String"/>
+
+        <variable
+            name="error"
+            type="boolean"/>
+
+        <variable
+            name="num"
+            type="int"/>
+
+        <!--定义的方式和我们上面的基本一致，区别就在于我们还需要为它定义key的变量-->
+
+        <variable
+            name="list"
+            type="ArrayList&lt;String>"/>
+
+        <variable
+            name="map"
+            type="HashMap&lt;String, String>"/>
+
+        <variable
+            name="array"
+            type="String[]"/>
+
+        <variable
+            name="listKey"
+            type="int"/>
+
+        <variable
+            name="mapKey"
+            type="String"/>
+
+        <variable
+            name="arrayKey"
+            type="int"/>
+
+        <!--点击事件设置-->
+        <variable
+            name="searchClick"
+            type="com.oubowu.exerciseprogram.databinding.DataBindingActivity"/>
+
+        <!--日期做格式化处理-->
+        <variable
+            name="time"
+            type="java.util.Date"/>
+
     </data>
 
     <RelativeLayout
@@ -22,7 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="搜索"/>
+            android:onClick="@{searchClick.search}"
+            android:text='@{error ? "error" : str}'/>
+        <!--在xml中还支持表达式-->
 
         <EditText
             android:id="@+id/et_keyword"
@@ -44,14 +106,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/tv_search_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@{time}"
+                    android:textColor="@color/material_orange_500"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
                 <ImageView
                     android:id="@+id/iv_head"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
+                    android:layout_below="@+id/tv_search_time"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/baidubaike"/>
+
 
                 <TextView
                     android:id="@+id/tv_chinese_name"

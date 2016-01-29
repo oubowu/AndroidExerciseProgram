@@ -1,11 +1,9 @@
 package com.oubowu.exerciseprogram.rxjava.nbabymvp.viewholder;
 
-import android.support.annotation.UiThread;
 import android.view.View;
 
 import com.oubowu.exerciseprogram.databinding.NbaRecyclerViewBinding;
 import com.oubowu.exerciseprogram.refreshrecyclerview.viewholder.BaseRecyclerViewHolder;
-import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.Tr;
 
 /**
  * 类名： NbaViewHolder
@@ -19,14 +17,18 @@ import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.Tr;
  */
 public class NbaViewHolder extends BaseRecyclerViewHolder {
 
-    final NbaRecyclerViewBinding binding;
+    NbaRecyclerViewBinding binding;
 
     public NbaViewHolder(final View view, final NbaRecyclerViewBinding binding) {
         super(view);
         this.binding = binding;
     }
 
-    @UiThread
+    public NbaRecyclerViewBinding getBinding() {
+        return this.binding;
+    }
+
+    /*@UiThread
     public void bindMatchScore(final Tr match) {
         this.binding.setMatch(match);
     }
@@ -44,6 +46,6 @@ public class NbaViewHolder extends BaseRecyclerViewHolder {
     @UiThread
     public void bindImageSize(final int size) {
         this.binding.setSize(size);
-    }
+    }*/
 
 }

@@ -27,7 +27,7 @@ import java.util.List;
  * 更新人:$$Author$$
  * 更新描述:
  */
-public class NbaAdapter extends BaseRecyclerViewAdapter<NbaViewHolder, Tr> implements View.OnClickListener {
+public class NbaAdapter extends BaseRecyclerViewAdapter<NbaViewHolder, Tr> {
 
     private final int mSize;
 
@@ -51,13 +51,31 @@ public class NbaAdapter extends BaseRecyclerViewAdapter<NbaViewHolder, Tr> imple
 
         final Tr tr = mDatas.get(position);
 
-        holder.bindMatchScore(tr);
+//        holder.bindMatchScore(tr);
+//
+//        holder.bindPlayer1logo(tr.player1logobig);
+//
+//        holder.bindPlayer2logo(tr.player2logobig);
+//
+//        holder.bindImageSize(mSize);
 
-        holder.bindPlayer1logo(tr.player1logobig);
+        holder.getBinding().setMatch(tr);
 
-        holder.bindPlayer2logo(tr.player2logobig);
+        holder.getBinding().setPlayer1logobig(tr.player1logobig);
 
-        holder.bindImageSize(mSize);
+        holder.getBinding().setPlayer2logobig(tr.player2logobig);
+
+        // 当我们需要某个view的实例时，我们只要给该view一个id，然后Data Binding框架就会给我们自动生成该view的实例，放哪了？当然是ViewDataBinding里面
+        holder.getBinding().ivHome.getLayoutParams().width = holder.getBinding().ivHome.getLayoutParams().height = mSize;
+
+        holder.getBinding().ivAway.getLayoutParams().width = holder.getBinding().ivAway.getLayoutParams().height = mSize;
+
+        holder.getBinding().llMatch.setTag(position);
+
+        holder.getBinding().setOnItemClick(this);
+
+        // 当数据改变时，binding会在下一帧去改变数据，如果我们需要立即改变，就去调用executePendingBindings方法
+        holder.getBinding().executePendingBindings();
 
     }
 
@@ -66,7 +84,6 @@ public class NbaAdapter extends BaseRecyclerViewAdapter<NbaViewHolder, Tr> imple
         return 0;
     }
 
-    @Override
     public void onClick(View v) {
         if (mItemListener != null) {
             mItemListener.onItemClick(v, (int) v.getTag());

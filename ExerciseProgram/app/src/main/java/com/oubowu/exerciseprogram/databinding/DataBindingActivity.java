@@ -9,6 +9,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,12 +28,12 @@ import com.squareup.okhttp.Request;
 import com.zhy.http.okhttp.callback.ResultCallback;
 import com.zhy.http.okhttp.request.OkHttpRequest;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class DataBindingActivity extends AppCompatActivity {
 
@@ -61,8 +62,17 @@ public class DataBindingActivity extends AppCompatActivity {
 
     private BaiduBaikeResult result;
 
-    @OnClick(R.id.bt_search)
+    /*@OnClick(R.id.bt_search)
     void search() {
+        if (!TextUtils.isEmpty(etKeyword.getText().toString())) {
+            searchKeyWord(etKeyword.getText().toString());
+        } else {
+            Toast.makeText(this, "请输入搜索词", Toast.LENGTH_SHORT).show();
+        }
+    }*/
+
+    // databing提供点击事件
+    public void search(View view) {
         if (!TextUtils.isEmpty(etKeyword.getText().toString())) {
             searchKeyWord(etKeyword.getText().toString());
         } else {
@@ -85,6 +95,7 @@ public class DataBindingActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("ObservableBinding");
         }
+
     }
 
     protected void initData() {
@@ -94,6 +105,10 @@ public class DataBindingActivity extends AppCompatActivity {
         // getXXX需添加@Bindable注解，setXXX最后调用notifyPropertyChanged(BR.xxx);
         result = new BaiduBaikeResult("", "", "");
         binding.setBaiduBaikeResult(result);
+        binding.setError(false);
+        binding.setStr("搜索");
+        // 点击事件注册
+        binding.setSearchClick(this);
     }
 
     private void searchKeyWord(String keyword) {
@@ -144,6 +159,8 @@ public class DataBindingActivity extends AppCompatActivity {
                             result.setEnglishName(baike.card.get(1).name + ": " + Html.fromHtml(baike.card.get(1).value.get(0)));
                             result.setAbstractX("简介:\n" + baike.abstractX);
 
+                            binding.setTime(new Date());
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(DataBindingActivity.this, "搜索出错!", Toast.LENGTH_SHORT).show();
@@ -163,9 +180,6 @@ public class DataBindingActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_recyclerview_binding:
                 startActivity(new Intent(this, NbaActivity.class));
-                break;
-            case R.id.action_customfont_binding:
-
                 break;
         }
         return super.onOptionsItemSelected(item);

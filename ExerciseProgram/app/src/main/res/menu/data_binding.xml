@@ -9,11 +9,4 @@
         android:title="RecyclerViewBinding"
         tools:ignore="AppCompatResource"/>
 
-    <item
-        android:id="@+id/action_customfont_binding"
-        android:orderInCategory="3"
-        android:showAsAction="never"
-        android:title="CustomFontBinding"
-        tools:ignore="AppCompatResource"/>
-
 </menu>

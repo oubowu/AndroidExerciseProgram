@@ -11,8 +11,6 @@ import com.squareup.okhttp.Request;
 import com.zhy.http.okhttp.callback.ResultCallback;
 import com.zhy.http.okhttp.request.OkHttpRequest;
 
-import java.io.IOException;
-
 import butterknife.Bind;
 
 public class JsonParseActivity extends BaseActivity {

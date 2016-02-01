@@ -1,10 +1,12 @@
 
 package com.oubowu.exerciseprogram.rxjava.nbabymvp.model;
 
-import javax.annotation.Generated;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import javax.annotation.Generated;
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Generated("org.jsonschema2pojo")
 public class Bottomlink {
 

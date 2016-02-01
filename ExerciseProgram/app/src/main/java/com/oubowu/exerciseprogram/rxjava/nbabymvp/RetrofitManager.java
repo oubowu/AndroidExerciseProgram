@@ -4,7 +4,7 @@ package com.oubowu.exerciseprogram.rxjava.nbabymvp;
 import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.NBA;
 import com.oubowu.exerciseprogram.rxjava.nbabymvp.service.NbaService;
 
-import retrofit.GsonConverterFactory;
+import retrofit.JacksonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
@@ -31,7 +31,7 @@ public class RetrofitManager {
     private RetrofitManager() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         final NbaService nbaService = retrofit.create(NbaService.class);

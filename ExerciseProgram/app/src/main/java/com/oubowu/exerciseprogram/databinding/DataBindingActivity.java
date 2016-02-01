@@ -149,10 +149,10 @@ public class DataBindingActivity extends AppCompatActivity {
                             }
 
                             // 最基本的绑定方式，每次都去设置一遍数据，不如ObservableBinding灵活
-                            /*result = new BaiduBaikeResult(
+                            result = new BaiduBaikeResult(
                                     baike.card.get(0).name + ": " + Html.fromHtml(baike.card.get(0).value.get(0)),
                                     baike.card.get(1).name + ": " + Html.fromHtml(baike.card.get(1).value.get(0)),
-                                    "简介:\n" + baike.abstractX);*/
+                                    "简介:\n" + baike.abstractX);
                             // binding.setBaiduBaikeResult(result);
 
                             result.setChineseName(baike.card.get(0).name + ": " + Html.fromHtml(baike.card.get(0).value.get(0)));

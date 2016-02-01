@@ -4,26 +4,30 @@
 #include <assert.h>
 #include "com_oubowu_exerciseprogram_jni_CheckUtil.h"
 #include "./utils/android_log_util.h"
-#include "./utils/md5.h"
 #include "./utils/sha1.h"
+#include "./utils/md5.h"
 
 JNIEXPORT jstring JNICALL get_encode_psw(JNIEnv *env, jobject obj, jstring psw) {
 
-    // 先用SHA1算法加密
-    SHA1Context sha;
     char *pswChar = (char *) (*env)->GetStringUTFChars(env, psw, 0);
 
-    SHA1Reset(&sha);
-    SHA1Input(&sha, (const unsigned char *) pswChar, strlen(pswChar));
+
+    // 先用SHA1算法加密
     char szSha1[32] = {0};
-    if (!SHA1Result(&sha)) {
-        fprintf(stderr, "ERROR-- could not compute message digest\n");
-    } else {
-        int n;
-        for (n = 0; n < 5; n++) {
-            sprintf(szSha1, "%s%02x", szSha1, sha.Message_Digest[n]);
-        }
-    }
+
+    SHA1_CTX sha;
+    uint8_t results[20];
+    char *buf;
+    int n;
+
+    buf = pswChar;
+    n = strlen(buf);
+    SHA1Init(&sha);
+    SHA1Update(&sha, (uint8_t *) buf, n);
+    SHA1Final(results, &sha);
+
+    for (n = 0; n < 20; n++)
+        sprintf(szSha1, "%s%02x", szSha1, results[n]);
 
     // SHA1加密后拼接字符串
     const char *sailvanStr = "oubowu";

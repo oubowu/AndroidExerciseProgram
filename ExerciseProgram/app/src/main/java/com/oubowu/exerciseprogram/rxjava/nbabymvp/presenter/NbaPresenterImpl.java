@@ -6,6 +6,7 @@ import com.oubowu.exerciseprogram.rxjava.nbabymvp.listener.OnRequestListener;
 import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.NBA;
 import com.oubowu.exerciseprogram.rxjava.nbabymvp.model.Tr;
 import com.oubowu.exerciseprogram.rxjava.nbabymvp.view.NbaView;
+import com.socks.library.KLog;
 
 import rx.Subscription;
 
@@ -68,6 +69,7 @@ public class NbaPresenterImpl implements NbaPresenter, OnRequestListener {
     @Override
     public void requestError(Throwable e) {
         mNbaView.hideProgress();
+        KLog.e(e.getMessage());
         mNbaView.showMsg(e.getMessage());
     }
 

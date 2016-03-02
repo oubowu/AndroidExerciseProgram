@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,35 +16,21 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
+        android:layout_centerInParent="true"
         android:max="100"
-        android:progress="1"/>
-
-    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshFirstStepView
-        android:id="@+id/meituan_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/seekbar"
-        android:layout_centerHorizontal="true"/>
-
-    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshSecondStepView
-        android:id="@+id/meituan_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/meituan_first"
-        android:layout_centerHorizontal="true"/>
-
-    <com.oubowu.exerciseprogram.customview.MeiTuanRefreshThirdStepView
-        android:id="@+id/meituan_third"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/meituan_second"
-        android:layout_centerHorizontal="true"/>-->
+        android:progress="1"/>-->
 
     <com.oubowu.exerciseprogram.customview.meituan.MeituanListView
         android:id="@+id/mt_lv"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </com.oubowu.exerciseprogram.customview.meituan.MeituanListView>
+
+    <!--<com.oubowu.exerciseprogram.customview.uc.UcRerfreshHead
+        android:id="@+id/uc_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>-->
 
 </RelativeLayout>

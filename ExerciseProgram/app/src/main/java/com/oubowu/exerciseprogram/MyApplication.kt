@@ -2,6 +2,7 @@ package com.oubowu.exerciseprogram
 
 import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDex
 import com.socks.library.KLog
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
@@ -30,12 +31,17 @@ class MyApplication : Application() {
 
     private val refWatcher: RefWatcher? = null
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
-        LeakCanary.install(this)
-        KLog.init(true)
-//        KLog.e("LeakCanary.install(this)")
-
+        Runnable {
+            LeakCanary.install(this)
+            KLog.init(true)
+        }.run()
     }
 
 }

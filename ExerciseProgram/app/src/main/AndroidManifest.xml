@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.oubowu.exerciseprogram"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.oubowu.exerciseprogram">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- android:hardwareAccelerated="false" -->
     <application
@@ -26,59 +27,45 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.MvpActivity"/>
+        <activity android:name=".mvp.MvpActivity" />
         <activity
             android:name=".refreshrecyclerview.RefreshActivity"
-            android:label="@string/title_activity_refresh">
-        </activity>
+            android:label="@string/title_activity_refresh"></activity>
         <activity
             android:name=".floatlayout.FloatLeafActivity"
-            android:label="@string/bazier">
-        </activity>
+            android:label="@string/bazier"></activity>
         <activity
             android:name=".kotlin.KotlinActivity"
-            android:label="@string/kotlin">
-        </activity>
+            android:label="@string/kotlin"></activity>
         <activity
             android:name=".kotlin.LoginActivity"
-            android:label="@string/title_activity_login">
-        </activity>
-        <activity android:name=".rxjava.RxJavaActivity">
-        </activity>
-        <activity android:name=".rxjava.nbademo.NbaActivity"/>
-        <activity android:name=".rxjava.nbabymvp.NbaActivity"/>
-        <activity android:name=".jsonparse.JsonParseActivity">
-        </activity>
-        <activity android:name=".viewdraghelper.SwipeActivity">
-        </activity>
-        <activity android:name=".databinding.DataBindingActivity">
-        </activity>
-        <activity android:name=".tailview.SettingsActivity">
-        </activity>
+            android:label="@string/title_activity_login"></activity>
+        <activity android:name=".rxjava.RxJavaActivity"></activity>
+        <activity android:name=".rxjava.nbademo.NbaActivity" />
+        <activity android:name=".rxjava.nbabymvp.NbaActivity" />
+        <activity android:name=".jsonparse.JsonParseActivity"></activity>
+        <activity android:name=".viewdraghelper.SwipeActivity"></activity>
+        <activity android:name=".databinding.DataBindingActivity"></activity>
+        <activity android:name=".tailview.SettingsActivity"></activity>
         <activity
             android:name=".toucheventdelivery.TouchEventActivity"
             android:label="Activity为总统"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
         <activity
             android:name=".aigestudiostudy.AigeActivity"
-            android:label="Canvas相关知识">
-        </activity>
+            android:label="Canvas相关知识"></activity>
         <activity
             android:name=".aigestudiostudy.AigeActivity1"
-            android:label="绘制流程相关知识">
-        </activity>
-        <activity android:name=".customview.CustomActivity">
-        </activity>
-        <activity android:name=".itemtouchhelper.ItemTouchHelperActivity">
-        </activity>
-        <activity android:name=".jni.JniActivity">
-        </activity>
+            android:label="绘制流程相关知识"></activity>
+        <activity android:name=".customview.CustomActivity"></activity>
+        <activity android:name=".itemtouchhelper.ItemTouchHelperActivity"></activity>
+        <activity android:name=".jni.JniActivity"></activity>
+        <activity android:name=".customview.uc.UcActivity" />
     </application>
 
 </manifest>

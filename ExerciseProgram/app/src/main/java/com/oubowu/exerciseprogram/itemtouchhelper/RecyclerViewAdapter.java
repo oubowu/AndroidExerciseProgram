@@ -67,7 +67,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                     //回调RecyclerListFragment中的startDrag方法
                     //让mItemTouchHelper执行拖拽操作
-                    mStartDragListener.startDrag(holder);
+                    if (mStartDragListener != null)
+                        mStartDragListener.startDrag(holder);
                 }
                 return false;
             }

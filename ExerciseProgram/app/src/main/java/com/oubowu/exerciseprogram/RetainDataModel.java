@@ -17,6 +17,7 @@ public class RetainDataModel {
     private static RetainDataModel sInstance;
     private View mRetainedButton;
 
+
     public static RetainDataModel getInstance() {
         if (sInstance == null) {
             sInstance = new RetainDataModel();
@@ -24,9 +25,11 @@ public class RetainDataModel {
         return sInstance;
     }
 
+
     public void recycle() {
         sInstance = null;
     }
+
 
     public void setRetainedView(View v) {
         mRetainedButton = v;

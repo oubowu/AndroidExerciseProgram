@@ -44,6 +44,9 @@ android {
             // 生成的.so文件在AndroidExerciseProgram\ExerciseProgram\app\build\intermediates\ndk中
         }
 
+        // Enabling multidex support.
+        multiDexEnabled true
+
     }
 
     signingConfigs {
@@ -154,7 +157,7 @@ def getDate() {
 }
 
 buildscript {
-    ext.kotlin_version = '1.0.0-beta-2423'
+    ext.kotlin_version = '1.0.0-rc-1036'
     repositories {
         mavenCentral()
         jcenter()
@@ -183,7 +186,7 @@ dependencies {
 
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
-    compile 'io.reactivex:rxkotlin:0.30.1'
+    compile 'io.reactivex:rxkotlin:0.40.1'
 
     // Lombok的特色是根据annotation创建一些代码，以减少重复代码的数量，它提供了以下几个annotation：
     // @Getter和@Setter：为属性创建getter和setter
@@ -226,6 +229,8 @@ dependencies {
 
     compile 'com.google.dagger:dagger:2.0.2' // dagger2
     compile 'com.google.dagger:dagger-compiler:2.0.2' // dagger2
+
+    compile 'com.android.support:multidex:1.0.1'
 
 }
 
